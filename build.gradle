@@ -1,0 +1,27 @@
+apply plugin: 'application'
+
+sourceCompatibility = 1.7		
+
+project.ext {
+	configPath = "$rootProject.projectDir/config/"
+	
+	dropwizardVersion = '0.9.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //compile 'org.slf4j:slf4j-api:1.7.5'
+
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+
+    testCompile 'junit:junit:4.12'
+}
+
+mainClassName = "com.tabordasolutions.prototype.ApiApplication"
+
+run {
+	args 'server', configPath + 'prototype_config.yml'
+}
