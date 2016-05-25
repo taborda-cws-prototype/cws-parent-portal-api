@@ -1,1 +1,1 @@
-# adqvp-api-prototype
+# Agile Development Qualified Vendor Pool Prototype
