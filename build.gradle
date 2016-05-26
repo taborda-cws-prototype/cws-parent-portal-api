@@ -20,8 +20,8 @@ dependencies {
     testCompile "junit:junit:4.12"
 }
 
-mainClassName = "com.tabordasolutions.prototype.ApiApplication"
+mainClassName = "com.tabordasolutions.cws.parentportal.api.ParentPortalApplication"
 
 run {
-	args "server", configPath + "prototype_config.yml"
+	args "server", configPath + "parentportal_config.yml"
 }

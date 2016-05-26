@@ -1,16 +1,16 @@
-package com.tabordasolutions.prototype.resources;
+package com.tabordasolutions.cws.parentportal.api.resources;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ApplicationResourceTest {
-    private ApplicationResource applicationResource;
+public class ParentPortalResourceTest {
+    private ParentPortalResource applicationResource;
 
     private String applicationName = "appname";
     @Before
     public void setup() {
-    	applicationResource = new ApplicationResource(applicationName);
+    	applicationResource = new ParentPortalResource(applicationName);
     }
 
     @Test

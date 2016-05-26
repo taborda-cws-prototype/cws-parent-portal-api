@@ -1,4 +1,4 @@
-package com.tabordasolutions.prototype.resources;
+package com.tabordasolutions.cws.parentportal.api.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 @Path("/application")
 @Produces(MediaType.APPLICATION_JSON)
-public class ApplicationResource {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationResource.class);
+public class ParentPortalResource {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ParentPortalResource.class);
 	
 	private String applicationName;
 	
-	public ApplicationResource(String applicationName) {
+	public ParentPortalResource(String applicationName) {
 		this.applicationName = applicationName;
 	}
 	
