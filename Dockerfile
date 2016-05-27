@@ -9,6 +9,6 @@ ADD config/prototype_config.yml /usr/local/etc/advp-contacts-api/advp-contacts-a
 VOLUME /var/lib/advp-contacts-api
 VOLUME /var/log/advp-contacts-api
 
-EXPOSE 8000
+EXPOSE 8080
 
 ENTRYPOINT [ "/usr/bin/java", "-jar", "/usr/local/share/java/advp-contacts-api/advp-contacts-api.jar", "server", "/usr/local/etc/advp-contacts-api/advp-contacts-api.yml" ]
