@@ -14,7 +14,7 @@ public class ParentPortalResourceTest {
     }
 
     @Test
-    public void testGetAppliationName() {
+    public void testGetApplicationName() {
         String name = applicationResource.getApplicationName();
         Assert.assertEquals("ApplicationName not correct", applicationName, name);
     }
