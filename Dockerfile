@@ -3,12 +3,11 @@ MAINTAINER Chris O'Meara
 
 RUN yum update -y && yum install -y java-1.8.0-openjdk && yum clean all
 
-ADD build/libs/prototype-all.jar /usr/local/share/java/advp-contacts-api/advp-contacts-api.jar
-ADD config/prototype_config.yml /usr/local/etc/advp-contacts-api/advp-contacts-api.yml
+COPY build/libs/parentportal-all.jar /usr/local/share/java/cws-parent-portal-api/cws-parent-portal-api.jar
+COPY config/parentportal_config.yml /usr/local/etc/cws-parent-portal-api/cws-parent-portal-api.yml
 
-VOLUME /var/lib/advp-contacts-api
-VOLUME /var/log/advp-contacts-api
+VOLUME /var/log/cws-parent-portal-api
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/usr/bin/java", "-jar", "/usr/local/share/java/advp-contacts-api/advp-contacts-api.jar", "server", "/usr/local/etc/advp-contacts-api/advp-contacts-api.yml" ]
+ENTRYPOINT [ "java", "-jar", "/usr/local/share/java/cws-parent-portal-api/cws-parent-portal-api.jar", "server", "/usr/local/etc/cws-parent-portal-api/cws-parent-portal-api.yml" ]
