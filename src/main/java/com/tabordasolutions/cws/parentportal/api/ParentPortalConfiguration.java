@@ -1,5 +1,7 @@
 package com.tabordasolutions.cws.parentportal.api;
 
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.flyway.FlywayFactory;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,6 +12,10 @@ public class ParentPortalConfiguration extends Configuration {
 
 	@NotEmpty
 	private String applicationName;
+	@NotEmpty
+	private DataSourceFactory dataSourceFactory;
+	@NotEmpty
+	private FlywayFactory flywayFactory;
 
 	@JsonProperty
 	public String getApplicationName() {
@@ -17,7 +23,17 @@ public class ParentPortalConfiguration extends Configuration {
 	}
 
 	@JsonProperty
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
-	}
+	public void setApplicationName(String applicationName) { this.applicationName = applicationName; }
+
+	@JsonProperty
+	public DataSourceFactory getDataSourceFactory() { return dataSourceFactory; }
+
+	@JsonProperty
+	public void setDataSourceFactory(DataSourceFactory applicationName) { this.dataSourceFactory = dataSourceFactory; }
+
+	@JsonProperty
+	public FlywayFactory getFlywayFactory() { return flywayFactory; }
+
+	@JsonProperty
+	public void setFlywayFactory(FlywayFactory flywayFactory) { this.flywayFactory = flywayFactory; }
 }
