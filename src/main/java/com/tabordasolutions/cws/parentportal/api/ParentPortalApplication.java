@@ -7,6 +7,7 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,10 +44,19 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 	public void setFlywayBundle(FlywayBundle<ParentPortalConfiguration> bundle) { this.flywayBundle = bundle; }
 
 	@Override
-	public void run(final ParentPortalConfiguration configuration,
-			final Environment environment) throws Exception {
+	public void run(final ParentPortalConfiguration configuration, final Environment environment) throws Exception {
 		LOGGER.info("Application name: {}", configuration.getApplicationName());
 		final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName()) ;
 		environment.jersey().register(applicationResource);
+
+        flywayMigration(configuration);
 	}
+
+    private void flywayMigration(ParentPortalConfiguration configuration) {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource( configuration.getDataSourceFactory(). getUrl(),
+                              configuration.getDataSourceFactory(). getUser(),
+                              configuration.getDataSourceFactory(). getPassword());
+        flyway.migrate();
+    }
 }

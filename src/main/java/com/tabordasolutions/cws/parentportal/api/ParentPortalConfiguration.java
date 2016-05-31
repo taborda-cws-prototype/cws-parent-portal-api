@@ -12,9 +12,7 @@ public class ParentPortalConfiguration extends Configuration {
 
 	@NotEmpty
 	private String applicationName;
-	@NotEmpty
 	private DataSourceFactory dataSourceFactory;
-	@NotEmpty
 	private FlywayFactory flywayFactory;
 
 	@JsonProperty
@@ -29,7 +27,7 @@ public class ParentPortalConfiguration extends Configuration {
 	public DataSourceFactory getDataSourceFactory() { return dataSourceFactory; }
 
 	@JsonProperty
-	public void setDataSourceFactory(DataSourceFactory applicationName) { this.dataSourceFactory = dataSourceFactory; }
+	public void setDataSourceFactory(DataSourceFactory dataSourceFactory) { this.dataSourceFactory = dataSourceFactory; }
 
 	@JsonProperty
 	public FlywayFactory getFlywayFactory() { return flywayFactory; }

@@ -20,6 +20,8 @@ dependencies {
     compile group: "io.dropwizard", name: "dropwizard-core", version: dropwizardVersion
     compile group: "io.dropwizard.modules", name: "dropwizard-flyway", version: "1.0.0-rc2-1"
 
+    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+
     testCompile "junit:junit:4.12"
     compile 'org.mockito:mockito-core:2.0.54-beta'
 }
@@ -27,5 +29,5 @@ dependencies {
 mainClassName = "com.tabordasolutions.cws.parentportal.api.ParentPortalApplication"
 
 run {
-	args "server", configPath + "parentportal_config.yml"
+    args "server", configPath + "parentportal_config.yml"
 }
