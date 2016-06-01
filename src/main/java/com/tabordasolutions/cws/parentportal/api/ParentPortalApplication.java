@@ -49,7 +49,7 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 		final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName()) ;
 		environment.jersey().register(applicationResource);
 
-        flywayMigration(configuration);
+        // flywayMigration(configuration);
 	}
 
     private void flywayMigration(ParentPortalConfiguration configuration) {
