@@ -13,7 +13,7 @@ public class SessionResource {
         if (isValid(email) && isValid(password)){
            valid = true;
         }
-        return new Session(valid);
+        return new Session(valid, "");
     }
 
     private boolean isValid(String string){
