@@ -1,6 +1,8 @@
 package com.tabordasolutions.cws.parentportal.api;
 
 import io.dropwizard.Application;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayBundle;
 import io.dropwizard.flyway.FlywayFactory;
@@ -16,20 +18,27 @@ import com.tabordasolutions.cws.parentportal.api.resources.ParentPortalResource;
 public class ParentPortalApplication extends Application<ParentPortalConfiguration> {
 
     private FlywayBundle flywayBundle;
-	public static final Logger LOGGER = LoggerFactory
-			.getLogger(ParentPortalApplication.class);
+    public static final Logger LOGGER = LoggerFactory
+            .getLogger(ParentPortalApplication.class);
 
-	public static void main(final String[] args) throws Exception {
-		new ParentPortalApplication().run(args);
-	}
+    public static void main(final String[] args) throws Exception {
+        new ParentPortalApplication().run(args);
+    }
 
-	@Override
+    @Override
     public void initialize(Bootstrap<ParentPortalConfiguration> bootstrap) {
+        // Enable variable substitution with environment variables
+        bootstrap.setConfigurationSourceProvider(
+                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
+                        new EnvironmentVariableSubstitutor()
+                )
+        );
+
         bootstrap.addBundle(getFlywayBundle());
     }
 
     public FlywayBundle<ParentPortalConfiguration> getFlywayBundle() {
-        return  flywayBundle  != null ? flywayBundle : new FlywayBundle<ParentPortalConfiguration>() {
+        return flywayBundle != null ? flywayBundle : new FlywayBundle<ParentPortalConfiguration>() {
             @Override
             public DataSourceFactory getDataSourceFactory(ParentPortalConfiguration configuration) {
                 return configuration.getDataSourceFactory();
@@ -41,22 +50,25 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
             }
         };
     }
-	public void setFlywayBundle(FlywayBundle<ParentPortalConfiguration> bundle) { this.flywayBundle = bundle; }
 
-	@Override
-	public void run(final ParentPortalConfiguration configuration, final Environment environment) throws Exception {
-		LOGGER.info("Application name: {}", configuration.getApplicationName());
-		final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName()) ;
-		environment.jersey().register(applicationResource);
+    public void setFlywayBundle(FlywayBundle<ParentPortalConfiguration> bundle) {
+        this.flywayBundle = bundle;
+    }
+
+    @Override
+    public void run(final ParentPortalConfiguration configuration, final Environment environment) throws Exception {
+        LOGGER.info("Application name: {}", configuration.getApplicationName());
+        final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName());
+        environment.jersey().register(applicationResource);
 
         // flywayMigration(configuration);
-	}
+    }
 
     private void flywayMigration(ParentPortalConfiguration configuration) {
         Flyway flyway = new Flyway();
-        flyway.setDataSource( configuration.getDataSourceFactory(). getUrl(),
-                              configuration.getDataSourceFactory(). getUser(),
-                              configuration.getDataSourceFactory(). getPassword());
+        flyway.setDataSource(configuration.getDataSourceFactory().getUrl(),
+                configuration.getDataSourceFactory().getUser(),
+                configuration.getDataSourceFactory().getPassword());
         flyway.migrate();
     }
 }

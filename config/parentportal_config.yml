@@ -2,9 +2,9 @@ applicationName: CWS Parent Portal
 
 dataSourceFactory:
   driverClass: org.postgresql.Driver
-  user: cpp
-  password: ZQ6Y7TdsK
-  url: jdbc:postgresql://cws-parent-portal.clb72r92gq7s.us-west-2.rds.amazonaws.com/cpp
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
+  url: ${DB_JDBC_URL}
 flywayFactory:
     locations:
       - db/migration
