@@ -9,7 +9,7 @@ public class MessageResource {
         this.messageService = service;
     }
 
-    public List<Message> list(){
-        return messageService.messagesFor();
+    public List<Message> list(long userId){
+        return messageService.messagesFor(userId);
     }
 }
