@@ -9,7 +9,8 @@ public class SessionResourceTest {
     private String validPassword;
     private String inValidUserName;
     private String inValidPassword;
-    SessionResource resource = new SessionResource();
+    SessionResource resource;
+    SessionService service;
 
     @Before
     public void setup(){
@@ -18,7 +19,8 @@ public class SessionResourceTest {
         inValidUserName = "Able";
         inValidPassword = "ABC";
 
-        resource = new SessionResource();
+        SessionService service = new SessionService();
+        resource = new SessionResource(service);
     }
 
     @Test

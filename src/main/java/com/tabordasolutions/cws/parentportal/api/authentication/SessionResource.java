@@ -7,17 +7,17 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SessionResource {
+    private SessionService sessionService;
 
-    public Session login(@PathParam("email") String email, @PathParam("password") String password){
-        boolean valid = false;
-        if (isValid(email) && isValid(password)){
-           valid = true;
-        }
-        return new Session(valid, "");
+    public SessionResource(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 
     @POST
-    private boolean isValid(String string){
-        return string != null && string.length() > 0 && Character.isLowerCase(string.charAt(0));
+    public Session login(@PathParam("email") String email, @PathParam("password") String password){
+
+        boolean valid = sessionService.login(email, password);
+        return new Session(valid, "");
     }
+
 }
