@@ -1,8 +1,11 @@
 package com.tabordasolutions.cws.parentportal.api.messaging;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 import java.util.List;
 
+@JsonSerialize(using=ConversationSerializer.class)
 public class Conversation {
     private String initializer;
     private String sender;
