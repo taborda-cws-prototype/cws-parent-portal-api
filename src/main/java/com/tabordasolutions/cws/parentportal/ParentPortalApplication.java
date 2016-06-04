@@ -59,7 +59,7 @@ public class ParentPortalApplication extends
                 )
         );
 
-//        bootstrap.addBundle(getFlywayBundle());
+        bootstrap.addBundle(getFlywayBundle());
     }
 
     public FlywayBundle<ParentPortalConfiguration> getFlywayBundle() {
@@ -87,8 +87,8 @@ public class ParentPortalApplication extends
         LOGGER.info("Registering Application Resources");
         loadResources(configuration, environment);
 
-//        LOGGER.info("Configuring Flyway DB migration");
-//        flywayMigration(configuration);
+        LOGGER.info("Configuring Flyway DB migration");
+        flywayMigration(configuration);
 
         LOGGER.info("Configuring CORS: Cross-Origin Resource Sharing");
         configureCors(environment);
