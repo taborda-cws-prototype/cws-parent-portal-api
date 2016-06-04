@@ -1,0 +1,40 @@
+package com.tabordasolutions.cws.parentportal.resources;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
+import com.tabordasolutions.cws.parentportal.api.User;
+
+import java.util.Arrays;
+
+@Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class UserResource {
+    @Path("/{id}")
+    @GET
+    public User user(@PathParam("id") long id){
+        return retrieveUser(id);
+    }
+
+    private User retrieveUser(long id){
+        User caseworker = createUser("Betty", "Ruble", "", "555 Bedrock", "", "AZ", "11111", "", "betty@bedrock.comx", "password");
+        User user = createUser("Fred", "Flinstone", "Bam Bam", "123 Bedrock", "", "AZ", "11111", "http://i.dailymail.co.uk/i/pix/2015/10/17/19/2D81CC2500000578-3277267-image-m-5_1445105070585.jpg", "fred@bedrock.comx", "password");
+        user.setCaseworkers(Arrays.asList(caseworker));
+        return user;
+    }
+    private User createUser(String fname, String lname, String ico, String addr, String state, String city, String zip, String image, String email, String password){
+        User user = new User();
+        user.setFirstName(fname);
+        user.setLastName(lname);
+        user.setInCareOf(ico);
+        user.setStreetAddress1(addr);
+        user.setStreetAddress2("");
+        user.setState(state);
+        user.setZip(zip);
+        user.setImageUrl(image);
+        user.setEmail(email);
+        user.setPassword(password);
+        return user;
+    }
+}

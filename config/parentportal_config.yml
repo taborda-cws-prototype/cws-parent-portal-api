@@ -5,6 +5,16 @@ dataSourceFactory:
   user: ${DB_USER}
   password: ${DB_PASSWORD}
   url: ${DB_JDBC_URL}
+  
 flywayFactory:
     locations:
       - db/migration
+      
+      
+api.chhs.url: https://chhs.data.ca.gov/resource/mffa-c6z5.json
+api.chhs.key: 81OubXhgPG3hny5Fdz1IgVACs
+
+
+jerseyClient:
+    timeout: 512ms
+    workQueueSize: 12
