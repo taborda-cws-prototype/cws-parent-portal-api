@@ -10,7 +10,7 @@ public class SessionResourceTest {
     private String inValidUserName;
     private String inValidPassword;
     SessionResource resource;
-    SessionService service;
+    SessionForm form;
 
     @Before
     public void setup(){
@@ -21,35 +21,45 @@ public class SessionResourceTest {
 
         SessionService service = new SessionService();
         resource = new SessionResource(service);
+
+        form = new SessionForm();
     }
 
     @Test
     public void testSuccessfulLogin(){
-        Session session = resource.login(validUserName, validPassword);
+        form.setEmail(validUserName);
+        form.setPassword(validPassword);
+        Session session = resource.login(form);
         assertTrue(session.isSuccess());
     }
 
     @Test
     public void testInvalidUserNameLogin(){
-        Session session = resource.login(inValidUserName, validPassword);
+        form.setEmail(inValidUserName);
+        form.setPassword(validPassword);
+        Session session = resource.login(form);
         assertFalse(session.isSuccess());
     }
 
     @Test
     public void testInvalidPasswordLogin(){
-        Session session = resource.login(validUserName, inValidPassword);
+        form.setEmail(validUserName);
+        form.setPassword(inValidPassword);
+        Session session = resource.login(form);
         assertFalse(session.isSuccess());
     }
 
     @Test
     public void testMissingLogin(){
-        Session session = resource.login(null, null);
+        Session session = resource.login(form);
         assertFalse(session.isSuccess());
     }
 
     @Test
     public void testEmptyLogin(){
-        Session session = resource.login("", "");
+        form.setEmail("");
+        form.setPassword("");
+        Session session = resource.login(form);
         assertFalse(session.isSuccess());
     }
 }

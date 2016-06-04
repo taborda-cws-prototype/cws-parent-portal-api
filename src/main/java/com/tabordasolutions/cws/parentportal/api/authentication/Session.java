@@ -1,13 +1,14 @@
 package com.tabordasolutions.cws.parentportal.api.authentication;
 
+import java.util.UUID;
+
 public class Session {
 
     private boolean success;
     private String token;
 
-    public Session(boolean success, String token) {
+    public Session(boolean success) {
         this.success = success;
-        this.token = success ? token : "";
     }
 
     public boolean isSuccess() {
@@ -15,6 +16,10 @@ public class Session {
     }
 
     public String getToken() {
-        return token;
+        return generateToken();
+    }
+
+    private String generateToken(){
+        return success ? UUID.randomUUID().toString() : "";
     }
 }

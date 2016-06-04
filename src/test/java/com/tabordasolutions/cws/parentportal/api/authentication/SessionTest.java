@@ -13,25 +13,26 @@ public class SessionTest {
 
     @Test
     public void sessionSuccessfulyCreated(){
-        Session session = new Session(validLogin, token);
+        Session session = new Session(validLogin);
         assertTrue(session.isSuccess());
     }
 
     @Test
     public void sessionNotSuccessfulyCreated(){
-        Session session = new Session(inValidLogin, token);
+        Session session = new Session(inValidLogin);
         assertFalse(session.isSuccess());
     }
 
     @Test
     public void successfulSessionContainsToken(){
-        Session session = new Session(validLogin, token);
-        assertEquals(session.getToken(), token);
+        Session session = new Session(validLogin);
+        assertNotNull(session.getToken());
+        assertEquals(session.getToken().length(), 36);
     }
 
     @Test
     public void unSuccessfulSessionDoesNotContainsToken(){
-        Session session = new Session(inValidLogin, token);
+        Session session = new Session(inValidLogin);
         assertEquals(session.getToken(), emptyToken);
     }
 }

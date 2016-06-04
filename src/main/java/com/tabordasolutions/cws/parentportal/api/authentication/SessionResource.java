@@ -15,8 +15,8 @@ public class SessionResource {
     }
 
     @POST
-    public Session login( SessionForm obj){
-        boolean valid = sessionService.login(obj.getEmail(), obj.getPassword());
-        return new Session(valid, "");
+    public Session login( SessionForm sessionParams){
+        boolean valid = sessionService.login(sessionParams.getEmail(), sessionParams.getPassword());
+        return new Session(valid);
     }
 }
