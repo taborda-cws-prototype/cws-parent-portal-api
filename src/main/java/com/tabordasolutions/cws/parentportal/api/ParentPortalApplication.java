@@ -13,11 +13,16 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tabordasolutions.cws.parentportal.api.resources.ParentPortalResource;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import java.util.EnumSet;
 
 public class ParentPortalApplication extends Application<ParentPortalConfiguration> {
 
@@ -68,6 +73,9 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 
         LOGGER.info("Configuring Flyway DB migration");
         flywayMigration(configuration);
+
+        LOGGER.info("Configuring CORS: Cross-Origin Resource Sharing");
+        configureCors(environment);
 	}
 
     private void loadResources(final ParentPortalConfiguration configuration, final Environment environment){
@@ -87,5 +95,15 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
                 configuration.getDataSourceFactory().getUser(),
                 configuration.getDataSourceFactory().getPassword());
         flyway.migrate();
+    }
+
+    private void configureCors(Environment environment) {
+        FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+        filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST,DELETE,OPTIONS");
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+        filter.setInitParameter(CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
+        filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+        filter.setInitParameter("allowCredentials", "true");
     }
 }
