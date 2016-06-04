@@ -6,9 +6,13 @@ public class Session {
 
     private boolean success;
     private String token;
+    private long userId;
 
-    public Session(boolean success) {
+    public Session(boolean success, long userId) {
         this.success = success;
+        if (success){
+            this.userId = userId;
+        }
     }
 
     public boolean isSuccess() {
@@ -22,4 +26,6 @@ public class Session {
     private String generateToken(){
         return success ? UUID.randomUUID().toString() : "";
     }
+
+    public long getUserId() { return userId; }
 }

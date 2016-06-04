@@ -1,5 +1,6 @@
 package com.tabordasolutions.cws.parentportal;
 
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -97,7 +98,9 @@ public class ParentPortalApplication extends
         final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName());
         environment.jersey().register(applicationResource);
 
-        final SessionResource sessionResource = new SessionResource(new SessionService());
+        UserService userService = new UserService();
+        SessionService sessionService = new SessionService(userService);
+        final SessionResource sessionResource = new SessionResource(sessionService);
         environment.jersey().register(sessionResource);
 
         final MessageResource messageResource = new MessageResource(new MessageService());

@@ -1,5 +1,7 @@
 package com.tabordasolutions.cws.parentportal.services;
 
+import org.glassfish.jersey.server.BackgroundScheduler;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.tabordasolutions.cws.parentportal.services.SessionService;
@@ -11,26 +13,25 @@ public class SessionServiceTest {
     public String validPassword = "goodPassword";
     public String inValidUserName = "john@gmailx.com";
     public String inValidPassword = "goodPassword";
+    public SessionService service;
+
+    @Before
+    public void setup(){
+        service = new SessionService(new UserService());
+    }
 
     @Test
     public void testLoginForValidUser(){
-        SessionService service = new SessionService();
         service.login(validUserName, validPassword);
-
     }
 
     @Test
     public void testLoginForInValidUser(){
-        SessionService service = new SessionService();
         service.login(inValidUserName, validPassword);
-
     }
 
     @Test
     public void testLoginForInValidPassword(){
-        SessionService service = new SessionService();
         service.login(validUserName, inValidPassword);
-
     }
-
 }

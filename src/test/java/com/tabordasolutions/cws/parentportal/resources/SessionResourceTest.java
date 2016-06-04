@@ -1,11 +1,11 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.auth.SessionForm;
-import com.tabordasolutions.cws.parentportal.resources.SessionResource;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 
 import static org.junit.Assert.*;
@@ -25,7 +25,7 @@ public class SessionResourceTest {
         inValidUserName = "Able";
         inValidPassword = "ABC";
 
-        SessionService service = new SessionService();
+        SessionService service = new SessionService(new UserService());
         resource = new SessionResource(service);
 
         form = new SessionForm();
