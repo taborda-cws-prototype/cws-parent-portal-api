@@ -1,9 +1,8 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tabordasolutions.cws.parentportal.api.messaging.MessageSerializer;
-
 import java.util.List;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using=UserSerializer.class)
 public class User {

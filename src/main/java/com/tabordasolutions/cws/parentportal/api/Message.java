@@ -1,10 +1,8 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tabordasolutions.cws.parentportal.util.MessageSerializer;
-
 import java.util.Date;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using=MessageSerializer.class)
 public class Message {

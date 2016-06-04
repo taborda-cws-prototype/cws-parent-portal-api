@@ -1,4 +1,4 @@
-package com.tabordasolutions.cws.parentportal.api.user;
+package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;

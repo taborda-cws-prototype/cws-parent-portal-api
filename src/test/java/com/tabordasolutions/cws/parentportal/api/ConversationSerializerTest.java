@@ -1,11 +1,11 @@
-package com.tabordasolutions.cws.parentportal.util;
+package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.api.ConversationSerializer;
 import com.tabordasolutions.cws.parentportal.api.Message;
-import com.tabordasolutions.cws.parentportal.util.ConversationSerializer;
 
 import io.dropwizard.jackson.Jackson;
 

@@ -1,9 +1,9 @@
-package com.tabordasolutions.cws.parentportal.util;
+package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.tabordasolutions.cws.parentportal.api.Message;
-import com.tabordasolutions.cws.parentportal.util.MessageSerializer;
+import com.tabordasolutions.cws.parentportal.api.MessageSerializer;
 
 import org.junit.Before;
 import org.junit.Test;

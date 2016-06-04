@@ -1,7 +1,10 @@
-package com.tabordasolutions.cws.parentportal.api.user;
+package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.UserSerializer;
+
 import org.junit.Before;
 import org.junit.Test;
 

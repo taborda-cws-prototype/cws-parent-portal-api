@@ -1,7 +1,6 @@
 package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.tabordasolutions.cws.parentportal.util.ConversationSerializer;
 
 import java.util.Date;
 import java.util.List;
