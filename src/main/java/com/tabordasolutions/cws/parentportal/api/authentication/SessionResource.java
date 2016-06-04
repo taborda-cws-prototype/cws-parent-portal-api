@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SessionResource {
+
     private SessionService sessionService;
 
     public SessionResource(SessionService sessionService) {
@@ -14,10 +15,8 @@ public class SessionResource {
     }
 
     @POST
-    public Session login(@PathParam("email") String email, @PathParam("password") String password){
-
-        boolean valid = sessionService.login(email, password);
+    public Session login( SessionForm obj){
+        boolean valid = sessionService.login(obj.getEmail(), obj.getPassword());
         return new Session(valid, "");
     }
-
 }
