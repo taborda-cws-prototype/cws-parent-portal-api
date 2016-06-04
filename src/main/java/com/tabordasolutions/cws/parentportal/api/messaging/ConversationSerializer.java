@@ -32,7 +32,14 @@ public class ConversationSerializer extends JsonSerializer<Conversation> {
         generator.writeString(messageBody(value.getBaseMessage()));
         generator.writeFieldName("read");
         generator.writeString(String.valueOf(value.isRead()));
-        //generator.writeFieldName("messages");
+        generator.writeFieldName("messages");
+        generator.writeStartArray();
+        if (value.getMessages() != null && !value.getMessages().isEmpty()){
+            for (Message message : value.getMessages()) {
+                generator.writeObject(message);
+            }
+        }
+        generator.writeEndArray();
 
         generator.writeEndObject();
 

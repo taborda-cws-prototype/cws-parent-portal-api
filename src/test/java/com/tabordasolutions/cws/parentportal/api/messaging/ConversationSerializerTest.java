@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -66,7 +67,8 @@ public class ConversationSerializerTest {
         assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":null"));
         assertTrue("Expected json to contain init_message value",  json.contains("\"init_message\":\"\""));
-        assertTrue("Expected json to contain read value",  json.contains("\"read\":\"false\"}"));
+        assertTrue("Expected json to contain read value",  json.contains("\"read\":\"false\""));
+        assertTrue("Expected json to contain messages",  json.contains("\"messages\":[]"));
     }
 
     @Test
@@ -83,6 +85,7 @@ public class ConversationSerializerTest {
         assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"" + df.format(modifiedDate)+ "\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":\"" + subject +"\""));
         assertTrue("Expected json to contain init_message value",  json.contains("\"init_message\":\"" + originalMessage.getBody() + "\""));
-        assertTrue("Expected json to contain read value",  json.contains("\"read\":\"true\"}"));
+        assertTrue("Expected json to contain read value",  json.contains("\"read\":\"true\""));
+        assertTrue("Expected json to contain messages",  json.contains("\"messages\":["));
     }
 }
