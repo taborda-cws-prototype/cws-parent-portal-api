@@ -9,6 +9,10 @@ public class UserService {
         return retrieveUser(1);
     }
 
+    public User findUserById(long id){
+        return retrieveUser(id);
+    }
+
     private User retrieveUser(long id){
         User caseworker = createUser("Betty", "Ruble", "", "555 Bedrock", "", "AZ", "11111", "", "betty@bedrock.comx", "password");
         User user = createUser("Fred", "Flinstone", "Bam Bam", "123 Bedrock", "", "AZ", "11111", "http://i.dailymail.co.uk/i/pix/2015/10/17/19/2D81CC2500000578-3277267-image-m-5_1445105070585.jpg", "fred@bedrock.comx", "password");

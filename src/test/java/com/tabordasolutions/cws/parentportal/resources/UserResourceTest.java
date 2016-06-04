@@ -1,5 +1,6 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import org.junit.Test;
 
 import com.tabordasolutions.cws.parentportal.api.User;
@@ -12,7 +13,7 @@ import static org.junit.Assert.*;
 public class UserResourceTest {
     @Test
     public void testRetieveUserInfo(){
-        UserResource resource = new UserResource();
+        UserResource resource = new UserResource(new UserService());
         User user = resource.user(5L);
         assertEquals("expected to receive our user firstname", "Fred", user.getFirstName());
         assertEquals("expected to receive our user lastname", "Flinstone", user.getLastName());

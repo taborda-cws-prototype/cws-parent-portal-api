@@ -106,7 +106,7 @@ public class ParentPortalApplication extends
         final MessageResource messageResource = new MessageResource(new MessageService());
         environment.jersey().register(messageResource);
 
-        final UserResource userResource = new UserResource();
+        final UserResource userResource = new UserResource(userService);
         environment.jersey().register(userResource);
         
         final AgencyResource agencyResource = agencyResource(configuration, environment);
