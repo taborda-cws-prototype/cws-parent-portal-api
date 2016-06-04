@@ -3,11 +3,11 @@ package com.tabordasolutions.cws.parentportal.api.messaging;
 import java.util.Date;
 
 public class Message {
-    long id;
-    String author;
-    Date date;
-    String subject;
-    String body;
+    private long id;
+    private String author;
+    private Date date;
+    private String subject;
+    private String body;
 
     public Message(long id, Date date, String author, String subject, String body) {
         this.id = id;

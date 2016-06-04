@@ -12,7 +12,7 @@ public class MessageResourceTest {
     public void testRetreivalForListOfMessages(){
         MessageService service = new MessageService();
         MessageResource resource = new MessageResource(service);
-        List messages = resource.list();
-        assertFalse(messages.isEmpty());
+        List conversations = resource.list();
+        assertFalse(conversations.isEmpty());
     }
 }

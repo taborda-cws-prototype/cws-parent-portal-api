@@ -15,7 +15,7 @@ public class MessageResource {
     }
 
     @GET
-    public List<Message> list(){
+    public List<Conversation> list(){
         return messageService.messagesFor(getUserId());
     }
 

@@ -7,8 +7,27 @@ import java.util.List;
 
 public class MessageService {
 
-    public List<Message> messagesFor(long userId){
-        return generateMessages();
+    public List<Conversation> messagesFor(long userId){
+        return Arrays.asList(buildConversation(), buildConversation(), buildConversation(), buildConversation());
+    }
+
+    private Conversation buildConversation(){
+        List <Message> messages = generateMessages();
+        Conversation conversation = new Conversation();
+
+        Message originalMessage = messages.remove(0);
+        conversation.setBaseMessage(originalMessage);
+        conversation.setDateCreated(new Date());
+        conversation.setDateUpdated(null);
+        conversation.setInitializer(originalMessage.getAuthor());
+        conversation.setReceiver(messages.get(1).getAuthor());
+        conversation.setSender(originalMessage.getAuthor());
+        conversation.setSubject(originalMessage.getSubject());
+
+        conversation.setMessages(messages);
+        conversation.setRead(true);
+
+        return conversation;
     }
 
     private List generateMessages(){
