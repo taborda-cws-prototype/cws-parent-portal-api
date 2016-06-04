@@ -25,8 +25,8 @@ public class ChhsOpenDataAgencyResource implements AgencyResource {
 	
 	@Override
 	public List<Agency> listAgencies() {
-		Agency agency1 = new Agency("facilityName1", "locationAddress1", "locationState1", "locationCity1", "locationZip1", "facilityType1");
-		Agency agency2 = new Agency("facilityName2", "locationAddress2", "locationState2", "locationCity2", "locationZip2", "facilityType2");
+		Agency agency1 = new Agency("facilityName1", "locationAddress1", "locationState1", "locationCity1", "locationZip1", "facilityPhone1", "facilityType1");
+		Agency agency2 = new Agency("facilityName2", "locationAddress2", "locationState2", "locationCity2", "locationZip2", "facilityPhone2", "facilityType2");
 		
 		ImmutableList.Builder<Agency> builder = ImmutableList.builder();
 		return builder.add( agency1 ).add( agency2 ).build();
