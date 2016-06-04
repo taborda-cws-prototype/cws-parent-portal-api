@@ -1,5 +1,9 @@
 package com.tabordasolutions.cws.parentportal.api;
 
+import com.tabordasolutions.cws.parentportal.api.authentication.SessionResource;
+import com.tabordasolutions.cws.parentportal.api.authentication.SessionService;
+import com.tabordasolutions.cws.parentportal.api.messaging.MessageResource;
+import com.tabordasolutions.cws.parentportal.api.messaging.MessageService;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -58,10 +62,24 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
     @Override
     public void run(final ParentPortalConfiguration configuration, final Environment environment) throws Exception {
         LOGGER.info("Application name: {}", configuration.getApplicationName());
-        final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName());
-        environment.jersey().register(applicationResource);
+
+        LOGGER.info("Registering Application Resources");
+        loadResources(configuration, environment);
+
+        LOGGER.info("Configuring Flyway DB migration");
         flywayMigration(configuration);
 	}
+
+    private void loadResources(final ParentPortalConfiguration configuration, final Environment environment){
+        final ParentPortalResource applicationResource = new ParentPortalResource(configuration.getApplicationName());
+        environment.jersey().register(applicationResource);
+
+        final SessionResource sessionResource = new SessionResource(new SessionService());
+        environment.jersey().register(sessionResource);
+
+        final MessageResource messageResource = new MessageResource(new MessageService());
+        environment.jersey().register(messageResource);
+    }
 
     private void flywayMigration(ParentPortalConfiguration configuration) {
         Flyway flyway = new Flyway();
