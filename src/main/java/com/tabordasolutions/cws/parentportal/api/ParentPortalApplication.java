@@ -4,6 +4,7 @@ import com.tabordasolutions.cws.parentportal.api.authentication.SessionResource;
 import com.tabordasolutions.cws.parentportal.api.authentication.SessionService;
 import com.tabordasolutions.cws.parentportal.api.messaging.MessageResource;
 import com.tabordasolutions.cws.parentportal.api.messaging.MessageService;
+import com.tabordasolutions.cws.parentportal.api.user.UserResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -87,6 +88,9 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 
         final MessageResource messageResource = new MessageResource(new MessageService());
         environment.jersey().register(messageResource);
+
+        final UserResource userResource = new UserResource();
+        environment.jersey().register(userResource);
     }
 
     private void flywayMigration(ParentPortalConfiguration configuration) {
