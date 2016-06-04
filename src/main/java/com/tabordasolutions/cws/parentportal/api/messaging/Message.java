@@ -1,17 +1,21 @@
 package com.tabordasolutions.cws.parentportal.api.messaging;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
+@JsonSerialize(using=MessageSerializer.class)
 public class Message {
     private long id;
     private String author;
-    private Date date;
+    private Date dateCreated;
     private String subject;
     private String body;
 
-    public Message(long id, Date date, String author, String subject, String body) {
+    public Message(long id, Date dateCreated, String author, String subject, String body) {
         this.id = id;
-        this.date = date;
+        this.dateCreated = dateCreated;
         this.author = author;
         this.subject = subject;
         this.body = body;
@@ -25,7 +29,7 @@ public class Message {
         return body;
     }
 
-    public Date getDate() { return date; }
+    public Date getDateCreated() { return dateCreated; }
 
     public String getAuthor() { return author; }
 

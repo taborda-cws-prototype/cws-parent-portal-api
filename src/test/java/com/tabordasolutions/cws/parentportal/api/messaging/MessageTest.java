@@ -25,7 +25,7 @@ public class MessageTest {
     public void testPropertiesAreSetViaConstructor(){
         Message message = new Message(id, date, author, subject, body);
         assertEquals(message.getId(), id);
-        assertEquals(message.getDate(), date);
+        assertEquals(message.getDateCreated(), date);
         assertEquals(message.getSubject(), subject);
         assertEquals(message.getBody(), body);
     }
