@@ -10,18 +10,20 @@ public class MessageTest {
     private Date date;
     private String subject;
     private String body;
+    private String author;
 
     @Before
     public void setup(){
         id = 1;
         date = new Date();
+        author = "Fred";
         subject = "A nifty message";
         body = "I was wondering if the previous message I sent to you made sense";
     }
 
     @Test
     public void testPropertiesAreSetViaConstructor(){
-        Message message = new Message(id, date, subject, body);
+        Message message = new Message(id, date, author, subject, body);
         assertEquals(message.getId(), id);
         assertEquals(message.getDate(), date);
         assertEquals(message.getSubject(), subject);

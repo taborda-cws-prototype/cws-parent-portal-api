@@ -1,6 +1,5 @@
 package com.tabordasolutions.cws.parentportal.api.messaging;
 
-import org.eclipse.jetty.servlets.ConcatServlet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,13 +20,13 @@ public class ConversationTest {
     @Test
     public void testAllAttributesExist(){
         String subject = "Subject line";
-        Message originalMessage = new Message(1, new Date(), subject, "the body");
+        Message originalMessage = new Message(1, new Date(), "Barney", subject, "the body");
         Date createDate = new Date();
         Date modifiedDate = new Date();
         String initializer = "Fred";
         String sender = "Barney";
         String receiver = "Fred";
-        List messages =  Arrays.asList(new Message(2, new Date(), subject, "another body"), new Message(3, new Date(), subject, "some other body"));
+        List messages =  Arrays.asList(new Message(2, new Date(), subject, "Fred", "another body"), new Message(3, new Date(), "Barney", subject, "some other body"));
 
 
         conversation.setBaseMessage(originalMessage);

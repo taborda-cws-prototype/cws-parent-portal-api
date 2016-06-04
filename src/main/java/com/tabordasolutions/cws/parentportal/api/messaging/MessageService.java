@@ -15,11 +15,11 @@ public class MessageService {
         List <Message> messages = new ArrayList<Message>();
 
 
-        messages.add(new Message(1, new Date(), "Welcome to the Group", generateBody()));
-        messages.add(new Message(2, new Date(), "Some fun facts", generateBody()));
-        messages.add(new Message(3, new Date(), "Tomorrow's Meeting is canceled", generateBody()));
-        messages.add(new Message(4, new Date(), "Can you call?", generateBody()));
-        messages.add(new Message(5, new Date(), "Here's what you requested", generateBody()));
+        messages.add(new Message(1, new Date(), "Fred", "Welcome to the Group", generateBody()));
+        messages.add(new Message(2, new Date(), "Barney", "Some fun facts", generateBody()));
+        messages.add(new Message(3, new Date(), "Fred", "Tomorrow's Meeting is canceled", generateBody()));
+        messages.add(new Message(4, new Date(), "Fred", "Can you call?", generateBody()));
+        messages.add(new Message(5, new Date(), "Barney", "Here's what you requested", generateBody()));
         return messages;
     }
 
