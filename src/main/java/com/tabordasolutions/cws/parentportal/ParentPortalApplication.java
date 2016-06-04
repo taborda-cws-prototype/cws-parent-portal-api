@@ -42,7 +42,7 @@ import com.tabordasolutions.cws.parentportal.services.SessionService;
 public class ParentPortalApplication extends
 		Application<ParentPortalConfiguration> {
 
-	private FlywayBundle flywayBundle;
+	private FlywayBundle<ParentPortalConfiguration> flywayBundle;
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(ParentPortalApplication.class);
 
@@ -59,7 +59,7 @@ public class ParentPortalApplication extends
                 )
         );
 
-        bootstrap.addBundle(getFlywayBundle());
+//        bootstrap.addBundle(getFlywayBundle());
     }
 
     public FlywayBundle<ParentPortalConfiguration> getFlywayBundle() {
@@ -87,8 +87,8 @@ public class ParentPortalApplication extends
         LOGGER.info("Registering Application Resources");
         loadResources(configuration, environment);
 
-        LOGGER.info("Configuring Flyway DB migration");
-        flywayMigration(configuration);
+//        LOGGER.info("Configuring Flyway DB migration");
+//        flywayMigration(configuration);
 
         LOGGER.info("Configuring CORS: Cross-Origin Resource Sharing");
         configureCors(environment);
@@ -116,7 +116,7 @@ public class ParentPortalApplication extends
 	private AgencyResource agencyResource(ParentPortalConfiguration configuration, Environment environment) {
 //		final Client client = new JerseyClientBuilder(environment).using(
 //				configuration.getJerseyClientConfiguration()).build(getName());
-		
+
 		Client client = stubbedClient();
 		return new ChhsOpenDataAgencyResource(client, configuration.getApiChhsUrl(), configuration.getApiChhsKey());
 	}

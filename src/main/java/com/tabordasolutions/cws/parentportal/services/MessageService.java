@@ -33,7 +33,7 @@ public class MessageService {
         return conversation;
     }
 
-    private List generateMessages(){
+    private List<Message> generateMessages(){
         List <Message> messages = new ArrayList<Message>();
 
 

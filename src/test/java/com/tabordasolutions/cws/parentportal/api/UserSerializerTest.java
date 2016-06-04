@@ -1,22 +1,17 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.api.UserSerializer;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.io.StringWriter;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.text.DateFormat;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 public class UserSerializerTest {
-    private DateFormat df;
     private UserSerializer serializer;
     private JsonGenerator jsonGenerator;
     private StringWriter stringWriter;
@@ -30,7 +25,6 @@ public class UserSerializerTest {
     private String city;
     private String zip;
 
-    private List<User> caseworkers;
     private String imageUrl;
     private String email;
     private String password;
@@ -49,7 +43,6 @@ public class UserSerializerTest {
         state = "AZ";
         city = "Bedrock";
         zip = "11111";
-        List <User> caseworkers;
         imageUrl = "http://someurl.com";
         email = "fred@foo.comx";
         password = "password";

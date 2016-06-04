@@ -29,7 +29,7 @@ public class ConversationTest {
         String initializer = "Fred";
         String sender = "Barney";
         String receiver = "Fred";
-        List messages =  Arrays.asList(new Message(2, new Date(), subject, "Fred", "another body"), new Message(3, new Date(), "Barney", subject, "some other body"));
+        List<Message> messages =  Arrays.asList(new Message(2, new Date(), subject, "Fred", "another body"), new Message(3, new Date(), "Barney", subject, "some other body"));
 
         conversation.setBaseMessage(originalMessage);
         conversation.setDateCreated(createDate);

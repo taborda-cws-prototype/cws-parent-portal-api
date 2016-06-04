@@ -1,25 +1,18 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tabordasolutions.cws.parentportal.api.Conversation;
-import com.tabordasolutions.cws.parentportal.api.ConversationSerializer;
-import com.tabordasolutions.cws.parentportal.api.Message;
-
-import io.dropwizard.jackson.Jackson;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 public class ConversationSerializerTest {
     private DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

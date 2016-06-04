@@ -1,14 +1,11 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import com.tabordasolutions.cws.parentportal.services.UserService;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.resources.UserResource;
-
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 
 public class UserResourceTest {
     @Test

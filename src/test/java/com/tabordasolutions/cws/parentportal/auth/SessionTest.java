@@ -1,11 +1,11 @@
 package com.tabordasolutions.cws.parentportal.auth;
 
-import org.junit.Before;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
-
-import com.tabordasolutions.cws.parentportal.auth.Session;
-
-import static org.junit.Assert.*;
 
 public class SessionTest {
     private boolean validLogin = true;

@@ -1,18 +1,18 @@
 package com.tabordasolutions.cws.parentportal.services;
 
-import org.junit.Test;
-
-import com.tabordasolutions.cws.parentportal.services.MessageService;
+import static org.junit.Assert.assertFalse;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import com.tabordasolutions.cws.parentportal.api.Conversation;
 
 public class MessageServiceTest {
     @Test
     public void testRetrievingListOfMessages(){
         MessageService service = new MessageService();
-        List messages = service.messagesFor(1);
+        List<Conversation> messages = service.messagesFor(1);
         assertFalse(messages.isEmpty());
     }
 }

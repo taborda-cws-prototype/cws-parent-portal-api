@@ -5,7 +5,6 @@ import java.util.UUID;
 public class Session {
 
     private boolean success;
-    private String token;
     private long userId;
 
     public Session(boolean success, long userId) {
