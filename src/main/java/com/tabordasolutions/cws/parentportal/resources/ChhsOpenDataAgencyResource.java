@@ -18,6 +18,8 @@ public class ChhsOpenDataAgencyResource implements AgencyResource {
 
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(ChhsOpenDataAgencyResource.class);
+	
+	private final String HEADER_API_KEY = "X-App-Token";
 
 	
 	private final Client client;
@@ -40,7 +42,7 @@ public class ChhsOpenDataAgencyResource implements AgencyResource {
 		LOGGER.debug("Searching on zipcode {}", zipcode);
 		
 		@SuppressWarnings({"rawtypes" })
-		List agenciesAsMaps =  client.target(this.apiUrl).queryParam("facility_zip", zipcode).request().get(List.class);
+		List agenciesAsMaps =  client.target(this.apiUrl).queryParam("facility_zip", zipcode).request().header(HEADER_API_KEY, this.apiKey).get(List.class);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

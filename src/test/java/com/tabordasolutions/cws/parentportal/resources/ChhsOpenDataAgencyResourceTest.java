@@ -48,6 +48,7 @@ public class ChhsOpenDataAgencyResourceTest {
     	Mockito.when(client.target(Matchers.anyString())).thenReturn(webTarget);
     	Mockito.when(webTarget.queryParam(Matchers.anyString(), Matchers.anyString())).thenReturn(webTarget);
     	Mockito.when(webTarget.request()).thenReturn(invocationBuilder);
+    	Mockito.when(invocationBuilder.header(Matchers.anyString(), Matchers.anyString())).thenReturn(invocationBuilder);
     }
     
     @Test
