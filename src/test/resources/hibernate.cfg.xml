@@ -5,6 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL94Dialect</property>
+        <!-- Resolves very slow connection establishment to RDS -->
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">cpp</property>
         <property name="hibernate.connection.password">ZQ6Y7TdsK</property>
