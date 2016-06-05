@@ -14,4 +14,8 @@ public class UserDAO extends AbstractDAO<User> {
         query.setString("email", email);
         return uniqueResult(query);
     }
+
+    public User find(long id) {
+        return get(id);
+    }
 }

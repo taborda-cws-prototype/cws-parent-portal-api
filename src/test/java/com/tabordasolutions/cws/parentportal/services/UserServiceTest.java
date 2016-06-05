@@ -16,18 +16,18 @@ public class UserServiceTest {
     @Before
     public void setup(){
         UserDAO dao = mock(UserDAO.class);
+        when(dao.find(1)).thenReturn(user);
         when(dao.findByUsername("joey.doe@example.com")).thenReturn(user);
         service = new UserService(dao);
     }
 
     @Test
-    public void testRetrievingUserByIdWhenUserExists(){
-        assertEquals("Expect to find user with name", "Fred", service.findUserById(1).getFirstName());
-        assertEquals("Expect to find user with name", "Flinstone", service.findUserById(1).getLastName());
+    public void findUserByIdReturnsUser(){
+        assertEquals(user, service.findUserById(1));
     }
 
     @Test
-    public void testRetrievingUserByEmailWhenUserExists(){
+    public void findUserByUsernameReturnsUser(){
         assertEquals(user, service.findUserByUserName("joey.doe@example.com"));
     }
 }
