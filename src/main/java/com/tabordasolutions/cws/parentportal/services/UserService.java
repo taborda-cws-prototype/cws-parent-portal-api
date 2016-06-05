@@ -6,11 +6,14 @@ import com.tabordasolutions.cws.parentportal.api.UserDAO;
 import java.util.Arrays;
 
 public class UserService {
+    private UserDAO dao;
+
     public UserService(UserDAO dao) {
+        this.dao = dao;
     }
 
     public User findUserByUserName(String username){
-        return retrieveUser(1);
+        return dao.findByUsername(username);
     }
 
     public User findUserById(long id){
