@@ -19,9 +19,10 @@ repositories {
 dependencies {
 	compile group: "io.dropwizard", name: "dropwizard-client", version: dropwizardVersion
 	compile group: "io.dropwizard", name: "dropwizard-hibernate", version: dropwizardVersion
+	compile group: "io.dropwizard", name: "dropwizard-testing", version: dropwizardVersion
     compile group: "io.dropwizard.modules", name: "dropwizard-flyway", version: "1.0.0-rc2-1"
 
-    compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
+    compile group: "org.postgresql", name: "postgresql", version: "9.4.1208.jre7"
 
     testCompile "junit:junit:4.12"
     compile 'org.mockito:mockito-core:2.0.54-beta'

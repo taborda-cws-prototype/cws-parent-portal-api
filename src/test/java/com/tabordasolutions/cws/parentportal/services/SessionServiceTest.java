@@ -12,7 +12,7 @@ public class SessionServiceTest {
 
     @Before
     public void setup(){
-        service = new SessionService(new UserService());
+        service = new SessionService(new UserService(null));
     }
 
     @Test

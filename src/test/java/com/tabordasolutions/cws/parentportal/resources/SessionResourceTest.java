@@ -25,7 +25,7 @@ public class SessionResourceTest {
         inValidUserName = "Able";
         inValidPassword = "ABC";
 
-        SessionService service = new SessionService(new UserService());
+        SessionService service = new SessionService(new UserService(null));
         resource = new SessionResource(service);
 
         form = new SessionForm();

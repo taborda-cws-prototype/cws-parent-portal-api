@@ -4,26 +4,46 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 @JsonSerialize(using=UserSerializer.class)
 public class User {
+    @Id
+    @GeneratedValue
     private long id;
-    private String firstName;
-    private String lastName;
-    private String inCareOf;
-    private String streetAddress1;
-    private String streetAddress2;
-    private String state;
-    private String city;
-    private String zip;
 
-    private List<User> caseworkers;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "in_care_of")
+    private String inCareOf;
+    @Column(name = "address1")
+    private String streetAddress1;
+    @Column(name = "address2")
+    private String streetAddress2;
+    @Column(name = "state_abbreviation")
+    private String state;
+    @Column(name = "city")
+    private String city;
+    @Column(name = "zip_code")
+    private String zip;
+    @Column(name = "image_url")
     private String imageUrl;
+    @Column(name = "email")
     private String email;
+
+    // TODO: map this association
+    @Transient
+    private List<User> caseworkers;
+
+    // TODO: implement password hashing
+    @Transient
     private String password;
 
     public long getId() {return id; }
-
-    public void setId(long id) {this.id =  id; }
 
     public String getFirstName() {
         return firstName;

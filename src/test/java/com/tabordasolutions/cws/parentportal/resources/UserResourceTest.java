@@ -10,7 +10,7 @@ import com.tabordasolutions.cws.parentportal.services.UserService;
 public class UserResourceTest {
     @Test
     public void testRetieveUserInfo(){
-        UserResource resource = new UserResource(new UserService());
+        UserResource resource = new UserResource(new UserService(null));
         User user = resource.user(5L);
         assertEquals("expected to receive our user firstname", "Fred", user.getFirstName());
         assertEquals("expected to receive our user lastname", "Flinstone", user.getLastName());

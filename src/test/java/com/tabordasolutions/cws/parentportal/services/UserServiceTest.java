@@ -9,7 +9,7 @@ public class UserServiceTest {
     UserService service;
     @Before
     public void setup(){
-        service = new UserService();
+        service = new UserService(null);
     }
 
     @Test

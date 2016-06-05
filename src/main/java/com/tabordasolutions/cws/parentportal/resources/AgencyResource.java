@@ -1,7 +1,5 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import io.dropwizard.hibernate.UnitOfWork;
-
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -15,10 +13,7 @@ import com.tabordasolutions.cws.parentportal.api.Agency;
 @Path("agencies")
 @Produces(MediaType.APPLICATION_JSON)
 public interface AgencyResource {
-	
 	@GET
-	@UnitOfWork
 	@Path("/{zipcode}")
 	public List<Agency> listAgencies(@PathParam("zipcode") String zipcode);
-
 }

@@ -1,10 +1,14 @@
 package com.tabordasolutions.cws.parentportal.services;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.UserDAO;
 
 import java.util.Arrays;
 
 public class UserService {
+    public UserService(UserDAO dao) {
+    }
+
     public User findUserByUserName(String username){
         return retrieveUser(1);
     }

@@ -1,27 +1,35 @@
 package com.tabordasolutions.cws.parentportal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.client.JerseyClientConfiguration;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.flyway.FlywayFactory;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+@SuppressWarnings("WeakerAccess")
 public class ParentPortalConfiguration extends Configuration {
+    /**
+     * The application name
+     */
+    @NotEmpty
+    private String applicationName;
 
-	/**
-	 * The application name
-	 */
-	@NotEmpty
-	private String applicationName;
-	private DataSourceFactory dataSourceFactory;
-	private FlywayFactory flywayFactory;
-	
+    /**
+     * The data source factory configuration
+     */
+    @NotEmpty
+    private DataSourceFactory dataSourceFactory;
+
+    /**
+     * The flyway factory configuration
+     */
+    @NotEmpty
+    private FlywayFactory flywayFactory;
+
     /**
      * The URL to access CHHS Open Data API for Foster Agencies
      */
@@ -33,79 +41,79 @@ public class ParentPortalConfiguration extends Configuration {
      */
     @NotEmpty
     private String apiChhsKey;
-	
+
     /**
      * The query param used on the CHHS Open Data API for Foster Agencies
      */
     @NotEmpty
     private String apiChhsQueryParam;
-    
+
     @Valid
-	@NotNull
-	private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
+    @NotNull
+    private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
 
-	@JsonProperty
-	public String getApplicationName() {
-		return applicationName;
-	}
+    @JsonProperty
+    public String getApplicationName() {
+        return applicationName;
+    }
 
-	@JsonProperty
-	public void setApplicationName(String applicationName) {
-		this.applicationName = applicationName;
-	}
+    @JsonProperty
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
 
-	@JsonProperty
-	public DataSourceFactory getDataSourceFactory() {
-		return dataSourceFactory;
-	}
+    @JsonProperty
+    public DataSourceFactory getDataSourceFactory() {
+        return dataSourceFactory;
+    }
 
-	@JsonProperty
-	public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-		this.dataSourceFactory = dataSourceFactory;
-	}
+    @JsonProperty
+    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
+        this.dataSourceFactory = dataSourceFactory;
+    }
 
-	@JsonProperty
-	public FlywayFactory getFlywayFactory() {
-		return flywayFactory;
-	}
+    @JsonProperty
+    public FlywayFactory getFlywayFactory() {
+        return flywayFactory;
+    }
 
-	@JsonProperty
-	public void setFlywayFactory(FlywayFactory flywayFactory) {
-		this.flywayFactory = flywayFactory;
-	}
-	
+    @JsonProperty
+    public void setFlywayFactory(FlywayFactory flywayFactory) {
+        this.flywayFactory = flywayFactory;
+    }
+
     @JsonProperty("jerseyClient")
     public JerseyClientConfiguration getJerseyClient() {
         return jerseyClientConfiguration;
     }
 
     @JsonProperty("api.chhs.url")
-	public String getApiChhsUrl() {
-		return apiChhsUrl;
-	}
+    public String getApiChhsUrl() {
+        return apiChhsUrl;
+    }
 
     @JsonProperty("api.chhs.url")
-	public void setApiChhsUrl(String apiChhsUrl) {
-		this.apiChhsUrl = apiChhsUrl;
-	}
+    public void setApiChhsUrl(String apiChhsUrl) {
+        this.apiChhsUrl = apiChhsUrl;
+    }
 
-	@JsonProperty("api.chhs.key")
-	public String getApiChhsKey() {
-		return apiChhsKey;
-	}
+    @JsonProperty("api.chhs.key")
+    public String getApiChhsKey() {
+        return apiChhsKey;
+    }
 
-	@JsonProperty("api.chhs.key")
-	public void setApiChhsKey(String apiChhsKey) {
-		this.apiChhsKey = apiChhsKey;
-	}
+    @JsonProperty("api.chhs.key")
+    public void setApiChhsKey(String apiChhsKey) {
+        this.apiChhsKey = apiChhsKey;
+    }
 
-	@JsonProperty("api.chhs.queryParam")
-	public String getApiChhsQueryParam() {
-		return apiChhsQueryParam;
-	}
+    @JsonProperty("api.chhs.queryParam")
+    public String getApiChhsQueryParam() {
+        return apiChhsQueryParam;
+    }
 
-	@JsonProperty("api.chhs.queryParam")
-	public void setApiChhsQueryParam(String apiChhsQueryParam) {
-		this.apiChhsQueryParam = apiChhsQueryParam;
-	}
+    @JsonProperty("api.chhs.queryParam")
+    public void setApiChhsQueryParam(String apiChhsQueryParam) {
+        this.apiChhsQueryParam = apiChhsQueryParam;
+    }
 }
