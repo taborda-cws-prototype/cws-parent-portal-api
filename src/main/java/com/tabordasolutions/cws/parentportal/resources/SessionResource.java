@@ -19,7 +19,7 @@ public class SessionResource {
     }
 
     @POST
-    public Session login( SessionForm sessionParams){
-        return sessionService.login(sessionParams.getEmail(), sessionParams.getPassword());
+    public Session login(SessionForm form) {
+        return sessionService.login(form.getEmail(), form.getPassword());
     }
 }

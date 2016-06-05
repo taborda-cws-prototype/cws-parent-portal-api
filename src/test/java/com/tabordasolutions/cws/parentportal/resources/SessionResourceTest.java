@@ -1,71 +1,30 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import com.tabordasolutions.cws.parentportal.services.UserService;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.auth.SessionForm;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SessionResourceTest {
-    private String validUserName;
-    private String validPassword;
-    private String inValidUserName;
-    private String inValidPassword;
-    SessionResource resource;
-    SessionForm form;
+    private SessionResource resource;
+    private SessionForm form;
+    private final Session session = mock(Session.class);
 
     @Before
-    public void setup(){
-        validUserName = "able";
-        validPassword = "abc";
-        inValidUserName = "Able";
-        inValidPassword = "ABC";
-
-        SessionService service = new SessionService(new UserService(null));
+    public void setup() {
+        form = new SessionForm("joey.doe@example.com", "password1");
+        SessionService service = mock(SessionService.class);
+        when(service.login("joey.doe@example.com", "password1")).thenReturn(session);
         resource = new SessionResource(service);
-
-        form = new SessionForm();
     }
 
     @Test
-    public void testSuccessfulLogin(){
-        form.setEmail(validUserName);
-        form.setPassword(validPassword);
-        Session session = resource.login(form);
-        assertTrue(session.isSuccess());
-    }
-
-    @Test
-    public void testInvalidUserNameLogin(){
-        form.setEmail(inValidUserName);
-        form.setPassword(validPassword);
-        Session session = resource.login(form);
-        assertFalse(session.isSuccess());
-    }
-
-    @Test
-    public void testInvalidPasswordLogin(){
-        form.setEmail(validUserName);
-        form.setPassword(inValidPassword);
-        Session session = resource.login(form);
-        assertFalse(session.isSuccess());
-    }
-
-    @Test
-    public void testMissingLogin(){
-        Session session = resource.login(form);
-        assertFalse(session.isSuccess());
-    }
-
-    @Test
-    public void testEmptyLogin(){
-        form.setEmail("");
-        form.setPassword("");
-        Session session = resource.login(form);
-        assertFalse(session.isSuccess());
+    public void loginReturnsSession() {
+        assertEquals(session, resource.login(form));
     }
 }
