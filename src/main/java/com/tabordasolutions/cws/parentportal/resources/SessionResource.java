@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.auth.SessionForm;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
+import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("/session")
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,6 +19,7 @@ public class SessionResource {
         this.sessionService = sessionService;
     }
 
+    @UnitOfWork
     @POST
     public Session login(SessionForm form) {
         return sessionService.login(form.getEmail(), form.getPassword());
