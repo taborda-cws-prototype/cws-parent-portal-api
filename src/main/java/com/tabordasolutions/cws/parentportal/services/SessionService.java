@@ -10,17 +10,15 @@ public class SessionService {
         this.userService = userService;
     }
 
-    public Session login(String username, String password ){
-
-        boolean valid = false;
-        if (isValid(username) && isValid(password)){
-            valid = true;
-        }
+    public Session login(String username, String password) {
         User user = userService.findUserByUserName(username);
-        return new Session(valid, user.getId());
+        if (user == null) {
+            return new Session(false, -1);
+        }
+        return new Session(isValid(password), user.getId());
     }
 
-    private boolean isValid(String string){
+    private boolean isValid(String string) {
         return string != null && string.length() > 0 && Character.isLowerCase(string.charAt(0));
     }
 }
