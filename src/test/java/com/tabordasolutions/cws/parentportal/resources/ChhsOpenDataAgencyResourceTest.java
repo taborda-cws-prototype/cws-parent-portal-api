@@ -125,6 +125,15 @@ public class ChhsOpenDataAgencyResourceTest {
     	new ChhsOpenDataAgencyResource(client, apiUrlString, apiKey, "");
     }
     
+    @Test
+    public void testNoZipcodeGiven() {
+    	chhsOpenDataAgencyResource = new ChhsOpenDataAgencyResource(client, apiUrlString, apiKey, apiQueryParam);
+    	List<Agency> agencies = chhsOpenDataAgencyResource.listAgencies(null);
+    	assertNotNull(agencies);
+    	assertEquals(0, agencies.size());
+    	Mockito.verify(client, Mockito.never()).target(Mockito.anyString());
+    }
+    
     private List<ImmutableMap<String,String>> jsonAgencyWithUnknown() {
     	if( jsonAgencyWithUnkown == null ) {
     		ImmutableMap.Builder<String,String> mapBuilder = ImmutableMap.builder();
