@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.services.UserService;
+import io.dropwizard.hibernate.UnitOfWork;
 
 @Path("/user")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,6 +21,7 @@ public class UserResource {
         this.userService = userService;
     }
 
+    @UnitOfWork
     @Path("/{id}")
     @GET
     public User user(@PathParam("id") long id){
