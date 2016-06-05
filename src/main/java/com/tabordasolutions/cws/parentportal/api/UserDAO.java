@@ -12,7 +12,6 @@ public class UserDAO extends AbstractDAO<User> {
     public User findByUsername(String email) {
         Query query = currentSession().createQuery("from User U where U.email = :email");
         query.setString("email", email);
-        // TODO: handle case where too many matches found
         return uniqueResult(query);
     }
 }

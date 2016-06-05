@@ -21,13 +21,11 @@ public class ParentPortalConfiguration extends Configuration {
     /**
      * The data source factory configuration
      */
-    @NotEmpty
     private DataSourceFactory dataSourceFactory;
 
     /**
      * The flyway factory configuration
      */
-    @NotEmpty
     private FlywayFactory flywayFactory;
 
     /**
