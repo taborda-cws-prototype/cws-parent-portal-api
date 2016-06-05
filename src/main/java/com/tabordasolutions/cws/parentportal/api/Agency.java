@@ -24,10 +24,14 @@ public class Agency {
 
 	@NotBlank
 	private String facilityType;
-
-	public Agency(String facilityName, String locationAddress,
-			String locationState, String locationCity, String locationZip,
-			String facilityPhone, String facilityType) {
+	
+	public Agency(@JsonProperty("facility_name")String facilityName, 
+			@JsonProperty("location_address")String locationAddress,
+			@JsonProperty("location_state")String locationState, 
+			@JsonProperty("location_city")String locationCity, 
+			@JsonProperty("location_zip")String locationZip,
+			@JsonProperty("facility_telephone_number")String facilityPhone, 
+			@JsonProperty("facility_type")String facilityType) {
 		super();
 		this.facilityName = facilityName;
 		this.locationAddress = locationAddress;

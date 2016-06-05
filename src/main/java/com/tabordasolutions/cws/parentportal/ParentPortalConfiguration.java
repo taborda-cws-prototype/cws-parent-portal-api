@@ -34,6 +34,11 @@ public class ParentPortalConfiguration extends Configuration {
     @NotEmpty
     private String apiChhsKey;
 	
+    /**
+     * The query param used on the CHHS Open Data API for Foster Agencies
+     */
+    @NotEmpty
+    private String apiChhsQueryParam;
     
     @Valid
 	@NotNull
@@ -70,7 +75,7 @@ public class ParentPortalConfiguration extends Configuration {
 	}
 	
     @JsonProperty("jerseyClient")
-    public JerseyClientConfiguration getJerseyClientConfiguration() {
+    public JerseyClientConfiguration getJerseyClient() {
         return jerseyClientConfiguration;
     }
 
@@ -92,5 +97,15 @@ public class ParentPortalConfiguration extends Configuration {
 	@JsonProperty("api.chhs.key")
 	public void setApiChhsKey(String apiChhsKey) {
 		this.apiChhsKey = apiChhsKey;
+	}
+
+	@JsonProperty("api.chhs.queryParam")
+	public String getApiChhsQueryParam() {
+		return apiChhsQueryParam;
+	}
+
+	@JsonProperty("api.chhs.queryParam")
+	public void setApiChhsQueryParam(String apiChhsQueryParam) {
+		this.apiChhsQueryParam = apiChhsQueryParam;
 	}
 }

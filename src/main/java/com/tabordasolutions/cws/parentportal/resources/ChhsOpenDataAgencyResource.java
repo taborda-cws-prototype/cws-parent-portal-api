@@ -5,30 +5,45 @@ import java.util.List;
 import javax.ws.rs.client.Client;
 
 import jersey.repackaged.com.google.common.base.Preconditions;
-import jersey.repackaged.com.google.common.collect.ImmutableList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tabordasolutions.cws.parentportal.api.Agency;
 
 public class ChhsOpenDataAgencyResource implements AgencyResource {
 
+	public static final Logger LOGGER = LoggerFactory
+			.getLogger(ChhsOpenDataAgencyResource.class);
+
+	
 	private final Client client;
 	private final String apiKey;
 	private final String apiUrl;
+	private final String apiQueryParam;
 	
-	public ChhsOpenDataAgencyResource(Client client, String apiUrl, String apiKey) {
+	public ChhsOpenDataAgencyResource(Client client, String apiUrl, String apiKey, String queryParam) {
 		this.client = Preconditions.checkNotNull(client, "Client must not be null");
 		this.apiUrl = Preconditions.checkNotNull(apiUrl, "apiUrl must not be null").trim();
 		Preconditions.checkArgument(this.apiUrl.length() > 0, "apiUrl must not be empty");
 		this.apiKey = Preconditions.checkNotNull(apiKey, "apiKey must not be null").trim();
 		Preconditions.checkArgument(this.apiKey.length() > 0, "apiKey must not be empty");
+		this.apiQueryParam = Preconditions.checkNotNull(queryParam, "apiQueryParam must not be null").trim();
+		Preconditions.checkArgument(this.apiQueryParam.length() > 0, "apiQueryParam must not be empty");
 	}
 	
 	@Override
-	public List<Agency> listAgencies() {
-		Agency agency1 = new Agency("facilityName1", "locationAddress1", "locationState1", "locationCity1", "locationZip1", "facilityPhone1", "facilityType1");
-		Agency agency2 = new Agency("facilityName2", "locationAddress2", "locationState2", "locationCity2", "locationZip2", "facilityPhone2", "facilityType2");
+	public List<Agency> listAgencies(String zipcode) {
+		LOGGER.debug("Searching on zipcode {}", zipcode);
 		
-		ImmutableList.Builder<Agency> builder = ImmutableList.builder();
-		return builder.add( agency1 ).add( agency2 ).build();
+		@SuppressWarnings({"rawtypes" })
+		List agenciesAsMaps =  client.target(this.apiUrl).queryParam("facility_zip", zipcode).request().get(List.class);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		return mapper.convertValue(agenciesAsMaps, new TypeReference<List<Agency>>() { });
 	}
 }

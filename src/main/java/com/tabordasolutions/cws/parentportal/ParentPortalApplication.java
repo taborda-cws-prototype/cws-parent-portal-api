@@ -1,7 +1,7 @@
 package com.tabordasolutions.cws.parentportal;
 
-import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
+import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
@@ -10,20 +10,11 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-import java.net.URI;
 import java.util.EnumSet;
-import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLContext;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.Link;
-import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
@@ -38,13 +29,15 @@ import com.tabordasolutions.cws.parentportal.resources.SessionResource;
 import com.tabordasolutions.cws.parentportal.resources.UserResource;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 
 public class ParentPortalApplication extends
 		Application<ParentPortalConfiguration> {
 
-	private FlywayBundle<ParentPortalConfiguration> flywayBundle;
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(ParentPortalApplication.class);
+	
+	private FlywayBundle<ParentPortalConfiguration> flywayBundle;
 
 	public static void main(final String[] args) throws Exception {
 		new ParentPortalApplication().run(args);
@@ -114,11 +107,10 @@ public class ParentPortalApplication extends
     }
     
 	private AgencyResource agencyResource(ParentPortalConfiguration configuration, Environment environment) {
-//		final Client client = new JerseyClientBuilder(environment).using(
-//				configuration.getJerseyClientConfiguration()).build(getName());
 
-		Client client = stubbedClient();
-		return new ChhsOpenDataAgencyResource(client, configuration.getApiChhsUrl(), configuration.getApiChhsKey());
+		final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClient())
+                   .build(getName());
+		return new ChhsOpenDataAgencyResource(client, configuration.getApiChhsUrl(), configuration.getApiChhsKey(), configuration.getApiChhsQueryParam());
 	}
 
     private void flywayMigration(ParentPortalConfiguration configuration) {
@@ -138,121 +130,4 @@ public class ParentPortalApplication extends
         filter.setInitParameter("allowedHeaders", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
         filter.setInitParameter("allowCredentials", "true");
     }
-	
-	/*
-	 * Stub out client until library issues are resolved.
-	 */
-	private static Client stubbedClient() {
-		return  new Client() {
-			
-			@Override
-			public Client register(Object component, Map<Class<?>, Integer> contracts) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Object component, Class<?>... contracts) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Object component, int priority) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Class<?> componentClass,
-					Map<Class<?>, Integer> contracts) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Class<?> componentClass, Class<?>... contracts) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Class<?> componentClass, int priority) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Object component) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client register(Class<?> componentClass) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Client property(String name, Object value) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Configuration getConfiguration() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public WebTarget target(Link link) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public WebTarget target(UriBuilder uriBuilder) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public WebTarget target(URI uri) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public WebTarget target(String uri) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Builder invocation(Link link) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public SSLContext getSslContext() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public HostnameVerifier getHostnameVerifier() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public void close() {
-				// TODO Auto-generated method stub
-				
-			}
-		};
-	}
 }
