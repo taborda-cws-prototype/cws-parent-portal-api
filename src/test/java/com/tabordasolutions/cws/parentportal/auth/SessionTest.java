@@ -16,39 +16,39 @@ public class SessionTest {
 
     @Test
     public void sessionSuccessfulyCreated(){
-        Session session = new Session(validLogin, userId);
+        Session session = new Session(validLogin, userId, token);
         assertTrue(session.isSuccess());
     }
 
     @Test
     public void sessionNotSuccessfulyCreated(){
-        Session session = new Session(inValidLogin, userId);
+        Session session = new Session(inValidLogin, userId, token);
         assertFalse(session.isSuccess());
     }
 
     @Test
     public void successfulSessionContainsToken(){
-        Session session = new Session(validLogin, userId);
+        Session session = new Session(validLogin, userId, token);
         assertNotNull(session.getToken());
-        assertEquals(session.getToken().length(), 36);
+        assertTrue("We expect a non-zero token to be set", session.getToken().length() > 0);
     }
 
     @Test
     public void unSuccessfulSessionDoesNotContainsToken(){
-        Session session = new Session(inValidLogin, userId);
+        Session session = new Session(inValidLogin, userId, token);
         assertEquals(session.getToken(), emptyToken);
     }
 
     @Test
     public void successfulSessionContainsUserId(){
-        Session session = new Session(validLogin, userId);
+        Session session = new Session(validLogin, userId, token);
         assertNotNull(session.getToken());
         assertEquals(session.getUserId(), userId);
     }
 
     @Test
     public void unSuccessfulSessionDoesNotContainsValidUserId(){
-        Session session = new Session(inValidLogin, userId);
-        assertEquals(session.getUserId(), 0);
+        Session session = new Session(inValidLogin, userId, token);
+        assertEquals(session.getUserId(), -1);
     }
 }

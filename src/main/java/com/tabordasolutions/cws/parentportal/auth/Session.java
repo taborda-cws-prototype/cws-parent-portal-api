@@ -6,25 +6,19 @@ public class Session {
 
     private boolean success;
     private long userId;
+    private String token;
 
-    public Session(boolean success, long userId) {
+    public Session(boolean success, long userId, String token) {
         this.success = success;
-        if (success){
-            this.userId = userId;
-        }
+        this.userId = success ? userId : -1;
+        this.token = success ? token : "";
     }
 
     public boolean isSuccess() {
         return success;
     }
 
-    public String getToken() {
-        return generateToken();
-    }
-
-    private String generateToken(){
-        return success ? UUID.randomUUID().toString() : "";
-    }
+    public String getToken() { return token; }
 
     public long getUserId() { return userId; }
 }

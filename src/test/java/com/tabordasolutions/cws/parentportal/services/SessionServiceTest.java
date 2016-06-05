@@ -1,6 +1,7 @@
 package com.tabordasolutions.cws.parentportal.services;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 public class SessionServiceTest {
     private SessionService service;
+    private final static String key = "mysecretkey12345";
 
     @Before
     public void setup(){
@@ -19,7 +21,7 @@ public class SessionServiceTest {
         User user = mock(User.class);
         when(user.getId()).thenReturn(1L);
         when(service.findUserByUserName("joey.doe@example.com")).thenReturn(user);
-        this.service = new SessionService(service);
+        this.service = new SessionService(service, new Cryptography(key));
     }
 
     @Test

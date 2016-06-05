@@ -46,6 +46,12 @@ public class ParentPortalConfiguration extends Configuration {
     @NotEmpty
     private String apiChhsQueryParam;
 
+    /**
+     * The query param used for salting encoding tokens
+     */
+    @NotEmpty
+    private String encryptSalt;
+
     @Valid
     @NotNull
     private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
@@ -111,7 +117,11 @@ public class ParentPortalConfiguration extends Configuration {
     }
 
     @JsonProperty("api.chhs.queryParam")
-    public void setApiChhsQueryParam(String apiChhsQueryParam) {
-        this.apiChhsQueryParam = apiChhsQueryParam;
-    }
+    public void setApiChhsQueryParam(String apiChhsQueryParam) { this.apiChhsQueryParam = apiChhsQueryParam; }
+
+    @JsonProperty("encrypt.salt")
+    public String getEncryptSalt() { return encryptSalt; }
+
+    @JsonProperty("encrypt.salt")
+    public void setEncryptSalt(String encryptSalt) { this.encryptSalt = encryptSalt; }
 }

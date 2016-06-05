@@ -22,3 +22,5 @@ api.chhs.url: https://chhs.data.ca.gov/resource/mffa-c6z5.json
 api.chhs.key: 81OubXhgPG3hny5Fdz1IgVACs
 api.chhs.queryParam: facility_zip
 
+encrypt.salt: fXY82541Kar14375
+

@@ -2,6 +2,7 @@ package com.tabordasolutions.cws.parentportal;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
+import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.resources.*;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
@@ -86,7 +87,8 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
         environment.jersey().register(applicationResource);
 
         UserService userService = new UserService(new UserDAO(sessionFactory));
-        SessionService sessionService = new SessionService(userService);
+        Cryptography cryptography = new Cryptography(configuration.getEncryptSalt());
+        SessionService sessionService = new SessionService(userService, cryptography);
         final SessionResource sessionResource = new SessionResource(sessionService);
         environment.jersey().register(sessionResource);
 
