@@ -2,6 +2,7 @@ package com.tabordasolutions.cws.parentportal.services;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.auth.Cryptography;
+import org.apache.commons.codec.digest.Crypt;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,14 +15,25 @@ import static org.mockito.Mockito.when;
 public class SessionServiceTest {
     private SessionService service;
     private final static String key = "mysecretkey12345";
+    private String username = "joey.doe@example.com";
+    private String encryptedToken = "myEncyptedToken";
+    private String decryptedToken = username + ":password";
+    private String badToken = "myHackedToken";
+    private Cryptography crypto;
 
     @Before
     public void setup(){
         UserService service = mock(UserService.class);
         User user = mock(User.class);
         when(user.getId()).thenReturn(1L);
-        when(service.findUserByUserName("joey.doe@example.com")).thenReturn(user);
-        this.service = new SessionService(service, new Cryptography(key));
+        when(service.findUserByUserName(username)).thenReturn(user);
+
+        crypto = mock(Cryptography.class);
+        when(crypto.decrypt(badToken)).thenReturn("joey.doe@example.com:BOGUS");
+        when(crypto.decrypt(encryptedToken)).thenReturn(decryptedToken);
+        when(crypto.encrypt(decryptedToken)).thenReturn(encryptedToken);
+
+        this.service = new SessionService(service, crypto);
     }
 
     @Test
@@ -42,5 +54,15 @@ public class SessionServiceTest {
     @Test
     public void loginWithInvalidPasswordReturnsInvalidSession(){
         assertFalse(service.login("joey.doe@example.com", "BOGUS").isSuccess());
+    }
+
+    @Test
+    public void loginWithValidToken(){
+        assertTrue(service.loginWithToken(encryptedToken).isSuccess());
+    }
+
+    @Test
+    public void loginWithInValidToken(){
+        assertFalse(service.loginWithToken(badToken).isSuccess());
     }
 }

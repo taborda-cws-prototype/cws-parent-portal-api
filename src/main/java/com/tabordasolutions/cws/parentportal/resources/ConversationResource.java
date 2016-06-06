@@ -1,7 +1,9 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -12,13 +14,20 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ConversationResource {
     private ConversationService service;
+    private SessionService sessionService;
 
-    public ConversationResource(ConversationService service) {
+    public ConversationResource(ConversationService service, SessionService sessionService) {
         this.service = service;
+        this.sessionService = sessionService;
     }
 
     @GET
-    public List<Conversation> list(){
-        return service.conversationsFor(1);
+    public List<Conversation> list(@HeaderParam("X-Auth-Token") String token){
+        return service.conversationsFor(getUser(token));
+    }
+
+    private long getUser(String token){
+        Session session = sessionService.loginWithToken(token);
+        return session.getUserId();
     }
 }

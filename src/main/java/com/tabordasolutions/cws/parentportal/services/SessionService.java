@@ -5,6 +5,9 @@ import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 
 public class SessionService {
+    private static final int USERNAME = 0;
+    private static final int PASSWORD = 1;
+
     private UserService userService;
     private Cryptography cryptography;
 
@@ -20,6 +23,12 @@ public class SessionService {
         return new Session(valid, userId, buildToken(username, password));
     }
 
+    public Session loginWithToken(String token){
+        String usernameAndPassword  = cryptography.decrypt(token);
+        String[] credentials = usernameAndPassword.split(":");
+        return login(credentials[USERNAME], credentials[PASSWORD]);
+    }
+
     private boolean isValid(String string) {
         return string != null && string.length() > 0 && Character.isLowerCase(string.charAt(0));
     }
@@ -27,6 +36,5 @@ public class SessionService {
     private String buildToken(String userName, String password) {
         String phrase = userName + ":" + password;
         return cryptography.encrypt(phrase);
-
     }
 }
