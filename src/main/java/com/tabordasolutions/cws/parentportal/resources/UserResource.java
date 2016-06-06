@@ -11,7 +11,7 @@ import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.hibernate.UnitOfWork;
 
-@Path("/user")
+@Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
