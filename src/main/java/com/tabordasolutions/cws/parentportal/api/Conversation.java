@@ -32,7 +32,8 @@ public class Conversation {
     @Column(name = "read")
     boolean read;
 
-    @OneToMany(mappedBy="conversation")
+    //@OneToMany(mappedBy="conversation")
+    @Transient
     private List<Message> messages;
 
     public String getInitializer() {

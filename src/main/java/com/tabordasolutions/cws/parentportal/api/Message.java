@@ -19,8 +19,9 @@ public class Message {
     private String subject;
     @Column(name = "body")
     private String body;
-    @ManyToOne
-    @JoinColumn(name="conversation_id")
+//    @ManyToOne
+//    @JoinColumn(name="conversation_id")
+    @Transient
     private Conversation conversation;
 
     public Message(long id, Date dateCreated, User author, User recipient, String subject, String body) {
