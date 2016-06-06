@@ -4,6 +4,7 @@ import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
+import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -21,6 +22,7 @@ public class ConversationResource {
         this.sessionService = sessionService;
     }
 
+    @UnitOfWork
     @GET
     public List<Conversation> list(@HeaderParam("X-Auth-Token") String token){
         return service.conversationsFor(getUser(token));

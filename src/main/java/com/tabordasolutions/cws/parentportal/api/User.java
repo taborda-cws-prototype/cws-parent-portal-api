@@ -141,4 +141,8 @@ public class User {
         this.city = city;
     }
 
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
+
 }

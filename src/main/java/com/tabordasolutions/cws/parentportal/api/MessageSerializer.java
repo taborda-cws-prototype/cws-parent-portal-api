@@ -17,13 +17,15 @@ public class MessageSerializer extends JsonSerializer<Message> {
     public void serialize(Message value, JsonGenerator generator, SerializerProvider serializers) throws IOException, JsonProcessingException {
         generator.writeStartObject();
         generator.writeFieldName("author");
-        generator.writeString(value.getAuthor());
+        generator.writeString(authorsName(value.getAuthor()));
         generator.writeFieldName("content");
         generator.writeString(value.getBody());
         generator.writeFieldName("date");
         generator.writeString(dateAsString(value.getDateCreated()));
         generator.writeEndObject();
     }
+
+    private String authorsName(User user){ return user == null ? "" : user.getFullName(); }
 
     private String dateAsString(Date date){
         return date == null ? "" : df.format(date);

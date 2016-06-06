@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.Message;
+import com.tabordasolutions.cws.parentportal.api.User;
 
 public class MessageService {
 
@@ -22,9 +23,9 @@ public class MessageService {
         conversation.setBaseMessage(originalMessage);
         conversation.setDateCreated(new Date());
         conversation.setDateUpdated(null);
-        conversation.setInitializer(originalMessage.getAuthor());
-        conversation.setReceiver(messages.get(1).getAuthor());
-        conversation.setSender(originalMessage.getAuthor());
+        conversation.setInitializer(originalMessage.getAuthor().getFullName());
+        conversation.setReceiver(messages.get(1).getAuthor().getFullName());
+        conversation.setSender(originalMessage.getAuthor().getFullName());
         conversation.setSubject(originalMessage.getSubject());
 
         conversation.setMessages(messages);
@@ -33,15 +34,21 @@ public class MessageService {
         return conversation;
     }
 
+
     private List<Message> generateMessages(){
         List <Message> messages = new ArrayList<Message>();
 
-
-        messages.add(new Message(1, new Date(), "Fred", "Welcome to the Group", generateBody()));
-        messages.add(new Message(2, new Date(), "Barney", "Some fun facts", generateBody()));
-        messages.add(new Message(3, new Date(), "Fred", "Tomorrow's Meeting is canceled", generateBody()));
-        messages.add(new Message(4, new Date(), "Fred", "Can you call?", generateBody()));
-        messages.add(new Message(5, new Date(), "Barney", "Here's what you requested", generateBody()));
+        User parent = new User();
+        parent.setFirstName("Fred");
+        parent.setLastName("Flinstone");
+        User caseworker = new User();
+        caseworker.setFirstName("Barney");
+        caseworker.setLastName("Rubble");
+        messages.add(new Message(1, new Date(), parent, caseworker, "Welcome to the Group", generateBody()));
+        messages.add(new Message(2, new Date(), caseworker, parent, "Some fun facts", generateBody()));
+        messages.add(new Message(3, new Date(), parent, caseworker, "Tomorrow's Meeting is canceled", generateBody()));
+        messages.add(new Message(4, new Date(), parent, caseworker, "Can you call?", generateBody()));
+        messages.add(new Message(5, new Date(), caseworker, parent, "Here'sl what you requested", generateBody()));
         return messages;
     }
 

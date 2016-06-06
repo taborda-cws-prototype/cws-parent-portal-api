@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class CryptographyTest {
     private Cryptography crypt;
     private String key = "Bar12345Bar12345";
@@ -45,5 +47,4 @@ public class CryptographyTest {
         assertTrue("Expected encoded and decoded phrases to be different", decodedPhrase != encodePhrase);
         assertEquals("Expected decoded phrase to equal original phrase", phrase, decodedPhrase);
     }
-
 }

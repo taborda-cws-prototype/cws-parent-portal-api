@@ -24,9 +24,8 @@ public class ConversationSerializerTest {
     Message originalMessage ;
     Date createDate ;
     Date modifiedDate ;
-    String initializer ;
-    String sender ;
-    String receiver ;
+    User parent;
+    User caseworker;
 
     @Before
     public void setup() throws IOException {
@@ -34,20 +33,24 @@ public class ConversationSerializerTest {
         stringWriter = new StringWriter();
         jsonGenerator = new JsonFactory().createGenerator(stringWriter);
 
+        parent = new User();
+        parent.setFirstName("Fred");
+        parent.setLastName("Flinstone");
+        caseworker = new User();
+        caseworker.setFirstName("Barney");
+        caseworker.setLastName("Rubble");
+
         subject = "Subject line";
-        originalMessage = new Message(1, new Date(), "Barney", subject, "the body");
+        originalMessage = new Message(1, new Date(), parent, caseworker, subject, "the body");
         createDate = new Date();
         modifiedDate = new Date();
-        initializer = "Fred";
-        sender = "Barney";
-        receiver = "Fred";
         conversation = new Conversation();
         conversation.setBaseMessage(originalMessage);
         conversation.setDateCreated(createDate);
         conversation.setDateUpdated(modifiedDate);
-        conversation.setInitializer(initializer);
-        conversation.setReceiver(receiver);
-        conversation.setSender(sender);
+        conversation.setInitializer(parent.getFullName());
+        conversation.setReceiver(caseworker.getFullName());
+        conversation.setSender(parent.getFullName());
         conversation.setRead(true);
         conversation.setSubject(subject);
     }
@@ -76,9 +79,9 @@ public class ConversationSerializerTest {
         jsonGenerator.flush();
         String json = stringWriter.toString();
 
-        assertTrue("Expected json to contain intializer value", json.contains("\"initializer\":\"" + initializer + "\""));
-        assertTrue("Expected json to contain sender value",  json.contains("\"sender\":\"" + sender + "\""));
-        assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":\"" + receiver + "\""));
+        assertTrue("Expected json to contain intializer value", json.contains("\"initializer\":\"" + parent.getFullName() + "\""));
+        assertTrue("Expected json to contain sender value",  json.contains("\"sender\":\"" + parent.getFullName() + "\""));
+        assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":\"" + caseworker.getFullName() + "\""));
         assertTrue("Expected json to contain date value",  json.contains("\"date\":\"" + df.format(createDate)+ "\""));
         assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"" + df.format(modifiedDate)+ "\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":\"" + subject +"\""));

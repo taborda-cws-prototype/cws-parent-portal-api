@@ -3,8 +3,6 @@ package com.tabordasolutions.cws.parentportal.api;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tabordasolutions.cws.parentportal.api.Message;
-
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -15,19 +13,26 @@ public class MessageTest {
     private String subject;
     private String body;
     private String author;
+    User parent;
+    User caseworker;
 
     @Before
     public void setup(){
         id = 1;
         date = new Date();
-        author = "Fred";
         subject = "A nifty message";
         body = "I was wondering if the previous message I sent to you made sense";
+        parent = new User();
+        parent.setFirstName("Fred");
+        parent.setLastName("Flinstone");
+        caseworker = new User();
+        caseworker.setFirstName("Barney");
+        caseworker.setLastName("Rubble");
     }
 
     @Test
     public void testPropertiesAreSetViaConstructor(){
-        Message message = new Message(id, date, author, subject, body);
+        Message message = new Message(id, date, parent, caseworker, subject, body);
         assertEquals(message.getId(), id);
         assertEquals(message.getDateCreated(), date);
         assertEquals(message.getSubject(), subject);

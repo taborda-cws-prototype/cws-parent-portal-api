@@ -2,7 +2,6 @@ package com.tabordasolutions.cws.parentportal.services;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.auth.Cryptography;
-import org.apache.commons.codec.digest.Crypt;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +17,7 @@ public class SessionServiceTest {
     private String username = "joey.doe@example.com";
     private String encryptedToken = "myEncyptedToken";
     private String decryptedToken = username + ":password";
-    private String badToken = "myHackedToken";
+    private String badToken = "myHackeToken";
     private Cryptography crypto;
 
     @Before
@@ -57,12 +56,8 @@ public class SessionServiceTest {
     }
 
     @Test
-    public void loginWithValidToken(){
-        assertTrue(service.loginWithToken(encryptedToken).isSuccess());
-    }
+    public void loginWithValidToken(){ assertTrue(service.loginWithToken(encryptedToken).isSuccess()); }
 
     @Test
-    public void loginWithInValidToken(){
-        assertFalse(service.loginWithToken(badToken).isSuccess());
-    }
+    public void loginWithInValidToken(){ assertFalse(service.loginWithToken(badToken).isSuccess()); }
 }

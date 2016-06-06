@@ -4,18 +4,36 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "conversations")
 @JsonSerialize(using=ConversationSerializer.class)
 public class Conversation {
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Transient
     private String initializer;
+    @Transient
     private String sender;
+    @Transient
     private String receiver;
-    Date dateCreated;
-    Date dateUpdated;
-    String subject;
-    Message baseMessage;
+    @Column(name = "date_created")
+    private Date dateCreated;
+    @Column(name = "date_updated")
+    private Date dateUpdated;
+    @Transient
+    private String subject;
+
+    @Transient
+    private Message baseMessage;
+    @Column(name = "read")
     boolean read;
-    List<Message> messages;
+
+    @OneToMany(mappedBy="conversation")
+    private List<Message> messages;
 
     public String getInitializer() {
         return initializer;

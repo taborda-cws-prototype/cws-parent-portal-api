@@ -2,8 +2,6 @@ package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.tabordasolutions.cws.parentportal.api.Message;
-import com.tabordasolutions.cws.parentportal.api.MessageSerializer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +23,9 @@ public class MessageSerializerTest {
 
     long id;
     Date createDate ;
-    String author ;
     String subject ;
     String body ;
+    User parent;
 
     public MessageSerializerTest() {
         df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -39,22 +37,28 @@ public class MessageSerializerTest {
         stringWriter = new StringWriter();
         jsonGenerator = new JsonFactory().createGenerator(stringWriter);
 
+        parent = new User();
+        parent.setFirstName("Fred");
+        parent.setLastName("Flinstone");
+        User caseworker = new User();
+        caseworker.setFirstName("Barney");
+        caseworker.setLastName("Rubble");
+
         id = 5;
         subject = "Subject line";
         createDate = new Date();
-        author = "Fred";
         body = "message body text";
-        message = new Message(id, createDate, author, subject, body);
+        message = new Message(id, createDate, parent, caseworker, subject, body);
     }
 
     @Test
     public void testSerializesEmptyConversation() throws IOException {
-        message = new Message(0,null,null,null,null);
+        message = new Message(0,null,null, null,null,null);
         serializer.serialize(message, jsonGenerator, null);
         jsonGenerator.flush();
         String json = stringWriter.toString();
         assertTrue("Expected json to contain date value",  json.contains("\"date\":\"\""));
-        assertTrue("Expected json to contain sender value",  json.contains("\"author\":null"));
+        assertTrue("Expected json to contain sender value",  json.contains("\"author\":\"\""));
         assertTrue("Expected json to contain receiver value",  json.contains("\"content\":null"));
     }
 
@@ -65,7 +69,7 @@ public class MessageSerializerTest {
         String json = stringWriter.toString();
 
         assertTrue("Expected json to contain date value",  json.contains("\"date\":\"" + df.format(createDate)+ "\""));
-        assertTrue("Expected json to contain sender value",  json.contains("\"author\":\"" + author + "\""));
+        assertTrue("Expected json to contain sender value",  json.contains("\"author\":\"" + parent.getFullName()  + "\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"content\":\"" + body +"\""));
     }
 }
