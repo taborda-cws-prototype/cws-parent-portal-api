@@ -1,12 +1,5 @@
 package com.tabordasolutions.cws.parentportal;
 
-import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.api.UserDAO;
-import com.tabordasolutions.cws.parentportal.auth.Cryptography;
-import com.tabordasolutions.cws.parentportal.resources.*;
-import com.tabordasolutions.cws.parentportal.services.MessageService;
-import com.tabordasolutions.cws.parentportal.services.SessionService;
-import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -17,17 +10,33 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import java.util.EnumSet;
+import java.util.List;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import javax.ws.rs.client.Client;
+
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.flywaydb.core.Flyway;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
-import javax.ws.rs.client.Client;
-import java.util.EnumSet;
-import java.util.List;
+import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.UserDAO;
+import com.tabordasolutions.cws.parentportal.auth.Cryptography;
+import com.tabordasolutions.cws.parentportal.filters.ModifyResponseFilter;
+import com.tabordasolutions.cws.parentportal.resources.AgencyResource;
+import com.tabordasolutions.cws.parentportal.resources.ChhsOpenDataAgencyResource;
+import com.tabordasolutions.cws.parentportal.resources.MessageResource;
+import com.tabordasolutions.cws.parentportal.resources.ParentPortalResource;
+import com.tabordasolutions.cws.parentportal.resources.SessionResource;
+import com.tabordasolutions.cws.parentportal.resources.UserResource;
+import com.tabordasolutions.cws.parentportal.services.MessageService;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 
 public class ParentPortalApplication extends Application<ParentPortalConfiguration> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParentPortalApplication.class);
@@ -75,6 +84,9 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
         LOGGER.info("Registering Application Resources");
         registerResources(configuration, environment, hibernateBundle.getSessionFactory());
 
+        LOGGER.info("Registering Servlet Filters");
+        registerFilters(configuration, environment);
+        
         LOGGER.info("Configuring Flyway DB migration");
         migrateDatabase(configuration);
 
@@ -101,6 +113,11 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
         final AgencyResource agencyResource = agencyResource(configuration, environment);
         environment.jersey().register(agencyResource);
     }
+    
+    private void registerFilters(final ParentPortalConfiguration configuration, final Environment environment) {
+    	environment.servlets().addFilter("ModfifyResponseFilter", new ModifyResponseFilter()).addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST), true, "/*");
+    }
+    
 
 	private AgencyResource agencyResource(ParentPortalConfiguration configuration, Environment environment) {
 		final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClient())

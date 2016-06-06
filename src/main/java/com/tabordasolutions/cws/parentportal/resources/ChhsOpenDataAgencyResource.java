@@ -51,7 +51,6 @@ public class ChhsOpenDataAgencyResource implements AgencyResource {
 	@Override
 	public List<Agency> listAgencies(String zipcode) {
 		LOGGER.debug("Searching on zipcode {}", zipcode);
-
 		if( zipcode != null) {
 			@SuppressWarnings({ "rawtypes" })
 			List agenciesAsMaps = client

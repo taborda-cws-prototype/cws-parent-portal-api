@@ -3,8 +3,6 @@ package com.tabordasolutions.cws.parentportal.services;
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
 
-import java.util.Arrays;
-
 public class UserService {
     private UserDAO dao;
 

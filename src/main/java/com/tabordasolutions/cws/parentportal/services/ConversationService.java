@@ -8,7 +8,7 @@ import java.util.List;
 public class ConversationService {
 
     public List<Conversation> conversationsFor(int userId){
-        return new ArrayList();
+        return new ArrayList<Conversation>();
 
     }
 }

@@ -1,11 +1,13 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import static org.mockito.Mockito.*;
-import com.tabordasolutions.cws.parentportal.services.ConversationService;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
 
 public class ConversationResourceTest {
     private ConversationResource resource;

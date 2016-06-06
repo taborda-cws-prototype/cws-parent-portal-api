@@ -1,6 +1,5 @@
 package com.tabordasolutions.cws.parentportal.auth;
 
-import java.util.UUID;
 
 public class Session {
 
