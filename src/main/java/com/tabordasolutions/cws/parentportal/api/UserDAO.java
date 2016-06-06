@@ -1,21 +1,32 @@
 package com.tabordasolutions.cws.parentportal.api;
 
 import io.dropwizard.hibernate.AbstractDAO;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 public class UserDAO extends AbstractDAO<User> {
-    public UserDAO(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+	public UserDAO(SessionFactory sessionFactory) {
+		super(sessionFactory);
+	}
 
-    public User findByUsername(String email) {
-        Query query = currentSession().createQuery("from User U where U.email = :email");
-        query.setString("email", email);
-        return uniqueResult(query);
-    }
+	public User findByUsername(String email) {
+		Query query = currentSession().createQuery(
+				"from User U where U.email = :email");
+		query.setString("email", email);
+		return uniqueResult(query);
+	}
 
-    public User find(long id) {
-        return get(id);
-    }
+	public User find(long id) {
+		return get(id);
+	}
+
+	public User update(User user) {
+		return persist(user);
+	}
+
+	public long create(User user) {
+		return persist(user).getId();
+	}
+
 }

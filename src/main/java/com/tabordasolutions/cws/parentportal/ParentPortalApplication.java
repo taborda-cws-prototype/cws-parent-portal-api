@@ -1,13 +1,5 @@
 package com.tabordasolutions.cws.parentportal;
 
-import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.api.UserDAO;
-import com.tabordasolutions.cws.parentportal.auth.Cryptography;
-import com.tabordasolutions.cws.parentportal.resources.*;
-import com.tabordasolutions.cws.parentportal.services.ConversationService;
-import com.tabordasolutions.cws.parentportal.services.MessageService;
-import com.tabordasolutions.cws.parentportal.services.SessionService;
-import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -38,10 +30,12 @@ import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.filters.ModifyResponseFilter;
 import com.tabordasolutions.cws.parentportal.resources.AgencyResource;
 import com.tabordasolutions.cws.parentportal.resources.ChhsOpenDataAgencyResource;
+import com.tabordasolutions.cws.parentportal.resources.ConversationResource;
 import com.tabordasolutions.cws.parentportal.resources.MessageResource;
 import com.tabordasolutions.cws.parentportal.resources.ParentPortalResource;
 import com.tabordasolutions.cws.parentportal.resources.SessionResource;
 import com.tabordasolutions.cws.parentportal.resources.UserResource;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
@@ -100,6 +94,16 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 
         LOGGER.info("Configuring CORS: Cross-Origin Resource Sharing");
         configureCors(environment);
+        
+        LOGGER.info("Registering Exception Mappers");
+        registerExceptionMappers(environment);
+        
+    }
+    
+    private void registerExceptionMappers(Environment environment) {
+    	//TODO : handle exceptions through a mapper.  Mainly looking at hibernate exceptions here
+    	//       for now we will short circuit exceptions in Service layer
+    	//environment.jersey().register(new RuntimeExceptionMapper());
     }
 
     private void registerResources(final ParentPortalConfiguration configuration, final Environment environment, final SessionFactory sessionFactory) {

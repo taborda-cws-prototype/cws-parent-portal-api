@@ -2,6 +2,7 @@ package com.tabordasolutions.cws.parentportal.api;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
@@ -9,10 +10,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 @JsonSerialize(using=UserSerializer.class)
+@JsonDeserialize(using=UserDeserializer.class)
 public class User {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy=GenerationType.AUTO, generator = "users_id_seq")
+    @SequenceGenerator(name="users_id_seq",sequenceName="users_id_seq",allocationSize=1)
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -32,7 +35,7 @@ public class User {
     private String zip;
     @Column(name = "image_url")
     private String imageUrl;
-    @Column(name = "email")
+    @Column(name = "email", unique=true)
     private String email;
 
     // TODO: map this association
@@ -43,7 +46,7 @@ public class User {
     @Transient
     private String password;
 
-    public long getId() {return id; }
+    public Long getId() {return id; }
 
     public String getFirstName() {
         return firstName;
@@ -145,4 +148,77 @@ public class User {
         return firstName + " " + lastName;
     }
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", inCareOf=" + inCareOf + ", streetAddress1="
+				+ streetAddress1 + ", streetAddress2=" + streetAddress2
+				+ ", state=" + state + ", city=" + city + ", zip=" + zip
+				+ ", imageUrl=" + imageUrl + ", email=" + email + ", password="
+				+ password + "]";
+	}
+    
+    public static class Builder 
+    {
+    	User user;
+        public Builder() {
+        	user = new User();
+        }
+        public Builder id(Long id) {
+            user.id = id;
+            return this;
+        }
+        public Builder firstName(String firstName) {
+            user.setFirstName(firstName);
+            return this;
+        }
+        public Builder lastName(String lastName) {
+            user.setLastName(lastName);
+            return this;
+        }
+        public Builder inCareOf(String inCareOf) {
+            user.setInCareOf(inCareOf);
+            return this;
+        }
+        public Builder streetAddress1(String streetAddress1) {
+            user.setStreetAddress1(streetAddress1);
+            return this;
+        }
+        public Builder streetAddress2(String streetAddress2) {
+            user.setStreetAddress2(streetAddress2);
+            return this;
+        }
+        public Builder state(String state) {
+            user.setState(state);
+            return this;
+        }
+        public Builder city(String city) {
+            user.setCity(city);
+            return this;
+        }
+        public Builder zip(String zip) {
+            user.setZip(zip);
+            return this;
+        }
+        public Builder imageUrl(String imageUrl) {
+            user.setImageUrl(imageUrl);
+            return this;
+        }
+        public Builder email(String email) {
+            user.setEmail(email);
+            return this;
+        }
+        public Builder password(String password) {
+            user.setPassword(password);
+            return this;
+        }
+
+        public User build() {
+            validateUserObject(user);
+            return user;
+        }
+        private void validateUserObject(User user) {
+            //TODO : validate user
+        }
+    }
 }

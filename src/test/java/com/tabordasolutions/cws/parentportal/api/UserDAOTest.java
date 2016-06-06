@@ -54,4 +54,37 @@ public class UserDAOTest {
 
         assertNull(user);
     }
+    
+    @Test 
+    public void updateExistingUser() throws Exception {
+        User user = dao.findByUsername("joey.doe@example.com");
+
+        assertNotNull(user);
+    	
+    }
+    
+    @Test
+    public void updateNotExistingUser() throws Exception {
+    	
+    }
+    
+    @Test
+    public void updateUserWithNonUniqueEmail() throws Exception {
+    	
+    }
+    
+    @Test
+    public void createNewUser() throws Exception {
+    	
+    }
+    
+    @Test
+    public void createUserWhenIdAlreadyExists() throws Exception {
+    	
+    }
+    
+    @Test
+    public void createUserWhenEmailNotUnique() throws Exception {
+    	
+    }
 }
