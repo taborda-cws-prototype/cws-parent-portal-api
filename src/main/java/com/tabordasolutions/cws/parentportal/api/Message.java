@@ -6,13 +6,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "messages")
 @JsonSerialize(using=MessageSerializer.class)
 public class Message {
     private long id;
+    @OneToOne
     private User author;
+    @OneToOne
     private User recipient;
     private Date dateCreated;
     private String subject;
