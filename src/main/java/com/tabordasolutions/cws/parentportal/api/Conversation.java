@@ -3,39 +3,38 @@ package com.tabordasolutions.cws.parentportal.api;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
 @Table(name = "conversations")
 @JsonSerialize(using=ConversationSerializer.class)
 public class Conversation {
-    @Id
-    @GeneratedValue
     private long id;
 
-    @Transient
     private String initializer;
-    @Transient
     private String sender;
-    @Transient
     private String receiver;
-    @Column(name = "date_created")
     private Date dateCreated;
-    @Column(name = "date_updated")
     private Date dateUpdated;
-    @Transient
     private String subject;
 
-    @Transient
     private Message baseMessage;
-    @Column(name = "read")
     boolean read;
 
-    //@OneToMany(mappedBy="conversation")
-    @Transient
-    private List<Message> messages;
+    private Set<Message> messages;
 
+    @Id
+    @GeneratedValue
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Transient
     public String getInitializer() {
         return initializer;
     }
@@ -44,6 +43,7 @@ public class Conversation {
         this.initializer = initializer;
     }
 
+    @Transient
     public String getSender() {
         return sender;
     }
@@ -52,6 +52,7 @@ public class Conversation {
         this.sender = sender;
     }
 
+    @Transient
     public String getReceiver() {
         return receiver;
     }
@@ -60,6 +61,7 @@ public class Conversation {
         this.receiver = receiver;
     }
 
+    @Column(name = "date_created")
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -68,6 +70,7 @@ public class Conversation {
         this.dateCreated = dateCreated;
     }
 
+    @Column(name = "date_updated")
     public Date getDateUpdated() {
         return dateUpdated;
     }
@@ -76,6 +79,7 @@ public class Conversation {
         this.dateUpdated = dateUpdated;
     }
 
+    @Transient
     public String getSubject() {
         return subject;
     }
@@ -84,6 +88,7 @@ public class Conversation {
         this.subject = subject;
     }
 
+    @Transient
     public Message getBaseMessage() {
         return baseMessage;
     }
@@ -92,6 +97,7 @@ public class Conversation {
         this.baseMessage = baseMessage;
     }
 
+    @Column(name = "read")
     public boolean isRead() {
         return read;
     }
@@ -100,11 +106,13 @@ public class Conversation {
         this.read = read;
     }
 
-    public List<Message> getMessages() {
+    @OneToMany( mappedBy="conversation", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ElementCollection(targetClass=Message.class)
+    public Set<Message> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<Message> messages) {
+    public void setMessages(Set<Message> messages) {
         this.messages = messages;
     }
 }

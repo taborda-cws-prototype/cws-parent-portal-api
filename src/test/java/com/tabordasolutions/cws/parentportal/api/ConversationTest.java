@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class ConversationTest {
         conversation.setInitializer(initializer);
         conversation.setReceiver(receiver);
         conversation.setSender(sender);
-        conversation.setMessages(messages);
+        conversation.setMessages(new HashSet<Message>(messages));
         conversation.setRead(true);
         conversation.setSubject(subject);
         assertEquals(originalMessage, conversation.getBaseMessage());

@@ -1,9 +1,6 @@
 package com.tabordasolutions.cws.parentportal.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.Message;
@@ -16,7 +13,7 @@ public class MessageService {
     }
 
     private Conversation buildConversation(){
-        List <Message> messages = generateMessages();
+        List<Message> messages = generateMessages();
         Conversation conversation = new Conversation();
 
         Message originalMessage = messages.remove(0);
@@ -28,7 +25,7 @@ public class MessageService {
         conversation.setSender(originalMessage.getAuthor().getFullName());
         conversation.setSubject(originalMessage.getSubject());
 
-        conversation.setMessages(messages);
+        conversation.setMessages( new HashSet<Message>(messages));
         conversation.setRead(true);
 
         return conversation;

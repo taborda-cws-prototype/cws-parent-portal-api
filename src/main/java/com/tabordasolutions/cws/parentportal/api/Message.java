@@ -6,22 +6,19 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import javax.persistence.*;
 
+
+@Entity
+@Table(name = "messages")
 @JsonSerialize(using=MessageSerializer.class)
 public class Message {
-    @Id
-    @GeneratedValue
     private long id;
     private User author;
     private User recipient;
-    @Column(name = "date_created")
     private Date dateCreated;
-    @Column(name = "subject")
     private String subject;
-    @Column(name = "body")
     private String body;
-//    @ManyToOne
-//    @JoinColumn(name="conversation_id")
-    @Transient
+
+
     private Conversation conversation;
 
     public Message(long id, Date dateCreated, User author, User recipient, String subject, String body) {
@@ -33,25 +30,42 @@ public class Message {
         this.body = body;
     }
 
-    public long getId() {
-        return id;
-    }
+    @Id
+    @GeneratedValue
+    public long getId() { return id; }
 
-    public String getBody() {
-        return body;
-    }
+    public void setId(long id) { this.id = id; }
 
+    @Column(name = "body")
+    public String getBody() { return body; }
+
+    public void setBody(String body) { this.body = body; }
+
+    @Column(name = "date_created")
     public Date getDateCreated() { return dateCreated; }
 
+    public void setDateCreated(Date dateCreated) { this.dateCreated = dateCreated; }
+
+    @Transient
     public User getAuthor() { return author; }
 
     public void setAuthor(User author) { this.author = author; }
 
+    @Transient
     public User getRecipient() { return recipient; }
 
     public void setRecipient(User recipient) { this.recipient = recipient; }
 
+    @Column(name = "subject")
     public String getSubject() { return subject; }
 
+    public void setSubject(String subject) { this.subject = subject; }
+
+    @ManyToOne
+    @JoinColumn(name="conversation_id")
     public Conversation getConversation() { return conversation; }
+
+    public void setConversation(Conversation conversation) {
+        this.conversation = conversation;
+    }
 }

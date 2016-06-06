@@ -10,4 +10,8 @@ public class ConversationService {
     public List<Conversation> conversationsFor(long userId){
         return new ArrayList();
     }
+
+    public Conversation save(Conversation conversation){
+        return conversation;
+    }
 }
