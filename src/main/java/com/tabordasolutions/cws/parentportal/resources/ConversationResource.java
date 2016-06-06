@@ -26,7 +26,8 @@ public class ConversationResource {
     @POST
     public Response create(Conversation conversation){
         Conversation createdConversation = conversationService.save(conversation);
-        return Response.status(Response.Status.CREATED).entity(createdConversation).build();
+        //success true
+        return Response.status(Response.Status.OK).entity(createdConversation).build();
     }
 
     @UnitOfWork

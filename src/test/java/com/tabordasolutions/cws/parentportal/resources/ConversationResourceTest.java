@@ -49,7 +49,7 @@ public class ConversationResourceTest {
     public void createConversationReturnsStatus(){
         Conversation conversation = new Conversation();
         Response response = resource.create(conversation);
-        assertEquals("Expect response to be succesful", 201, response.getStatus());
+        assertEquals("Expect response to be succesful", 200, response.getStatus());
     }
 
     @Test
