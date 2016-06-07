@@ -42,9 +42,29 @@ public class UserService {
     		LOGGER.warn("Unable to update user email to non unique email {}", user.getEmail());
     		throw new ServicesException("email not unique");
     	}
+    	if( isPasswordChanged(user) ) {
+    		if( !isCorrectPassword(user, existingWithUsername)) {
+	    		LOGGER.warn("Unabl to update user, password incorrect {}", user.getEmail());
+    			throw new ServicesException("Unable to update user, password not correct" )	;
+	    	}
+    	}
     	
     	
     	return dao.update(copyUser(existingUser, user));
+    }
+    	
+    private boolean isPasswordChanged(User user) {
+    	return( user.getNewPassword() != null && user.getPassword().trim().length() > 0); 
+    }
+    
+    private boolean isCorrectPassword(User user, User existingUser) {
+    	String existingPasswordFromDb = existingUser.getPassword();
+    	existingPasswordFromDb = existingPasswordFromDb != null ? existingPasswordFromDb.trim() : "";
+    	
+    	String passwordFromUser = user.getPassword();
+    	passwordFromUser = passwordFromUser != null ? passwordFromUser.equals("null") ? "" : passwordFromUser : "";
+
+    	return existingPasswordFromDb.equals(passwordFromUser);
     }
 
     /**
@@ -75,9 +95,8 @@ public class UserService {
     	user.setZip(copyFrom.getZip());
     	user.setImageUrl(copyFrom.getImageUrl());
     	user.setEmail(copyFrom.getEmail());
-    	user.setPassword(copyFrom.getPassword());
-    	if(copyFrom.getPassword() != null && copyFrom.getPassword().trim().length() > 0 ) {
-    		user.setPassword(copyFrom.getPassword());
+    	if(copyFrom.getNewPassword() != null && copyFrom.getNewPassword().trim().length() > 0 ) {
+    		user.setPassword(copyFrom.getNewPassword());
     	}
     	return user;
     }

@@ -18,7 +18,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		JsonNode node = oc.readTree(jsonParser);  
 		Long id = node.get("id").asLong(Long.MIN_VALUE);
 		id = id.longValue() != Long.MIN_VALUE ? id : null;
-		
 		JsonNode nameNode = node.get("name");
 		String firstName = nameNode.get("first_name").asText();
 		String lastName = nameNode.get("last_name").asText();
@@ -36,7 +35,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		String image = node.get("image").asText();
 		String email = node.get("email").asText();
 		String password = node.get("password").asText();
-		
+		String newPassword = node.get("npass").asText();
 		User.Builder builder = new User.Builder();
 		return builder.id(id)
 				.firstName(firstName)
@@ -50,6 +49,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 				.imageUrl(image)
 				.email(email)
 				.password(password)
+				.newPassword(newPassword)
 				.build();
 	}
 

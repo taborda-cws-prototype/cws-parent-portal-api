@@ -43,11 +43,20 @@ public class User {
     private List<User> caseworkers;
 
     // TODO: implement password hashing
-    @Transient
+    @Column(name = "password_hash")
     private String password;
-
+    
+    @Transient
+    private String newPassword;
+    
+    
     public Long getId() {return id; }
+    
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
     public String getFirstName() {
         return firstName;
     }
@@ -147,6 +156,16 @@ public class User {
     public String getFullName(){
         return firstName + " " + lastName;
     }
+    
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
 
 	@Override
 	public String toString() {
@@ -210,6 +229,10 @@ public class User {
         }
         public Builder password(String password) {
             user.setPassword(password);
+            return this;
+        }
+        public Builder newPassword(String password) {
+            user.setNewPassword(password);
             return this;
         }
 
