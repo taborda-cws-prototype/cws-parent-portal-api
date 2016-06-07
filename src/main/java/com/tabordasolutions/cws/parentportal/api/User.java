@@ -53,10 +53,8 @@ public class User {
     public Long getId() {return id; }
     
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-    
+    public void setId(Long id) { this.id = id; }
+
     public String getFirstName() {
         return firstName;
     }
@@ -153,6 +151,7 @@ public class User {
         this.city = city;
     }
 
+<<<<<<< HEAD
     public String getFullName(){
         return firstName + " " + lastName;
     }
@@ -166,6 +165,9 @@ public class User {
 		this.newPassword = newPassword;
 	}
 
+=======
+    public String getFullName(){ return firstName + " " + lastName; }
+>>>>>>> Add messages endpoint
 
 	@Override
 	public String toString() {
