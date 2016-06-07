@@ -1,5 +1,12 @@
 package com.tabordasolutions.cws.parentportal;
 
+import com.tabordasolutions.cws.parentportal.api.*;
+import com.tabordasolutions.cws.parentportal.auth.Cryptography;
+import com.tabordasolutions.cws.parentportal.resources.*;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
+import com.tabordasolutions.cws.parentportal.services.MessageService;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -116,10 +123,12 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
         final SessionResource sessionResource = new SessionResource(sessionService);
         environment.jersey().register(sessionResource);
 
-        final ConversationResource conversationResource= new ConversationResource(new ConversationService(), sessionService);
+
+        MessageDAO messageDAO = new MessageDAO(sessionFactory);
+        final ConversationResource conversationResource= new ConversationResource(new ConversationService(new ConversationDAO(sessionFactory),messageDAO), sessionService, userService);
         environment.jersey().register(conversationResource);
 
-        final MessageResource messageResource = new MessageResource(new MessageService());
+        final MessageResource messageResource = new MessageResource(new MessageService(messageDAO));
         environment.jersey().register(messageResource);
 
         final UserResource userResource = new UserResource(userService, sessionService);
