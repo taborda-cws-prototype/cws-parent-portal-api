@@ -76,7 +76,9 @@ public class UserService {
     	user.setImageUrl(copyFrom.getImageUrl());
     	user.setEmail(copyFrom.getEmail());
     	user.setPassword(copyFrom.getPassword());
-    	
+    	if(copyFrom.getPassword() != null && copyFrom.getPassword().trim().length() > 0 ) {
+    		user.setPassword(copyFrom.getPassword());
+    	}
     	return user;
     }
 }

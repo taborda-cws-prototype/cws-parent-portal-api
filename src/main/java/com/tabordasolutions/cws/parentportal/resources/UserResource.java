@@ -71,6 +71,21 @@ public class UserResource {
 	}
 
 	@UnitOfWork
+	@Path("/me")
+	@PUT
+	public User updateMe(@HeaderParam("X-Auth-Token") String token, User user) {
+		Session session = sessionService.loginWithToken(token);
+		try {
+			return userService.updateUser(session.getUserId(), user);
+		} catch (ServicesException e) {
+			//TODO : Handle through ExcpetionMapper
+			LOGGER.error("Unable to update " + user, e);
+			throw new ResourcesException(e.getMessage());
+		}
+	}
+	
+
+	@UnitOfWork
 	@Path("/")
 	@POST
 	public User createUser(User user) {
