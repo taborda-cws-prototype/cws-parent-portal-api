@@ -40,7 +40,7 @@ public class ConversationResourceTest {
         session = new Session(true, sender.getId(), token);
 
         mockedConversationService = mock(ConversationService.class);
-        when(mockedConversationService.save(any(),any(),any())).thenReturn(successfulConversation);
+        when(mockedConversationService.save((Conversation)any(),(User)any(),(User)any())).thenReturn(successfulConversation);
 
         mockedSessionService = mock(SessionService.class);
         when(mockedSessionService.loginWithToken(token)).thenReturn(session);
