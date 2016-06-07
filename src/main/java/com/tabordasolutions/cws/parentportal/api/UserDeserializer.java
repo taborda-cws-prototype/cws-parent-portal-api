@@ -35,7 +35,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		String image = node.get("image").asText();
 		String email = node.get("email").asText();
 		String password = node.get("password").asText();
-		String newPassword = node.get("npass").asText();
+		String newPassword = node.get("npass") != null ? node.get("npass").asText() : null;
 		User.Builder builder = new User.Builder();
 		return builder.id(id)
 				.firstName(firstName)
