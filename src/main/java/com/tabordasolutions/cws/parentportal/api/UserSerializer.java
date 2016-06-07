@@ -51,7 +51,7 @@ public class UserSerializer extends JsonSerializer<User> {
         generator.writeFieldName("email");
         generator.writeString(value.getEmail());
         generator.writeFieldName("password");
-        generator.writeString(value.getPassword());
+        generator.writeString("");
 
 
         generator.writeEndObject();
