@@ -16,7 +16,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 			throws IOException, JsonProcessingException {
 		ObjectCodec oc = jsonParser.getCodec();
 		JsonNode node = oc.readTree(jsonParser);  
-		Long id = node.get("id").asLong(Long.MIN_VALUE);
+		Long id = node.get("id") == null ? new Long(Long.MIN_VALUE) : node.get("id").asLong(Long.MIN_VALUE);
 		id = id.longValue() != Long.MIN_VALUE ? id : null;
 		JsonNode nameNode = node.get("name");
 		String firstName = nameNode.get("first_name").asText();
