@@ -151,11 +151,7 @@ public class User {
         this.city = city;
     }
 
-<<<<<<< HEAD
-    public String getFullName(){
-        return firstName + " " + lastName;
-    }
-    
+    public String getFullName(){ return firstName + " " + lastName; }
 
 	public String getNewPassword() {
 		return newPassword;
@@ -165,9 +161,6 @@ public class User {
 		this.newPassword = newPassword;
 	}
 
-=======
-    public String getFullName(){ return firstName + " " + lastName; }
->>>>>>> Add messages endpoint
 
 	@Override
 	public String toString() {
