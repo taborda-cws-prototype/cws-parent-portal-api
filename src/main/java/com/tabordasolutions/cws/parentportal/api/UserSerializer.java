@@ -45,9 +45,11 @@ public class UserSerializer extends JsonSerializer<User> {
             }
         }
         generator.writeEndArray();
+        if( value.getImageUrl() != null ) {
+            generator.writeFieldName("image");
+            generator.writeString(value.getImageUrl());
+        }
 
-        generator.writeFieldName("image");
-        generator.writeString(value.getImageUrl());
         generator.writeFieldName("email");
         generator.writeString(value.getEmail());
         generator.writeFieldName("password");
