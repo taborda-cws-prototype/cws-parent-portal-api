@@ -2,7 +2,6 @@ package com.tabordasolutions.cws.parentportal.services;
 
 import java.util.*;
 
-import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.Message;
 import com.tabordasolutions.cws.parentportal.api.MessageDAO;
 import com.tabordasolutions.cws.parentportal.api.User;
