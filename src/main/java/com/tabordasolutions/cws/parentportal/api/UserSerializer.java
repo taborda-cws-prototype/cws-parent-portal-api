@@ -10,10 +10,9 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class UserSerializer extends JsonSerializer<User> {
     @Override
     public void serialize(User value, JsonGenerator generator, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    	generator.writeStartObject();
     	generator.writeFieldName("id");
         generator.writeNumber(value.getId() != null ? value.getId() : -1);
-        
-    	generator.writeStartObject();
         generator.writeFieldName("name");
         generator.writeStartObject();
         generator.writeFieldName("first_name");
