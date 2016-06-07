@@ -5,8 +5,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.services.UserService;
@@ -14,6 +16,7 @@ import com.tabordasolutions.cws.parentportal.services.UserService;
 public class UserResourceTest {
     private UserService service;
     private final User user = mock(User.class);
+    private final UserService mockedService = mock(UserService.class);
 
     @Before
     public void setup() {
@@ -21,11 +24,39 @@ public class UserResourceTest {
         when(dao.find(1)).thenReturn(user);
         when(dao.findByUsername("joey.doe@example.com")).thenReturn(user);
         service = new UserService(dao);
+        
+        when(mockedService.updateUser(1, user)).thenReturn(user);
+        when(mockedService.createUser((User)Mockito.anyObject())).thenReturn(1L);
     }
 
     @Test
     public void userReturnsUserObject() {
         UserResource resource = new UserResource(service);
         assertEquals(user, resource.user(1));
+    }
+    
+    @Test
+    public void findUserByUserNameReturnsUserObject() {
+    	UserResource resource = new UserResource(service);
+    	assertEquals(user, resource.findUserByUserName("joey.doe@example.com"));
+    }
+    
+    @Test
+    public void updateUserReturnsUser() {
+    	UserResource resource = new UserResource(mockedService);
+    	assertEquals(user, resource.updateUser(1, user));
+    }
+    
+    @Test
+    public void createUserReturnsLongInId() {
+    	UserResource resource = new UserResource(mockedService);
+    	User.Builder builder = new User.Builder();
+		User user = builder.city("Sacramento").email("a@test.com")
+				.firstName("John").lastName("Doe")
+				.imageUrl("http:www.xyzabc.co").inCareOf("Baby Boy")
+				.password("password").state("CA")
+				.streetAddress1("123 Main Street").zip("90210").build();
+		user = resource.createUser(user);
+		assertEquals(1L, user.getId().longValue());
     }
 }
