@@ -122,7 +122,7 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
         final MessageResource messageResource = new MessageResource(new MessageService());
         environment.jersey().register(messageResource);
 
-        final UserResource userResource = new UserResource(userService);
+        final UserResource userResource = new UserResource(userService, sessionService);
         environment.jersey().register(userResource);
 
         final AgencyResource agencyResource = agencyResource(configuration, environment);

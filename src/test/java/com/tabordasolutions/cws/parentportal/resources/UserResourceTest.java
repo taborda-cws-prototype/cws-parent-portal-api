@@ -11,12 +11,14 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 
 public class UserResourceTest {
     private UserService service;
     private final User user = mock(User.class);
     private final UserService mockedService = mock(UserService.class);
+    private final SessionService mockedSessonService = mock(SessionService.class);
 
     @Before
     public void setup() {
@@ -31,25 +33,25 @@ public class UserResourceTest {
 
     @Test
     public void userReturnsUserObject() {
-        UserResource resource = new UserResource(service);
+        UserResource resource = new UserResource(service, mockedSessonService);
         assertEquals(user, resource.user(1));
     }
     
     @Test
     public void findUserByUserNameReturnsUserObject() {
-    	UserResource resource = new UserResource(service);
+    	UserResource resource = new UserResource(service, mockedSessonService);
     	assertEquals(user, resource.findUserByUserName("joey.doe@example.com"));
     }
     
     @Test
     public void updateUserReturnsUser() {
-    	UserResource resource = new UserResource(mockedService);
+    	UserResource resource = new UserResource(mockedService, mockedSessonService);
     	assertEquals(user, resource.updateUser(1, user));
     }
     
     @Test
     public void createUserReturnsLongInId() {
-    	UserResource resource = new UserResource(mockedService);
+    	UserResource resource = new UserResource(mockedService, mockedSessonService);
     	User.Builder builder = new User.Builder();
 		User user = builder.city("Sacramento").email("a@test.com")
 				.firstName("John").lastName("Doe")

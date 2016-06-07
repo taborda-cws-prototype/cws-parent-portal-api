@@ -4,6 +4,7 @@ import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -15,7 +16,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ServicesException;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 
 @Path("/users")
@@ -25,11 +28,21 @@ public class UserResource {
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(UserResource.class);
 	private UserService userService;
-
-	public UserResource(UserService userService) {
+	private SessionService sessionService;
+	
+	public UserResource(UserService userService, SessionService sessionService) {
 		this.userService = userService;
+		this.sessionService = sessionService;
 	}
 
+	@UnitOfWork
+	@Path("/me")
+	@GET
+	public User me(@HeaderParam("X-Auth-Token") String token) {
+		Session session = sessionService.loginWithToken(token);
+		return userService.findUserById(session.getUserId());
+	}
+	
 	@UnitOfWork
 	@Path("/{id}")
 	@GET
