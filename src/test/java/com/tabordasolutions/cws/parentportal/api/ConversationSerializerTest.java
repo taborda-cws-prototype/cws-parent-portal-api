@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class ConversationSerializerTest {
     private DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-    ConversationSerializer serializer;
+    CreateConversationSerializer serializer;
     JsonGenerator jsonGenerator;
     StringWriter stringWriter;
     Conversation conversation;
@@ -29,7 +29,7 @@ public class ConversationSerializerTest {
 
     @Before
     public void setup() throws IOException {
-        serializer = new ConversationSerializer();
+        serializer = new CreateConversationSerializer();
         stringWriter = new StringWriter();
         jsonGenerator = new JsonFactory().createGenerator(stringWriter);
 

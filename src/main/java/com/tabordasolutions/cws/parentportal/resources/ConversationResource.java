@@ -1,43 +1,73 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import com.tabordasolutions.cws.parentportal.ShowConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.api.CreateConversationRequest;
+import com.tabordasolutions.cws.parentportal.api.CreateConversationRequestDeserializer;
+import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.response.ConversationResponse;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/conversation")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ConversationResource {
+    private String RECEIVER = "receiver";
     private ConversationService conversationService;
     private SessionService sessionService;
+    private UserService userService;
 
-    public ConversationResource(ConversationService service, SessionService sessionService) {
+    public ConversationResource(ConversationService service, SessionService sessionService, UserService userService) {
         this.conversationService = service;
         this.sessionService = sessionService;
-    }
-
-    @POST
-    public Response create(Conversation conversation){
-        Conversation createdConversation = conversationService.save(conversation);
-        //success true
-        return Response.status(Response.Status.OK).entity(createdConversation).build();
+        this.userService = userService;
     }
 
     @UnitOfWork
-    @GET
-    public List<Conversation> list(@HeaderParam("X-Auth-Token") String token){
-        return conversationService.conversationsFor(getUser(token));
+    @Path("/")
+    @POST
+    public ConversationResponse create(@HeaderParam("X-Auth-Token") String token, CreateConversationRequest createRequest){
+        Conversation conversation = new Conversation();
+        conversation.setInitializer(createRequest.getMessage());
+        conversation.setSubject(createRequest.getSubject());
+        Conversation createdConversation = conversationService.save(conversation, getUserByToken(token), getUser(createRequest.getReceiverId()));
+        boolean success = createdConversation.getId() > 0 ? true : false;
+        return new ConversationResponse(createdConversation, success );
     }
 
-    private long getUser(String token) {
+    @UnitOfWork
+    @Path("/")
+    @GET
+    public List<Conversation> list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
+        if (type == RECEIVER){
+            return conversationService.conversationsAsRecipients(getUserByToken(token));
+        }else{
+            return conversationService.conversationsAsSender(getUserByToken(token));
+        }
+    }
+
+    @UnitOfWork
+    @Path("/{id}")
+    @GET
+    public Conversation show(ShowConversationRequest request){
+        return conversationService.find(request.getId());
+
+    }
+
+    private User getUserByToken(String token) {
         Session session = sessionService.loginWithToken(token);
-        return session.getUserId();
+        long userId = session.getUserId();
+        return userService.findUserById(userId);
+    }
+    private User getUser(long id) {
+        return userService.findUserById(id);
     }
 }

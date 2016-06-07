@@ -10,7 +10,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ConversationSerializer extends JsonSerializer<Conversation> {
+public class CreateConversationSerializer extends JsonSerializer<Conversation> {
     private DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
     @Override
