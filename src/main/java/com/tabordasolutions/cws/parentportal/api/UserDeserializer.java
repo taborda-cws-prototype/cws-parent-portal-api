@@ -32,7 +32,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		
 
 		//TODO : handle case workers
-		String image = node.get("image").asText();
+		String image = node.get("image") != null ? node.get("image").asText() : null;
 		String email = node.get("email").asText();
 		String password = node.get("password").asText();
 		String newPassword = node.get("npass") != null ? node.get("npass").asText() : null;
