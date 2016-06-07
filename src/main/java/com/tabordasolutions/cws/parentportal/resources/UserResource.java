@@ -88,13 +88,13 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/")
 	@POST
-	public User createUser(User user) {
+	public Session createUser(User user) {
 		
 		try {
 			long newId = userService.createUser(user);
 			
 			User.Builder builder = new User.Builder();
-			return builder.id(newId)
+			User newUser = builder.id(newId)
 				.firstName(user.getFirstName())
 				.lastName(user.getLastName())
 				.inCareOf(user.getInCareOf())
@@ -105,7 +105,10 @@ public class UserResource {
 				.zip(user.getZip())
 				.imageUrl(user.getImageUrl())
 				.email(user.getEmail())
+				.password(user.getPassword())
 				.build();
+			
+			return sessionService.login(newUser.getEmail(), newUser.getPassword());
 		} catch (ServicesException e) {
 			//TODO : Handle through ExcpetionMapper
 			LOGGER.error("Unable to create: " + user.toString(), e);
