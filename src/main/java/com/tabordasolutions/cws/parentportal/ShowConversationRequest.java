@@ -4,7 +4,7 @@ import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
 
 public class ShowConversationRequest {
-    @PathParam("id")
+    @PathParam("foo")
     private long id;
     @HeaderParam("X-Auth-Token")
     private String token;

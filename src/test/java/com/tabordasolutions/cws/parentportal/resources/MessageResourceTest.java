@@ -41,7 +41,7 @@ public class MessageResourceTest {
 
     @Test
     public void testShowingAMessage(){
-        resource.show(1);
+        resource.show(1, "mytoken");
         verify(mockMessageService).find(1);
     }
 

@@ -1,21 +1,20 @@
 package com.tabordasolutions.cws.parentportal.services;
 
-import com.tabordasolutions.cws.parentportal.api.ConversationDAO;
-import com.tabordasolutions.cws.parentportal.api.MessageDAO;
-import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-import com.tabordasolutions.cws.parentportal.api.Conversation;
-
 public class ConversationServiceTest {
     ConversationService service;
     ConversationDAO mockedConversationDao;
     MessageDAO mockMessageDao;
+    Conversation mockedConversation;
+    Message message;
     User sender;
     User receiver;
+    long id = 1;
 
     @Before
     public void setup(){
@@ -24,6 +23,13 @@ public class ConversationServiceTest {
         service = new ConversationService(mockedConversationDao, mockMessageDao);
         sender = new User();
         receiver = new User();
+        mockedConversation = mock(Conversation.class);
+        when(mockedConversationDao.find(id)).thenReturn(mockedConversation);
+        message = new Message();
+        message.setConversation(mockedConversation);
+        message.setAuthor(new User());
+        message.setRecipient(new User());
+        when(mockedConversation.getBaseMessage()).thenReturn(message);
     }
 
 
@@ -36,8 +42,8 @@ public class ConversationServiceTest {
 
     @Test
     public void testFindingConversation(){
-        service.find(1);
-        verify(mockedConversationDao).find(1);
+        service.find(id, sender);
+        verify(mockedConversationDao).find(id);
     }
 
 }

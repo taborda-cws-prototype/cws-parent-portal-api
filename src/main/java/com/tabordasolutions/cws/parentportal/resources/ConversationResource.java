@@ -59,9 +59,8 @@ public class ConversationResource {
     @UnitOfWork
     @Path("/{id}")
     @GET
-    public Conversation show(ShowConversationRequest request){
-        return conversationService.find(request.getId());
-
+    public Conversation show(@PathParam("id") long id, @HeaderParam("X-Auth-Token" )String token){
+        return conversationService.find(id, getUserByToken(token));
     }
 
     private User getUserByToken(String token) {

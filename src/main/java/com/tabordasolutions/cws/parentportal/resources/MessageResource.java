@@ -17,18 +17,19 @@ import java.util.List;
 public class MessageResource {
     MessageService messageService;
 
-    public MessageResource(MessageService service) {
-        this.messageService = service;
-    }
+    public MessageResource(MessageService service) { this.messageService = service; }
 
+    @UnitOfWork
+    @Path("/")
     @GET
     public List<Message> list(){
         return messageService.messagesFor(getUserId());
     }
 
+    @UnitOfWork
     @GET
     @Path("/{id}")
-    public Message show(@PathParam("id") long id){
+    public Message show(@PathParam("id") long id, @HeaderParam("X-Auth-Token" )String token){
         return messageService.find(id);
     }
 

@@ -101,9 +101,7 @@ public class ConversationResourceTest {
     @Test
     public void findSavedConversation(){
         ShowConversationRequest request = new ShowConversationRequest();
-        request.setId(7);
-        request.setToken(token);
-        resource.show(request);
-        verify(mockedConversationService).find(sender.getId());
+        resource.show(sender.getId(), token);
+        verify(mockedConversationService).find(sender.getId(), sender);
     }
 }

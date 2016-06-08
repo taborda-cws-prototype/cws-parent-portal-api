@@ -72,7 +72,14 @@ public class ConversationService {
         return conversation;
     }
 
-    public Conversation find(long id){
-        return conversationDao.find(id);
+    public Conversation find(long id, User user ){
+        Conversation conversation = conversationDao.find(id);
+        if (user == null && conversation.getBaseMessage().getAuthor().getId() != user.getId() && conversation.getBaseMessage().getRecipient().getId() != user.getId()){
+            conversation = new Conversation();
+        }else{
+            addMessagePropertiesToConversation(conversation, conversation.getBaseMessage());
+        }
+
+        return conversation;
     }
 }
