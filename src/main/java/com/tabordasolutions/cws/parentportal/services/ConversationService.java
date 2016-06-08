@@ -3,6 +3,7 @@ package com.tabordasolutions.cws.parentportal.services;
 import com.tabordasolutions.cws.parentportal.api.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConversationService {
@@ -43,14 +44,32 @@ public class ConversationService {
     }
 
     public Conversation save(Conversation conversation, User sender, User recipient){
+        conversation.setDateCreated(new Date());
+        Message message = createInitialMessageForConversation(conversation, sender, recipient);
+        conversation = addMessagePropertiesToConversation(conversation,message);
+        Conversation savedConversation = conversationDao.create(conversation);
+        messageDAO.create(message);
+        return savedConversation;
+    }
+
+    private Message createInitialMessageForConversation(Conversation conversation, User sender, User recipient){
         Message message = new Message();
         message.setAuthor(sender);
         message.setRecipient(recipient);
         message.setDateCreated(conversation.getDateCreated());
         message.setSubject(conversation.getSubject());
         message.setBody(conversation.getInitializer());
-        Conversation savedConversation = conversationDao.create(conversation);
-        return savedConversation;
+        message.setConversation(conversation);
+        return message;
+    }
+
+    private Conversation addMessagePropertiesToConversation(Conversation conversation, Message message){
+        conversation.setSender(message.getAuthor().getFullName());
+        conversation.setReceiver(message.getRecipient().getFullName());
+        conversation.setSubject(message.getSubject());
+        conversation.setBaseMessage(message);
+        conversation.setInitializer(message.getAuthor().getFullName());
+        return conversation;
     }
 
     public Conversation find(long id){

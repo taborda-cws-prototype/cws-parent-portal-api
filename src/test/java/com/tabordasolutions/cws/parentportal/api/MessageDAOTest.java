@@ -44,25 +44,14 @@ public class MessageDAOTest {
     }
 
     @Test
-    public void testFindingMessagesByRecipients(){
-        User fred = buildUser("Fred", "Flinstone", "BamBam", "123 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "me@myisp.com");
-        User barney = buildUser("Barney", "Rubble", "BamBam", "124 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "br@myisp.com");
-
-        setupDB(fred, barney);
-        List<Message> foundMessages = dao.findMessagesByRecipient(barney);
+    public void testFindingMessagesBySender(){
+        User wilma = buildUser("wilma", "Flinstone", "BamBam", "123 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "me@myisp.com");
+        User betty = buildUser("betty", "Rubble", "BamBam", "124 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "br@myisp.com");
+        setupDB(wilma, betty);
+        List<Message> foundMessages = dao.findMessagesBySender(wilma);
         assertEquals("Expected to only find one message", 1, foundMessages.size());
-        assertEquals("Expected find user a a recipient", barney.getFullName(), foundMessages.get(0).getRecipient().getFullName());
+        assertEquals("Expected find user a sender", wilma.getFullName(), foundMessages.get(0).getAuthor().getFullName());
     }
-
-//    @Test
-//    public void testFindingMessagesBySender(){
-//        User wilma = buildUser("wilma", "Flinstone", "BamBam", "123 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "me@myisp.com");
-//        User betty = buildUser("betty", "Rubble", "BamBam", "124 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "br@myisp.com");
-//        setupDB(wilma, betty);
-//        List<Message> foundMessages = dao.findMessagesBySender(wilma);
-//        assertEquals("Expected to only find one message", 1, foundMessages.size());
-//        assertEquals("Expected find user a sender", wilma.getFullName(), foundMessages.get(0).getAuthor().getFullName());
-//    }
 
     private void setupDB(User sender, User recipient){
         userDao.create(sender);

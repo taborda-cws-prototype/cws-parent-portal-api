@@ -12,18 +12,25 @@ import java.io.IOException;
 public class CreateConversationRequestDeserializer extends JsonDeserializer<CreateConversationRequest> {
     @Override
     public CreateConversationRequest deserialize(JsonParser jsonParser, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-        ObjectCodec oc = jsonParser.getCodec();
-        JsonNode node = oc.readTree(jsonParser);
+        CreateConversationRequest request;
+        try {
+            ObjectCodec oc = jsonParser.getCodec();
+            JsonNode node = oc.readTree(jsonParser);
 
-        Long id = node.get("receiver").asLong(Long.MIN_VALUE);
-        id = id.longValue() != Long.MIN_VALUE ? id : null;
+            request = new CreateConversationRequest();
+            request.setSubject(node.get("subject").asText());
+            request.setMessage(node.get("init_message").asText());
+            request.setReceiverId(node.get("receiver").asLong(Long.MIN_VALUE));
 
-        String subject = node.get("subject").asText();
-        String message = node.get("init_message").asText();
-        CreateConversationRequest request = new CreateConversationRequest();
-        request.setSubject(subject);
-        request.setMessage(message);
-        request.setReceiverId(id);
+        }catch(JsonProcessingException e) {
+            System.out.println("Threw JSON Deserializing Error. Unprocessable request, skipping....");
+            e.printStackTrace();
+            throw e;
+        } catch(IOException e){
+            System.out.println("Threw IO Exception. Unprocessable request, skipping....");
+            e.printStackTrace();
+            throw e;
+        }
         return request;
     }
 }

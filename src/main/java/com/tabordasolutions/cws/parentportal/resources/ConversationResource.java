@@ -3,7 +3,6 @@ package com.tabordasolutions.cws.parentportal.resources;
 import com.tabordasolutions.cws.parentportal.ShowConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.CreateConversationRequest;
-import com.tabordasolutions.cws.parentportal.api.CreateConversationRequestDeserializer;
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.response.ConversationResponse;
 import com.tabordasolutions.cws.parentportal.auth.Session;
@@ -38,7 +37,10 @@ public class ConversationResource {
         Conversation conversation = new Conversation();
         conversation.setInitializer(createRequest.getMessage());
         conversation.setSubject(createRequest.getSubject());
+        log("received request to create conversation for: " + conversation);
+
         Conversation createdConversation = conversationService.save(conversation, getUserByToken(token), getUser(createRequest.getReceiverId()));
+        log("Saved conversation for request: " + conversation);
         boolean success = createdConversation.getId() > 0 ? true : false;
         return new ConversationResponse(createdConversation, success );
     }
@@ -69,5 +71,9 @@ public class ConversationResource {
     }
     private User getUser(long id) {
         return userService.findUserById(id);
+    }
+
+    private void log(String message){
+        System.out.println(message);
     }
 }

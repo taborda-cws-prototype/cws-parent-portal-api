@@ -1,5 +1,9 @@
 package com.tabordasolutions.cws.parentportal.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonDeserialize(using=CreateConversationRequestDeserializer.class)
 public class CreateConversationRequest {
     private String subject;
     private Long receiverId;
@@ -14,12 +18,11 @@ public class CreateConversationRequest {
 
     }
 
-    public String getSubject() {
-        return subject;
-    }
+
+    public String getSubject() { return subject; }
 
     public void setSubject(String subject) {
-        subject = subject;
+        this.subject = subject;
     }
 
     public Long getReceiverId() {

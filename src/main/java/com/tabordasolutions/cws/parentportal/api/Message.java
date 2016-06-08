@@ -3,7 +3,6 @@ package com.tabordasolutions.cws.parentportal.api;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +10,7 @@ import javax.persistence.*;
 @JsonSerialize(using=MessageSerializer.class)
 public class Message {
     private long id;
+
     private User author;
     private User recipient;
     private Date dateCreated;
@@ -19,9 +19,8 @@ public class Message {
 
     private Conversation conversation;
 
-    public Message(){
+    public Message(){ }
 
-    }
     public Message(long id, Date dateCreated, User author, User recipient, String subject, String body) {
         this.id = id;
         this.dateCreated = dateCreated;
@@ -32,6 +31,7 @@ public class Message {
     }
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy=GenerationType.AUTO, generator = "message_id_seq")
     @SequenceGenerator(name="message_id_seq",sequenceName="message_id_seq",allocationSize=1)
     public long getId() { return id; }
@@ -96,8 +96,19 @@ public class Message {
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (body != null ? body.hashCode() : 0);
-        result = 31 * result + (conversation != null ? conversation.hashCode() : 0);
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", author=" + author +
+                ", recipient=" + recipient +
+                ", dateCreated=" + dateCreated +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", conversation=" + conversation.getId() +
+                '}';
+    }
 }

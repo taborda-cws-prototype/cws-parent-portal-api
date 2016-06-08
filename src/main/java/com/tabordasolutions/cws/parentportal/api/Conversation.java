@@ -89,7 +89,7 @@ public class Conversation {
         this.subject = subject;
     }
 
-    @Transient
+    @OneToOne(mappedBy="conversation")
     public Message getBaseMessage() {
         return baseMessage;
     }
@@ -146,9 +146,7 @@ public class Conversation {
         result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
         result = 31 * result + (dateUpdated != null ? dateUpdated.hashCode() : 0);
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
-        result = 31 * result + (baseMessage != null ? baseMessage.hashCode() : 0);
         result = 31 * result + (read ? 1 : 0);
-        result = 31 * result + (messages != null ? messages.hashCode() : 0);
         return result;
     }
 
@@ -161,5 +159,21 @@ public class Conversation {
             this.setSubject(message.getSubject());
             this.setDateCreated(message.getDateCreated());
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Conversation{" +
+                "id=" + id +
+                ", initializer='" + initializer + '\'' +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", dateUpdated=" + dateUpdated +
+                ", subject='" + subject + '\'' +
+                ", baseMessage=" + baseMessage +
+                ", read=" + read +
+                ", messages=" + messages +
+                '}';
     }
 }

@@ -21,17 +21,16 @@ public class MessageDAO extends AbstractDAO<Message> {
     }
 
     public List<Message> findMessagesByRecipient(User user){
-        return findMessagesBy(user, "from Message M where M.recipient = :recipient", "recipient");
+        return findMessagesBy(user, "from Message M where M.recipient=:person", "person");
     }
 
     public List<Message> findMessagesBySender(User user){
-        assert user != null;
-        return findMessagesBy(user, "from Message M where M.author = :author", "author");
+        return findMessagesBy(user, "from Message M where M.author=:person", "person");
     }
 
     private List<Message> findMessagesBy(User user, String queryString, String userNamedParam){
         Query query = currentSession().createQuery( queryString);
-        query.setEntity(userNamedParam, user);
-        return list(query);
+        query.setEntity("person", user);
+        return query.list();
     }
 }
