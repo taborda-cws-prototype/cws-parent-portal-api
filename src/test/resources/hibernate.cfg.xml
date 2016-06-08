@@ -10,22 +10,14 @@
         <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">cpp</property>
-        <!--
         <property name="hibernate.connection.password">ZQ6Y7TdsK</property>
-        -->
         <!--<property name="hibernate.connection.password"></property>-->
-        <!--
         <property name="hibernate.connection.url">jdbc:postgresql://cws-parent-portal.clb72r92gq7s.us-west-2.rds.amazonaws.com/cpp_jenkins_test</property>
-        -->
         <!--<property name="hibernate.connection.url">jdbc:postgresql://localhost/cpp</property>-->
 
 
 
-        <property name="hibernate.connection.username">cpp</property>
-        <property name="hibernate.connection.password">myPassword</property>
-        <!--<property name="hibernate.connection.password"></property>-->
-        <property name="hibernate.connection.url">jdbc:postgresql://cpp.cczlfehei2i3.us-west-2.rds.amazonaws.com/cpp</property>
-        <!--<property name="hibernate.connection.url">jdbc:postgresql://localhost/cpp</property>-->
+
 
 
 
