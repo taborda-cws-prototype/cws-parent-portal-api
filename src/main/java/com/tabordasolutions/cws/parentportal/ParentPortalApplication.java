@@ -1,12 +1,5 @@
 package com.tabordasolutions.cws.parentportal;
 
-import com.tabordasolutions.cws.parentportal.api.*;
-import com.tabordasolutions.cws.parentportal.auth.Cryptography;
-import com.tabordasolutions.cws.parentportal.resources.*;
-import com.tabordasolutions.cws.parentportal.services.ConversationService;
-import com.tabordasolutions.cws.parentportal.services.MessageService;
-import com.tabordasolutions.cws.parentportal.services.SessionService;
-import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -31,8 +24,11 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tabordasolutions.cws.parentportal.api.ConversationDAO;
+import com.tabordasolutions.cws.parentportal.api.MessageDAO;
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
+import com.tabordasolutions.cws.parentportal.api.response.RuntimeExceptionMapper;
 import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.filters.ModifyResponseFilter;
 import com.tabordasolutions.cws.parentportal.resources.AgencyResource;
@@ -108,9 +104,7 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
     }
     
     private void registerExceptionMappers(Environment environment) {
-    	//TODO : handle exceptions through a mapper.  Mainly looking at hibernate exceptions here
-    	//       for now we will short circuit exceptions in Service layer
-    	//environment.jersey().register(new RuntimeExceptionMapper());
+    	environment.jersey().register(new RuntimeExceptionMapper());
     }
 
     private void registerResources(final ParentPortalConfiguration configuration, final Environment environment, final SessionFactory sessionFactory) {
