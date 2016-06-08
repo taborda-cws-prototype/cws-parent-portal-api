@@ -19,7 +19,6 @@ Further configuration options are available in the file config/parentportal_conf
 
 ### Prerequisites
 
-1. Java SE 8 runtime environment
 1. PostgreSQL database 9.4
 
 ### Using Docker
