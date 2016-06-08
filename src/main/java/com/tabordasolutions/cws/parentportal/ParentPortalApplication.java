@@ -116,10 +116,11 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
 
 
         MessageDAO messageDAO = new MessageDAO(sessionFactory);
-        final ConversationResource conversationResource= new ConversationResource(new ConversationService(new ConversationDAO(sessionFactory),messageDAO), sessionService, userService);
+        ConversationService conversationService = new ConversationService(new ConversationDAO(sessionFactory), messageDAO);
+        final ConversationResource conversationResource = new ConversationResource(conversationService, sessionService, userService);
         environment.jersey().register(conversationResource);
 
-        final MessageResource messageResource = new MessageResource(new MessageService(messageDAO));
+        final MessageResource messageResource = new MessageResource(new MessageService(messageDAO),conversationService, sessionService, userService);
         environment.jersey().register(messageResource);
 
         final UserResource userResource = new UserResource(userService, sessionService);

@@ -4,26 +4,50 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.api.CreateMessageRequest;
 import com.tabordasolutions.cws.parentportal.api.Message;
+import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.response.MessageResponse;
+import com.tabordasolutions.cws.parentportal.auth.Session;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.hibernate.UnitOfWork;
+import org.hibernate.validator.cfg.context.GroupConversionTargetContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Path("/message")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MessageResource {
-    MessageService messageService;
+    private String RECEIVER = "receiver";
+    private MessageService messageService;
+    private ConversationService conversationService;
+    private SessionService sessionService;
+    private UserService userService;
 
-    public MessageResource(MessageService service) { this.messageService = service; }
+    public MessageResource() { }
+
+    public MessageResource(MessageService messageService, ConversationService conversationService, SessionService sessionService, UserService userService) {
+        this.messageService = messageService;
+        this.conversationService = conversationService;
+        this.sessionService = sessionService;
+        this.userService = userService;
+    }
 
     @UnitOfWork
     @Path("/")
     @GET
-    public List<Message> list(){
-        return messageService.messagesFor(getUserId());
+    public List<Message> list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
+        if (type == RECEIVER){
+            return messageService.findByRecipient(getUserByToken(token));
+
+        }else{
+            return messageService.findBySender(getUserByToken(token));
+        }
     }
 
     @UnitOfWork
@@ -34,14 +58,19 @@ public class MessageResource {
     }
 
     @UnitOfWork
+    @Path("/")
     @POST
-    public MessageResponse create(Message message){
+    public MessageResponse create(@HeaderParam("X-Auth-Token") String token, CreateMessageRequest createRequest){
+        Conversation conversation = conversationService.find(createRequest.getConversationId(),getUserByToken(token));
+        Message message = createRequest.buildMessage(new User(), new User(), conversation);
         Message createdMessage = messageService.save(message);
         boolean success = createdMessage.getId() > 0 ? true : false;
         return new MessageResponse(createdMessage, success );
     }
 
-    private long getUserId() {
-        return 1;
+    private User getUserByToken(String token) {
+        Session session = sessionService.loginWithToken(token);
+        long userId = session.getUserId();
+        return userService.findUserById(userId);
     }
 }

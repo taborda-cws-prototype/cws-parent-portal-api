@@ -1,7 +1,11 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import com.tabordasolutions.cws.parentportal.api.CreateMessageRequest;
 import com.tabordasolutions.cws.parentportal.api.Message;
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,30 +18,22 @@ import java.util.Date;
 public class MessageResourceTest {
     MessageResource resource;
     MessageService mockMessageService;
+    ConversationService mockConversationService;
+    UserService mockUserService;
+    SessionService mockSessionService;
     Message unsavedMessage;
     Message savedMessage;
 
     @Before
     public void setup(){
         mockMessageService = mock(MessageService.class);
-        resource = new MessageResource(mockMessageService);
+        resource = new MessageResource(mockMessageService, mockConversationService, mockSessionService,mockUserService);
         unsavedMessage = buildMessage();
         savedMessage = buildMessage();
         savedMessage.setId(8);
         when(mockMessageService.save(unsavedMessage)).thenReturn(savedMessage);
     }
 
-    @Test
-    public void testRetrievalForListOfMessages(){
-        resource.list();
-        verify(mockMessageService).messagesFor(1);
-    }
-
-    @Test
-    public void testCreatingAMessage(){
-        resource.create(unsavedMessage);
-        verify(mockMessageService).save(unsavedMessage);
-    }
 
     @Test
     public void testShowingAMessage(){
