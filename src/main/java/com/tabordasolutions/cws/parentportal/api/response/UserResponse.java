@@ -20,7 +20,6 @@ public class UserResponse {
 		this.success = success;
 		this.message = "SUCCESS";
 	}
-	
 
 	public User getUser() {
 		return user;

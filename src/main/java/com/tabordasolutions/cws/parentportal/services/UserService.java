@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
 
+import java.util.List;
+
 public class UserService {
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(UserService.class);
@@ -20,7 +22,9 @@ public class UserService {
     }
 
     public User findUserById(long id){
-        return dao.find(id);
+		User user = dao.find(id);
+		user = loadCaseworkers(user);
+		return user;
     }
     
     /**
@@ -48,10 +52,17 @@ public class UserService {
     			throw new ServicesException("Password incorrect" )	;
 	    	}
     	}
-    	
-    	
+
     	return dao.update(copyUser(existingUser, user));
     }
+
+	private User loadCaseworkers(User user){
+		List<User> caseworkers = dao.findCaseworkers("%cws.com");
+		if(user != null) {
+			user.setCaseworkers(caseworkers);
+		}
+		return user;
+	}
     	
     private boolean isPasswordChanged(User user) {
     	return( user.getNewPassword() != null && user.getPassword().trim().length() > 0); 
