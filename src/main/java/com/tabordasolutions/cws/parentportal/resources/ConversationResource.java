@@ -34,6 +34,7 @@ public class ConversationResource {
     @Path("/")
     @POST
     public ConversationResponse create(@HeaderParam("X-Auth-Token") String token, CreateConversationRequest createRequest){
+        log("***************** getReceiverId: " + createRequest.getReceiverId());
         Conversation conversation = new Conversation();
         conversation.setInitializer(createRequest.getMessage());
         conversation.setSubject(createRequest.getSubject());

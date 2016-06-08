@@ -36,7 +36,18 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
         generator.writeStartArray();
         if (value.getMessages() != null && !value.getMessages().isEmpty()){
             for (Message message : value.getMessages()) {
-                generator.writeObject(message);
+                generator.writeStartObject();
+
+                generator.writeFieldName("sender");
+                generator.writeString(String.valueOf(message.getAuthor().getFullName()));
+                generator.writeFieldName("receiver");
+                generator.writeString(String.valueOf(message.getRecipient().getFullName()));
+                generator.writeFieldName("content");
+                generator.writeString(String.valueOf(message.getBody()));
+                generator.writeFieldName("date");
+                generator.writeString(dateAsString(message.getDateCreated()));
+
+                generator.writeEndObject();
             }
         }
         generator.writeEndArray();

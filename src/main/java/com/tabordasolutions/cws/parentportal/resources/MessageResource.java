@@ -62,8 +62,11 @@ public class MessageResource {
     @POST
     public MessageResponse create(@HeaderParam("X-Auth-Token") String token, CreateMessageRequest createRequest){
         Conversation conversation = conversationService.find(createRequest.getConversationId(),getUserByToken(token));
-        Message message = createRequest.buildMessage(new User(), new User(), conversation);
+        Message message = createRequest.buildMessage(getUserByToken(token) , getUser(createRequest.getReceiver()), conversation);
+        log("received request to create message for: " + message);
+        log("creating message for conversation" + conversation);
         Message createdMessage = messageService.save(message);
+        log("saved message to conversation" + conversation);
         boolean success = createdMessage.getId() > 0 ? true : false;
         return new MessageResponse(createdMessage, success );
     }
@@ -72,5 +75,11 @@ public class MessageResource {
         Session session = sessionService.loginWithToken(token);
         long userId = session.getUserId();
         return userService.findUserById(userId);
+    }
+    private User getUser(long id) {
+        return userService.findUserById(id);
+    }
+    private void log(String message){
+        System.out.println(message);
     }
 }

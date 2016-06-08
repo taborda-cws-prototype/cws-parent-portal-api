@@ -74,12 +74,24 @@ public class ConversationService {
 
     public Conversation find(long id, User user ){
         Conversation conversation = conversationDao.find(id);
-        if (user == null && conversation.getBaseMessage().getAuthor().getId() != user.getId() && conversation.getBaseMessage().getRecipient().getId() != user.getId()){
-            conversation = new Conversation();
-        }else{
+
+        if (conversationContainsUser(user, conversation)) {
             addMessagePropertiesToConversation(conversation, conversation.getBaseMessage());
+        }else{
+            conversation = new Conversation();
         }
 
         return conversation;
+    }
+
+    private boolean conversationContainsUser(User user, Conversation conversation){
+        if (user == null || conversation == null) { return false; }
+        if (conversation.getBaseMessage() == null) { return false; }
+        return matchesUser(user, conversation.getBaseMessage().getAuthor()) || matchesUser(user, conversation.getBaseMessage().getRecipient());
+    }
+    private boolean matchesUser(User user, User messenger){
+        if ( user == null || messenger == null) { return false; }
+        if ( user.getId() == null || user.getId() <= 0 || messenger.getId() <= 0) { return false; }
+        return user.getId() == messenger.getId();
     }
 }

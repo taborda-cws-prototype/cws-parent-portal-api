@@ -7,8 +7,8 @@ import java.util.Date;
 @JsonDeserialize(using=CreateMessageDeserializer.class)
 public class CreateMessageRequest {
     long conversationId;
-    String sender;
-    String receiver;
+    long sender;
+    long receiver;
     String content;
     Date date;
 
@@ -31,19 +31,19 @@ public class CreateMessageRequest {
         this.conversationId = conversationId;
     }
 
-    public String getSender() {
+    public long getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
+    public void setSender(long sender) {
         this.sender = sender;
     }
 
-    public String getReceiver() {
+    public long getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(String receiver) {
+    public void setReceiver(long receiver) {
         this.receiver = receiver;
     }
 

@@ -2,8 +2,7 @@ package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 
 @Entity
@@ -89,10 +88,8 @@ public class Conversation {
         this.subject = subject;
     }
 
-    @OneToOne(mappedBy="conversation")
-    public Message getBaseMessage() {
-        return baseMessage;
-    }
+    @Transient
+    public Message getBaseMessage() { return loadBaseMessage(); }
 
     public void setBaseMessage(Message baseMessage) {
         this.baseMessage = baseMessage;
@@ -109,12 +106,17 @@ public class Conversation {
 
     @OneToMany( mappedBy="conversation", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @ElementCollection(targetClass=Message.class)
-    public Set<Message> getMessages() {
-        return messages;
-    }
+    public Set<Message> getMessages() { return messages != null ? messages : new HashSet<Message>(); }
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
+    }
+
+    private Message loadBaseMessage(){
+        if (messages == null || baseMessage == null) { return new Message(); }
+        List<Message> sorted = new ArrayList(messages);
+        Collections.sort(sorted, Collections.reverseOrder());
+        return sorted.get(0);
     }
 
     @Override
@@ -134,7 +136,6 @@ public class Conversation {
         if (subject != null ? !subject.equals(that.subject) : that.subject != null) return false;
         if (baseMessage != null ? !baseMessage.equals(that.baseMessage) : that.baseMessage != null) return false;
         return !(messages != null ? !messages.equals(that.messages) : that.messages != null);
-
     }
 
     @Override

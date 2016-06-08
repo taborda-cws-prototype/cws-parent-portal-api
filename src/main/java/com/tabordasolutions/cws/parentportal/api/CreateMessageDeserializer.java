@@ -19,9 +19,11 @@ public class CreateMessageDeserializer extends JsonDeserializer<CreateMessageReq
             JsonNode node = oc.readTree(jsonParser);
 
             request = new CreateMessageRequest();
-            request.setSender(node.get("sender").asText());
-            request.setReceiver(node.get("receiver").asText());
-            request.setContent(node.get("content").asText());
+            request.setConversationId(node.get("conversation_id").asLong());
+            JsonNode message = node.get("message");
+            request.setSender(message.get("sender").asLong());
+            request.setReceiver(message.get("receiver").asLong());
+            request.setContent(message.get("content").asText());
             request.setDate(new Date());
 
         } catch (JsonProcessingException e) {

@@ -15,4 +15,7 @@ public class ConversationDAO extends AbstractDAO<Conversation> {
     public Conversation find(long id){
         return get(id);
     }
+    public Conversation save(Conversation conversation){
+        return persist(conversation);
+    }
 }

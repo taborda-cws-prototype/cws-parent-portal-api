@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "messages")
 @JsonSerialize(using=MessageSerializer.class)
-public class Message {
+public class Message implements Comparable<Message> {
     private long id;
 
     private User author;
@@ -108,7 +108,10 @@ public class Message {
                 ", dateCreated=" + dateCreated +
                 ", subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
-                ", conversation=" + conversation.getId() +
                 '}';
+    }
+    @Override
+    public int compareTo(Message o) {
+        return dateCreated.compareTo(o.getDateCreated());
     }
 }
