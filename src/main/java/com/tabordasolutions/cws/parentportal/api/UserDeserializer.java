@@ -24,17 +24,16 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		
 		JsonNode addressNode = node.get("address");
 		String inCareOf = node.get("name") != null ? node.get("name").asText() : null;
-		String streetAddress1 = addressNode.get("street_address").asText();
-		String streetAddress2 = addressNode.get("street_address_2").asText();
-		String state = addressNode.get("state").asText();
-		String city = addressNode.get("city").asText();
+		String streetAddress1 = addressNode.get("street_address") != null ? addressNode.get("street_address").asText() : null;
+		String streetAddress2 = addressNode.get("street_address_2") != null ? addressNode.get("street_address_2").asText() : null;
+		String state = addressNode.get("state") != null ? addressNode.get("state").asText() : null;
+		String city = addressNode.get("city") != null ? addressNode.get("city").asText() : null;
 		String zip = addressNode.get("zip").asText();
 		
-
 		//TODO : handle case workers
 		String image = node.get("image") != null ? node.get("image").asText() : null;
 		String email = node.get("email").asText();
-		String password = node.get("password").asText();
+		String password = node.get("password") != null ? node.get("password").asText() : null;
 		String newPassword = node.get("npass") != null ? node.get("npass").asText() : null;
 		User.Builder builder = new User.Builder();
 		return builder.id(id)
