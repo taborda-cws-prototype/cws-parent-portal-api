@@ -2,11 +2,11 @@ package com.tabordasolutions.cws.parentportal.api.response;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 
-public class ConversationResponse {
+public class ConversationCreateResponse {
     private Conversation Conversation;
     private boolean success;
 
-    public ConversationResponse(com.tabordasolutions.cws.parentportal.api.Conversation conversation, boolean success) {
+    public ConversationCreateResponse(com.tabordasolutions.cws.parentportal.api.Conversation conversation, boolean success) {
         Conversation = conversation;
         this.success = success;
     }

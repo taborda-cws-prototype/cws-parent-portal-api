@@ -7,7 +7,7 @@ import com.tabordasolutions.cws.parentportal.ShowConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.CreateConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.api.response.ConversationResponse;
+import com.tabordasolutions.cws.parentportal.api.response.ConversationCreateResponse;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
@@ -71,7 +71,7 @@ public class ConversationResourceTest {
     @Test
     public void createConversationIsSaved(){
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(senderToken, request);
+        ConversationCreateResponse response = resource.create(senderToken, request);
         verify(mockedConversationService).save(unsavedConversation, sender, receiver);
         assertEquals("expect response to contain the saved conversation", successfulConversation, response.getConversation());
     }
@@ -79,7 +79,7 @@ public class ConversationResourceTest {
     @Test
     public void successfulCreateConversationReturnsSuccess(){
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(senderToken, request);
+        ConversationCreateResponse response = resource.create(senderToken, request);
         assertTrue("Expect response to indicate success", response.isSuccess());
     }
 
@@ -90,7 +90,7 @@ public class ConversationResourceTest {
         resource = new ConversationResource(mockedConversationService, mockedSessionService, mockUserService);
 
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(senderToken, request);
+        ConversationCreateResponse response = resource.create(senderToken, request);
         assertFalse("Expect status to indicate failure", response.isSuccess());
     }
     @Test
@@ -98,7 +98,7 @@ public class ConversationResourceTest {
         Conversation conversation = new Conversation();
         when(mockedConversationService.save(conversation, sender, receiver)).thenReturn(conversation);
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(senderToken, request);
+        ConversationCreateResponse response = resource.create(senderToken, request);
         assertEquals("Expect response to contain conversation", conversation, response.getConversation());
     }
 
