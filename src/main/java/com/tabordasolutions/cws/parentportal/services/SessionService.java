@@ -29,6 +29,16 @@ public class SessionService {
         return login(credentials[USERNAME], credentials[PASSWORD]);
     }
 
+    public  User getUserByToken(String token) {
+        Session session = loginWithToken(token);
+        long userId = session.getUserId();
+        return userService.findUserById(userId);
+    }
+
+    public User getUser(long id) {
+        return userService.findUserById(id);
+    }
+
     private boolean isValid(String string) {
         return string != null && string.length() > 0 && Character.isLowerCase(string.charAt(0));
     }

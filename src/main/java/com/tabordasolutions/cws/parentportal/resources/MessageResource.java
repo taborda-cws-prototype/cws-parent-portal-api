@@ -14,9 +14,7 @@ import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 import io.dropwizard.hibernate.UnitOfWork;
-import org.hibernate.validator.cfg.context.GroupConversionTargetContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/message")
@@ -40,14 +38,16 @@ public class MessageResource {
 
     @UnitOfWork
     @Path("/")
-    @GET
-    public List<Message> list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
-        if (type == RECEIVER){
-            return messageService.findByRecipient(getUserByToken(token));
-
-        }else{
-            return messageService.findBySender(getUserByToken(token));
-        }
+    @POST
+    public MessageResponse create(@HeaderParam("X-Auth-Token") String token, CreateMessageRequest createRequest){
+        Conversation conversation = conversationService.find(createRequest.getConversationId(),sessionService.getUserByToken(token));
+        Message message = createRequest.buildMessage(sessionService.getUserByToken(token) , sessionService.getUser(createRequest.getReceiver()), conversation);
+        log("received request to create message for: " + message);
+        log("creating message for conversation" + conversation);
+        Message createdMessage = messageService.save(message);
+        log("saved message to conversation" + conversation);
+        boolean success = createdMessage.getId() > 0 ? true : false;
+        return new MessageResponse(createdMessage, success );
     }
 
     @UnitOfWork
@@ -59,25 +59,14 @@ public class MessageResource {
 
     @UnitOfWork
     @Path("/")
-    @POST
-    public MessageResponse create(@HeaderParam("X-Auth-Token") String token, CreateMessageRequest createRequest){
-        Conversation conversation = conversationService.find(createRequest.getConversationId(),getUserByToken(token));
-        Message message = createRequest.buildMessage(getUserByToken(token) , getUser(createRequest.getReceiver()), conversation);
-        log("received request to create message for: " + message);
-        log("creating message for conversation" + conversation);
-        Message createdMessage = messageService.save(message);
-        log("saved message to conversation" + conversation);
-        boolean success = createdMessage.getId() > 0 ? true : false;
-        return new MessageResponse(createdMessage, success );
-    }
+    @GET
+    public List<Message> list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
+        if (type == RECEIVER){
+            return messageService.findByRecipient(sessionService.getUserByToken(token));
 
-    private User getUserByToken(String token) {
-        Session session = sessionService.loginWithToken(token);
-        long userId = session.getUserId();
-        return userService.findUserById(userId);
-    }
-    private User getUser(long id) {
-        return userService.findUserById(id);
+        }else{
+            return messageService.findBySender(sessionService.getUserByToken(token));
+        }
     }
     private void log(String message){
         System.out.println(message);

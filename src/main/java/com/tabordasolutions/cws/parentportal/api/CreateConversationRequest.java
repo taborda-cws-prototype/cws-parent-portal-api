@@ -1,7 +1,6 @@
 package com.tabordasolutions.cws.parentportal.api;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonDeserialize(using=CreateConversationRequestDeserializer.class)
 public class CreateConversationRequest {

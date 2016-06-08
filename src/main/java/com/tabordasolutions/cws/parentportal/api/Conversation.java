@@ -113,10 +113,11 @@ public class Conversation {
     }
 
     private Message loadBaseMessage(){
-        if (messages == null || baseMessage == null) { return new Message(); }
+        Message emptyMessage = new Message();
+        if (messages == null || baseMessage == null) { return  emptyMessage; }
         List<Message> sorted = new ArrayList(messages);
         Collections.sort(sorted, Collections.reverseOrder());
-        return sorted.get(0);
+        return sorted.isEmpty() ? emptyMessage : sorted.get(0);
     }
 
     @Override
@@ -154,13 +155,16 @@ public class Conversation {
     public void updateMessage(Message message){
         if(message != null){
             this.setBaseMessage(message);
-            this.setInitializer(message.getAuthor().getFullName());
-            this.setReceiver(message.getRecipient().getFullName());
-            this.setSender(message.getAuthor().getFullName());
+            String name = message.getAuthor() != null ? message.getAuthor().getFullName() : "";
+            this.setInitializer(name);
+            this.setSender(name);
+            name = message.getRecipient() != null ? message.getRecipient().getFullName() : "";
+            this.setReceiver(name);
             this.setSubject(message.getSubject());
             this.setDateCreated(message.getDateCreated());
         }
     }
+
 
     @Override
     public String toString() {

@@ -17,7 +17,8 @@ import org.junit.Test;
 
 public class ConversationResourceTest {
     private ConversationResource resource;
-    private String token = "myToken";
+    private String senderToken = "senderToken";
+    private String receiverToken = "receiverToken";
     ConversationService mockedConversationService;
     Session session;
     UserService mockUserService;
@@ -37,13 +38,16 @@ public class ConversationResourceTest {
         unsavedConversation = new Conversation();
         successfulConversation = new Conversation();
         successfulConversation.setId(100);
-        session = new Session(true, sender.getId(), token);
+        session = new Session(true, sender.getId(), senderToken);
 
         mockedConversationService = mock(ConversationService.class);
         when(mockedConversationService.save((Conversation)any(),(User)any(),(User)any())).thenReturn(successfulConversation);
 
         mockedSessionService = mock(SessionService.class);
-        when(mockedSessionService.loginWithToken(token)).thenReturn(session);
+        when(mockedSessionService.loginWithToken(senderToken)).thenReturn(session);
+        when(mockedSessionService.getUserByToken(senderToken)).thenReturn(sender);
+        when(mockedSessionService.getUserByToken(receiverToken)).thenReturn(receiver);
+        when(mockedSessionService.getUser(receiver.getId())).thenReturn(receiver);
 
         mockUserService = mock(UserService.class);
         when(mockUserService.findUserById(sender.getId())).thenReturn(sender);
@@ -54,20 +58,20 @@ public class ConversationResourceTest {
 
     @Test
     public void listOfConverstaionsForRecipients(){
-        resource.list("receiver", token);
+        resource.list("receiver", senderToken);
         verify(mockedConversationService).conversationsAsRecipients(sender);
     }
 
     @Test
     public void listOfConverstaionsForSenders(){
-        resource.list("sender", token);
+        resource.list("sender", senderToken);
         verify(mockedConversationService).conversationsAsSender(sender);
     }
 
     @Test
     public void createConversationIsSaved(){
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(token, request);
+        ConversationResponse response = resource.create(senderToken, request);
         verify(mockedConversationService).save(unsavedConversation, sender, receiver);
         assertEquals("expect response to contain the saved conversation", successfulConversation, response.getConversation());
     }
@@ -75,7 +79,7 @@ public class ConversationResourceTest {
     @Test
     public void successfulCreateConversationReturnsSuccess(){
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(token, request);
+        ConversationResponse response = resource.create(senderToken, request);
         assertTrue("Expect response to indicate success", response.isSuccess());
     }
 
@@ -86,7 +90,7 @@ public class ConversationResourceTest {
         resource = new ConversationResource(mockedConversationService, mockedSessionService, mockUserService);
 
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(token, request);
+        ConversationResponse response = resource.create(senderToken, request);
         assertFalse("Expect status to indicate failure", response.isSuccess());
     }
     @Test
@@ -94,14 +98,14 @@ public class ConversationResourceTest {
         Conversation conversation = new Conversation();
         when(mockedConversationService.save(conversation, sender, receiver)).thenReturn(conversation);
         CreateConversationRequest request = new CreateConversationRequest(receiver.getId(), unsavedConversation.getSubject(), unsavedConversation.getInitializer());
-        ConversationResponse response = resource.create(token, request);
+        ConversationResponse response = resource.create(senderToken, request);
         assertEquals("Expect response to contain conversation", conversation, response.getConversation());
     }
 
     @Test
     public void findSavedConversation(){
         ShowConversationRequest request = new ShowConversationRequest();
-        resource.show(sender.getId(), token);
+        resource.show(sender.getId(), senderToken);
         verify(mockedConversationService).find(sender.getId(), sender);
     }
 }
