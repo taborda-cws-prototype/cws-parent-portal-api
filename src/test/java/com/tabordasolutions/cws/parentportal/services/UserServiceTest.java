@@ -67,7 +67,7 @@ public class UserServiceTest {
     @Test
     public void updateNonUniqueEmailUserThrowsException() {
         thrown.expect(ServicesException.class);
-        thrown.expectMessage("email not unique");
+        thrown.expectMessage("Email not unique");
          
     	service.updateUser(2, user2);
     }
@@ -81,7 +81,7 @@ public class UserServiceTest {
     @Test
     public void createAlreadyExistingUserThrowsException() {
         thrown.expect(ServicesException.class);
-        thrown.expectMessage("email not unique");
+        thrown.expectMessage("Email not unique");
          
     	service.createUser(user2);
     }

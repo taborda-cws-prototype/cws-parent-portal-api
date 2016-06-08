@@ -1,6 +1,6 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -76,9 +76,9 @@ public class UserSerializerTest {
         assertTrue("Expected json to contain city value",  json.contains("\"city\":null"));
         assertTrue("Expected json to contain zip value",  json.contains("\"zip\":null"));
         assertTrue("Expected json to contain case_workers value",  json.contains("\"case_workers\":[]"));
-        assertTrue("Expected json to contain image value",  json.contains("\"image\":null"));
+        assertFalse("Expected json to contain image value",  json.contains("\"image\":null"));
         assertTrue("Expected json to contain email value",  json.contains("\"email\":null"));
-        assertTrue("Expected json to contain password value",  json.contains("\"password\":null"));
+        assertTrue("Expected json to contain password value",  json.contains("\"password\":\"\""));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class UserSerializerTest {
         assertTrue("Expected json to contain case_workers value",  json.contains("\"case_workers\":[]"));
         assertTrue("Expected json to contain image value",  json.contains("\"image\":\"" + imageUrl));
         assertTrue("Expected json to contain email value",  json.contains("\"email\":\"" + email));
-        assertTrue("Expected json to contain password value",  json.contains("\"password\":\"" + password));
+        assertTrue("Expected json to contain password value",  json.contains("\"password\":\"\""));
     }
 
 }

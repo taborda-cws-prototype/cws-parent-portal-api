@@ -40,12 +40,12 @@ public class UserService {
     	User existingWithUsername = findUserByUserName(user.getEmail());
     	if( existingWithUsername != null && existingWithUsername.getId() != id) {
     		LOGGER.warn("Unable to update user email to non unique email {}", user.getEmail());
-    		throw new ServicesException("email not unique");
+    		throw new ServicesException("Email not unique");
     	}
     	if( isPasswordChanged(user) ) {
     		if( !isCorrectPassword(user, existingWithUsername)) {
 	    		LOGGER.warn("Unabl to update user, password incorrect {}", user.getEmail());
-    			throw new ServicesException("Unable to update user, password not correct" )	;
+    			throw new ServicesException("Password incorrect" )	;
 	    	}
     	}
     	
@@ -80,7 +80,7 @@ public class UserService {
     		return dao.create(user);	
     	} else {
     		LOGGER.warn("Unable to create user with non unique email {}", user.getEmail());
-    		throw new ServicesException("email not unique" );
+    		throw new ServicesException("Email not unique" );
     	}
     }
     

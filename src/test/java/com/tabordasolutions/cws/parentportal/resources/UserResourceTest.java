@@ -1,7 +1,6 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -12,6 +11,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.response.UserResponse;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
@@ -38,9 +38,9 @@ public class UserResourceTest {
     }
 
     @Test
-    public void userReturnsUserObject() {
+    public void userReturnsUserResponset() {
         UserResource resource = new UserResource(service, mockedSessonService);
-        assertEquals(user, resource.user(1));
+        assertTrue(resource.user(1) instanceof UserResponse);
     }
     
     @Test
@@ -50,9 +50,9 @@ public class UserResourceTest {
     }
     
     @Test
-    public void updateUserReturnsUser() {
+    public void updateUserReturnsUserResponse() {
     	UserResource resource = new UserResource(mockedService, mockedSessonService);
-    	assertEquals(user, resource.updateUser(1, user));
+    	assertTrue(resource.updateUser(1, user) instanceof UserResponse);
     }
     
     @Test
@@ -64,7 +64,8 @@ public class UserResourceTest {
 				.imageUrl("http:www.xyzabc.co").inCareOf("Baby Boy")
 				.password("password").state("CA")
 				.streetAddress1("123 Main Street").zip("90210").build();
-		Session session = resource.createUser(user);
+		Object session = resource.createUser(user);
 		assertNotNull(session);
+		assertTrue(session instanceof Session);
     }
 }

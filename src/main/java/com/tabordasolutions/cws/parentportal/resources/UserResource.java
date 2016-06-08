@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.response.UserResponse;
 import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ServicesException;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
@@ -38,16 +39,16 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/me")
 	@GET
-	public User me(@HeaderParam("X-Auth-Token") String token) {
+	public UserResponse me(@HeaderParam("X-Auth-Token") String token) {
 		Session session = sessionService.loginWithToken(token);
-		return userService.findUserById(session.getUserId());
+		return new UserResponse(userService.findUserById(session.getUserId()), true);
 	}
 	
 	@UnitOfWork
 	@Path("/{id}")
 	@GET
-	public User user(@PathParam("id") long id) {
-		return userService.findUserById(id);
+	public UserResponse user(@PathParam("id") long id) {
+		return new UserResponse(userService.findUserById(id), true);
 	}
 
 	@UnitOfWork
@@ -60,27 +61,28 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/{id}")
 	@PUT
-	public User updateUser(@PathParam("id")long id, User user) {
+	public UserResponse updateUser(@PathParam("id")long id, User user) {
 		try {
-			return userService.updateUser(id, user);
+			return new UserResponse(userService.updateUser(id, user), true);
 		} catch (ServicesException e) {
 			//TODO : Handle through ExcpetionMapper
 			LOGGER.error("Unable to update " + user, e);
-			throw new ResourcesException(e.getMessage());
+			return new UserResponse(user, false, e.getMessage());
 		}
 	}
 
 	@UnitOfWork
 	@Path("/me")
 	@PUT
-	public User updateMe(@HeaderParam("X-Auth-Token") String token, User user) {
+	public UserResponse updateMe(@HeaderParam("X-Auth-Token") String token, User user) {
 		Session session = sessionService.loginWithToken(token);
 		try {
-			return userService.updateUser(session.getUserId(), user);
+			user = userService.updateUser(session.getUserId(), user);
+			return new UserResponse(user, true);
 		} catch (ServicesException e) {
-			//TODO : Handle through ExcpetionMapper
+			//TODO : Handle through ExceptionMapper
 			LOGGER.error("Unable to update " + user, e);
-			throw new ResourcesException(e.getMessage());
+			return new UserResponse(user, false, e.getMessage());
 		}
 	}
 	
@@ -88,7 +90,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/")
 	@POST
-	public Session createUser(User user) {
+	public Object createUser(User user) {
 		
 		try {
 			long newId = userService.createUser(user);
@@ -112,7 +114,7 @@ public class UserResource {
 		} catch (ServicesException e) {
 			//TODO : Handle through ExcpetionMapper
 			LOGGER.error("Unable to create: " + user.toString(), e);
-			throw new ResourcesException(e.getMessage());
+			return new UserResponse(user, false, e.getMessage());
 		}
 	}
 
