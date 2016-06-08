@@ -46,7 +46,7 @@ import com.tabordasolutions.cws.parentportal.services.UserService;
 public class ParentPortalApplication extends Application<ParentPortalConfiguration> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ParentPortalApplication.class);
 
-    private final HibernateBundle<ParentPortalConfiguration> hibernateBundle = new HibernateBundle<ParentPortalConfiguration>(User.class) {
+    private final HibernateBundle<ParentPortalConfiguration> hibernateBundle = new HibernateBundle<ParentPortalConfiguration>(User.class, Message.class, Conversation.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(ParentPortalConfiguration configuration) {
             return configuration.getDataSourceFactory();
