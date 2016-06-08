@@ -17,7 +17,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ConversationResource {
-    private String RECEIVER = "receiver";
+    private String SENDER = "sender";
     private ConversationService conversationService;
     private SessionService sessionService;
     private UserService userService;
@@ -59,10 +59,10 @@ public class ConversationResource {
     @GET
     public ConversationListResponse list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
         List conversations;
-        if (type == RECEIVER){
-            conversations = conversationService.conversationsAsRecipients(sessionService.getUserByToken(token));
-        }else{
+        if (type.equals(SENDER)){
             conversations = conversationService.conversationsAsSender(sessionService.getUserByToken(token));
+        }else{
+            conversations = conversationService.conversationsAsRecipients(sessionService.getUserByToken(token));
         }
         return new ConversationListResponse(conversations, true);
     }
