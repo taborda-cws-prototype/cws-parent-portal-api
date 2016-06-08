@@ -1,5 +1,6 @@
 package com.tabordasolutions.cws.parentportal;
 
+import com.tabordasolutions.cws.parentportal.api.*;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -24,10 +25,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tabordasolutions.cws.parentportal.api.ConversationDAO;
-import com.tabordasolutions.cws.parentportal.api.MessageDAO;
-import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.api.UserDAO;
 import com.tabordasolutions.cws.parentportal.api.response.RuntimeExceptionMapper;
 import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.filters.ModifyResponseFilter;
