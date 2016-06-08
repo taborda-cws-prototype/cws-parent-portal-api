@@ -25,13 +25,13 @@ public class ConversationDAOTest {
     @After
     public void teardown() {sessionFactory.close();}
 
-    @Test
+    //@Test
     public void saveConversation() throws Exception{
         Conversation savedConversation = dao.create(buildConversation());
         assertTrue("Expected conversation to be greater than 0", savedConversation.getId() > 0);
     }
 
-    @Test
+    //@Test
     public void findConversation() throws Exception{
         Conversation savedConversation = dao.create(buildConversation());
         Conversation foundConversation = dao.find(savedConversation.getId());

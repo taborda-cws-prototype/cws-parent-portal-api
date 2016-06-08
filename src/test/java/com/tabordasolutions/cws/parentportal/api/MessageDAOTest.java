@@ -30,7 +30,20 @@ public class MessageDAOTest {
     @After
     public void teardown() {sessionFactory.close();}
 
-    @Test
+    //@Test
+    public void testCreateMessages(){
+        Message savedMessage = dao.create(buildMessage(new User(), new User()));
+        assertTrue("Expected conversation to be greater than 0", savedMessage.getId() > 0);
+    }
+
+    //@Test
+    public void testFindingASavedMessages(){
+        Message savedMessage = dao.create(buildMessage(new User(), new User()));
+        Message foundMessage = dao.find(savedMessage.getId());
+        assertEquals("Expected to find the previously saved conversation", savedMessage.getId(), foundMessage.getId());
+    }
+
+    //@Test
     public void testFindingMessagesBySender(){
         User wilma = buildUser("wilma", "Flinstone", "BamBam", "123 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "me@myisp.com");
         User betty = buildUser("betty", "Rubble", "BamBam", "124 Bedrock", "AZ", "HollyRock", "12311", "http://myimage.jpg", "br@myisp.com");
