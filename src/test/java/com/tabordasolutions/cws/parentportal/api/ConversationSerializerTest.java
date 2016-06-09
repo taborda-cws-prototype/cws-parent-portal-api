@@ -59,15 +59,26 @@ public class ConversationSerializerTest {
         conversation.setSubject(subject);
     }
 
+    public Conversation buildConversation(){
+        User sender = new User();
+        User receiver = new User();
+        conversation = new Conversation();
+        Message message = new Message();
+        message.setAuthor(sender);
+        message.setAuthor(receiver);
+        conversation.getMessages().add(message);
+        return conversation;
+    }
+
     @Test
     public void testSerializesEmptyConversation() throws IOException {
-        conversation = new Conversation();
+        Conversation conversation = buildConversation();
         serializer.serialize(conversation, jsonGenerator, null);
         jsonGenerator.flush();
         String json = stringWriter.toString();
         assertTrue("Expected json to contain intializer value", json.contains("\"initializer\":null,"));
-        assertTrue("Expected json to contain sender value",  json.contains("\"sender\":null"));
-        assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":null"));
+        assertTrue("Expected json to contain sender value",  json.contains("\"sender\":\"\""));
+        assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":\"\""));
         assertTrue("Expected json to contain date value",  json.contains("\"date\":\"\""));
         assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":null"));
@@ -87,7 +98,7 @@ public class ConversationSerializerTest {
         assertTrue("Expected json to contain sender value",  json.contains("\"sender\":\"" + parent.getFullName() + "\""));
         assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":\"" + caseworker.getFullName() + "\""));
         assertTrue("Expected json to contain date value",  json.contains("\"date\":\"" + df.format(createDate)+ "\""));
-        assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"" + df.format(modifiedDate)+ "\""));
+        assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":\"" + subject +"\""));
         assertTrue("Expected json to contain init_message value",  json.contains("\"init_message\":\"" + originalMessage.getBody() + "\""));
         assertTrue("Expected json to contain read value",  json.contains("\"read\":\"true\""));

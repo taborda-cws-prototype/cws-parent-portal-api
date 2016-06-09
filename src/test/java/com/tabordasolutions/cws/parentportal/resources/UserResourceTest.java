@@ -28,6 +28,7 @@ public class UserResourceTest {
         UserDAO dao = mock(UserDAO.class);
         when(dao.find(1)).thenReturn(user);
         when(dao.findByUsername("joey.doe@example.com")).thenReturn(user);
+        when(user.getEmail()).thenReturn("joey.doe@example.com");
         service = new UserService(dao);
         
         when(mockedService.updateUser(1, user)).thenReturn(user);
