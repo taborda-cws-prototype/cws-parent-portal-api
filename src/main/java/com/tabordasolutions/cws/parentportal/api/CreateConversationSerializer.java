@@ -17,6 +17,8 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
     @Override
     public void serialize(Conversation value, JsonGenerator generator, SerializerProvider serializers) throws IOException, JsonProcessingException {
         generator.writeStartObject();
+        generator.writeFieldName("id");
+        generator.writeString(Long.toString(value.getId()));
         generator.writeFieldName("initializer");
         generator.writeString(value.getInitializer());
         generator.writeFieldName("sender");
