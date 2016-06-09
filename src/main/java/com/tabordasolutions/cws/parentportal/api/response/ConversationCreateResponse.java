@@ -6,15 +6,15 @@ public class ConversationCreateResponse {
     private Conversation Conversation;
     private boolean success;
 
-    public ConversationCreateResponse(com.tabordasolutions.cws.parentportal.api.Conversation conversation, boolean success) {
+    public ConversationCreateResponse(Conversation conversation, boolean success) {
         Conversation = conversation;
         this.success = success;
     }
-    public com.tabordasolutions.cws.parentportal.api.Conversation getConversation() {
+    public Conversation getConversation() {
         return Conversation;
     }
 
-    public void setConversation(com.tabordasolutions.cws.parentportal.api.Conversation conversation) {
+    public void setConversation(Conversation conversation) {
         Conversation = conversation;
     }
 
