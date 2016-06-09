@@ -20,12 +20,15 @@ public class MessageDAO extends AbstractDAO<Message> {
         return get(id);
     }
 
+    //TODO: lots of mesages will have same converstaion
     public Message findByConversation(Conversation conversation){
         if (conversation == null) { return new Message(); }
         Query query = currentSession().createQuery(
-                "from Message M where M.conversation = :conversation");
+                "from Message M where M.conversation = :conversation order by M.dateCreated asc ");
         query.setEntity("conversation", conversation);
-        return uniqueResult(query);
+        List <Message>conversations = list(query);
+
+        return conversations.get(0);
     }
 
     public List<Message> findMessagesByRecipient(User user){
@@ -33,7 +36,9 @@ public class MessageDAO extends AbstractDAO<Message> {
     }
 
     public List<Message> findMessagesBySender(User user){
-        return findMessagesBy(user, "from Message M where M.author=:person", "person");
+        List <Message> messages = findMessagesBy(user, "from Message M where M.author=:person", "person");
+        currentSession().clear();
+        return messages;
     }
 
     private List<Message> findMessagesBy(User user, String queryString, String userNamedParam){
