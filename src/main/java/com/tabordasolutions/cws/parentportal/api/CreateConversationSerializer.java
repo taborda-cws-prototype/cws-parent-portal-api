@@ -100,7 +100,7 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
     }
 
     private boolean hasBaseMessage(Conversation conversation){
-        return conversation == null || conversation.getBaseMessage() == null;
+        return conversation != null || conversation.getBaseMessage() != null;
 
     }
     private String dateAsString(Date date){
