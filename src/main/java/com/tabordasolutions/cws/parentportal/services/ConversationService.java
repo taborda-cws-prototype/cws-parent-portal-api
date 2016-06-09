@@ -1,12 +1,16 @@
 package com.tabordasolutions.cws.parentportal.services;
 
-import com.tabordasolutions.cws.parentportal.api.*;
-import org.hibernate.Session;
-
-import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
+
+import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.api.ConversationDAO;
+import com.tabordasolutions.cws.parentportal.api.Message;
+import com.tabordasolutions.cws.parentportal.api.MessageDAO;
+import com.tabordasolutions.cws.parentportal.api.User;
 
 public class ConversationService {
     private ConversationDAO conversationDao;
@@ -18,28 +22,58 @@ public class ConversationService {
     }
 
     public List<Conversation> conversationsAsRecipients(User user){
-        List<Conversation> conversations = new ArrayList<Conversation>();
+        HashMap<Long, TreeSet<Message>> conversationsData = new HashMap<Long, TreeSet<Message>>();
 
         List<Message> recipients = messageDAO.findMessagesByRecipient(user);
 
         for(Message message : recipients){
-            Conversation conversation = message.getConversation();
-            conversation.updateMessage(conversation.getBaseMessage());
-            conversations.add(conversation);
+            TreeSet<Message> messages = conversationsData.get(message.getConversation().getId());
+            if( messages == null ) {
+            	messages = new TreeSet<Message>();
+            	conversationsData.put(message.getConversation().getId(), messages );
+            }
+            messages.add(message);
+        }
+        
+        List<Conversation> conversations = new ArrayList<Conversation>();
+        
+        for(Long id : conversationsData.keySet()) {
+        	TreeSet<Message> messages = conversationsData.get(id);
+        	Message baseMessage = messages.first();
+        	if(baseMessage.getRecipient().equals(user)) {
+	        	Conversation conversation = baseMessage.getConversation();
+	        	conversation.updateMessage(baseMessage);
+	        	conversations.add(conversation);
+        	}
         }
 
         return conversations;
     }
 
     public List<Conversation> conversationsAsSender(User user){
-        List<Conversation> conversations = new ArrayList<Conversation>();
+        HashMap<Long, TreeSet<Message>> conversationsData = new HashMap<Long, TreeSet<Message>>();
 
         List<Message> senders = messageDAO.findMessagesBySender(user);
 
         for(Message message : senders){
-            Conversation conversation = message.getConversation();
-            conversation.updateMessage(conversation.getBaseMessage());
-            conversations.add(conversation);
+            TreeSet<Message> messages = conversationsData.get(message.getConversation().getId());
+            if( messages == null ) {
+            	messages = new TreeSet<Message>();
+            	conversationsData.put(message.getConversation().getId(), messages );
+            }
+            messages.add(message);
+        }
+        
+        List<Conversation> conversations = new ArrayList<Conversation>();
+        
+        for(Long id : conversationsData.keySet()) {
+        	TreeSet<Message> messages = conversationsData.get(id);
+        	Message baseMessage = messages.first();
+        	if(baseMessage.getAuthor().equals(user)) {
+	        	Conversation conversation = baseMessage.getConversation();
+	        	conversation.updateMessage(baseMessage);
+	        	conversations.add(conversation);
+        	}
         }
 
         return conversations;

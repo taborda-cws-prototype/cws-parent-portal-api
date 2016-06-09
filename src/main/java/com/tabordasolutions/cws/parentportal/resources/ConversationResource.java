@@ -7,16 +7,24 @@ import com.tabordasolutions.cws.parentportal.api.response.ConversationListRespon
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
+
 import io.dropwizard.hibernate.UnitOfWork;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 @Path("/conversation")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ConversationResource {
+	public static final Logger LOGGER = LoggerFactory
+			.getLogger(ConversationResource.class);
+	
     private String SENDER = "sender";
     private ConversationService conversationService;
     private SessionService sessionService;
@@ -69,6 +77,6 @@ public class ConversationResource {
     }
 
     private void log(String message){
-        System.out.println(message);
+        LOGGER.debug(message);
     }
 }

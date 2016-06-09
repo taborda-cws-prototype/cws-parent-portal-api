@@ -31,18 +31,18 @@ public class SessionServiceTest {
         when(crypto.decrypt(badToken)).thenReturn("joey.doe@example.com:BOGUS");
         when(crypto.decrypt(encryptedToken)).thenReturn(decryptedToken);
         when(crypto.encrypt(decryptedToken)).thenReturn(encryptedToken);
-
+        when(user.getPassword()).thenReturn("password");
         this.service = new SessionService(service, crypto);
     }
 
     @Test
     public void loginWithValidCredentialsReturnsValidSession(){
-        assertTrue(service.login("joey.doe@example.com", "password1").isSuccess());
+        assertTrue(service.login("joey.doe@example.com", "password").isSuccess());
     }
 
     @Test
     public void loginWithValidCredentialsReturnsSessionWithUserId(){
-        assertEquals(1, service.login("joey.doe@example.com", "password1").getUserId());
+        assertEquals(1, service.login("joey.doe@example.com", "password").getUserId());
     }
 
     @Test
@@ -56,7 +56,11 @@ public class SessionServiceTest {
     }
 
     @Test
-    public void loginWithValidToken(){ assertTrue(service.loginWithToken(encryptedToken).isSuccess()); }
+    public void loginWithValidToken(){ 
+    	assertTrue(service.loginWithToken(encryptedToken).isSuccess()); 
+    	}
+    
+    
 
     @Test
     public void loginWithInValidToken(){ assertFalse(service.loginWithToken(badToken).isSuccess()); }

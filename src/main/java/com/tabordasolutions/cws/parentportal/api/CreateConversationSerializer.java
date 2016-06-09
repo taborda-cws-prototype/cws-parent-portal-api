@@ -44,7 +44,7 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
                 generator.writeStartObject();
 
                 generator.writeFieldName("sender");
-                generator.writeObject(authorsFromBaseMessage(value));
+                generator.writeObject(authors(message));
                 generator.writeFieldName("receiver");
                 generator.writeString(String.valueOf(recipientsName(message)));
                 generator.writeFieldName("content");

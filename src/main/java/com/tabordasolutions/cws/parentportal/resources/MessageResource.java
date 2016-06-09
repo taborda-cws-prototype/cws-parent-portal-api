@@ -1,26 +1,38 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import javax.ws.rs.*;
+import io.dropwizard.hibernate.UnitOfWork;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.CreateMessageRequest;
 import com.tabordasolutions.cws.parentportal.api.Message;
-import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.response.MessageResponse;
-import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
-import io.dropwizard.hibernate.UnitOfWork;
-
-import java.util.List;
 
 @Path("/message")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MessageResource {
+	public static final Logger LOGGER = LoggerFactory
+			.getLogger(MessageResource.class);
+	
     private String RECEIVER = "receiver";
     private MessageService messageService;
     private ConversationService conversationService;
@@ -70,6 +82,6 @@ public class MessageResource {
         }
     }
     private void log(String message){
-        System.out.println(message);
+        LOGGER.debug(message);
     }
 }

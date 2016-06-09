@@ -2,10 +2,17 @@ package com.tabordasolutions.cws.parentportal.api;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -171,7 +178,7 @@ public class User {
 				+ ", imageUrl=" + imageUrl + ", email=" + email + ", password="
 				+ password + "]";
 	}
-    
+	
     public static class Builder 
     {
     	User user;
@@ -239,4 +246,117 @@ public class User {
             //TODO : validate user
         }
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((caseworkers == null) ? 0 : caseworkers.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((imageUrl == null) ? 0 : imageUrl.hashCode());
+		result = prime * result
+				+ ((inCareOf == null) ? 0 : inCareOf.hashCode());
+		result = prime * result
+				+ ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result
+				+ ((newPassword == null) ? 0 : newPassword.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = prime * result
+				+ ((streetAddress1 == null) ? 0 : streetAddress1.hashCode());
+		result = prime * result
+				+ ((streetAddress2 == null) ? 0 : streetAddress2.hashCode());
+		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (caseworkers == null) {
+			if (other.caseworkers != null)
+				return false;
+		} else if (!caseworkers.equals(other.caseworkers))
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (imageUrl == null) {
+			if (other.imageUrl != null)
+				return false;
+		} else if (!imageUrl.equals(other.imageUrl))
+			return false;
+		if (inCareOf == null) {
+			if (other.inCareOf != null)
+				return false;
+		} else if (!inCareOf.equals(other.inCareOf))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (newPassword == null) {
+			if (other.newPassword != null)
+				return false;
+		} else if (!newPassword.equals(other.newPassword))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (state == null) {
+			if (other.state != null)
+				return false;
+		} else if (!state.equals(other.state))
+			return false;
+		if (streetAddress1 == null) {
+			if (other.streetAddress1 != null)
+				return false;
+		} else if (!streetAddress1.equals(other.streetAddress1))
+			return false;
+		if (streetAddress2 == null) {
+			if (other.streetAddress2 != null)
+				return false;
+		} else if (!streetAddress2.equals(other.streetAddress2))
+			return false;
+		if (zip == null) {
+			if (other.zip != null)
+				return false;
+		} else if (!zip.equals(other.zip))
+			return false;
+		return true;
+	}
 }
