@@ -44,7 +44,7 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
                 generator.writeStartObject();
 
                 generator.writeFieldName("sender");
-                generator.writeString(String.valueOf(authorsName(message)));
+                generator.writeObject(authorsFromBaseMessage(value));
                 generator.writeFieldName("receiver");
                 generator.writeString(String.valueOf(recipientsName(message)));
                 generator.writeFieldName("content");
@@ -85,12 +85,12 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
         }
         return name;
     }
-    private String authorsName(Message message){
-        String name = "";
+    private User authors(Message message){
+        User user = new User();
         if( message != null && message.getAuthor() != null){
-            name = message.getAuthor().getFullName();
+            user = message.getAuthor();
         }
-        return name;
+        return user;
     }
 
     private String recipientsName(Message message){
