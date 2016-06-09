@@ -53,8 +53,9 @@ public class MessageResource {
     @UnitOfWork
     @GET
     @Path("/{id}")
-    public Message show(@PathParam("id") long id, @HeaderParam("X-Auth-Token" )String token){
-        return messageService.find(id);
+    public MessageResponse show(@PathParam("id") long id, @HeaderParam("X-Auth-Token" )String token){
+        Message message =  messageService.find(id);
+        return new MessageResponse(message, message.getId() > 0 );
     }
 
     @UnitOfWork

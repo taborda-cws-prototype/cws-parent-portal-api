@@ -32,6 +32,7 @@ public class MessageResourceTest {
         savedMessage = buildMessage();
         savedMessage.setId(8);
         when(mockMessageService.save(unsavedMessage)).thenReturn(savedMessage);
+        when(mockMessageService.find(1)).thenReturn(savedMessage);
     }
 
 

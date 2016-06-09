@@ -22,7 +22,8 @@ public class MessageService {
     }
 
     public Message find(long id){
-        return messageDAO.find(id);
+        Message message = messageDAO.find(id);
+        return message != null ? message : new Message();
     }
 
     public List<Message> findByRecipient(User recipient){
