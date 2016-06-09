@@ -9,6 +9,7 @@ import com.tabordasolutions.cws.parentportal.api.UserDAO;
 import java.util.List;
 
 public class UserService {
+	public static final String CASEWORKER = "cws.com";
 	public static final Logger LOGGER = LoggerFactory
 			.getLogger(UserService.class);
     private UserDAO dao;
@@ -57,11 +58,16 @@ public class UserService {
     }
 
 	private User loadCaseworkers(User user){
-		List<User> caseworkers = dao.findCaseworkers("%cws.com");
-		if(user != null) {
+		String caseworkerPattern = "%" + CASEWORKER;
+		List<User> caseworkers = dao.findCaseworkers(caseworkerPattern);
+		if(user != null && isCaseworker(user)) {
 			user.setCaseworkers(caseworkers);
 		}
 		return user;
+	}
+
+	private boolean isCaseworker(User user){
+		return user.getEmail().endsWith(CASEWORKER);
 	}
     	
     private boolean isPasswordChanged(User user) {
