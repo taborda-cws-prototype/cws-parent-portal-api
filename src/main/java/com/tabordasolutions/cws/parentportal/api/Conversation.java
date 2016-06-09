@@ -161,10 +161,8 @@ public class Conversation {
             name = message.getRecipient() != null ? message.getRecipient().getFullName() : "";
             this.setReceiver(name);
             this.setSubject(message.getSubject());
-            this.setDateCreated(message.getDateCreated());
         }
     }
-
 
     @Override
     public String toString() {

@@ -58,12 +58,13 @@ public class ConversationResource {
     @Path("/")
     @GET
     public ConversationListResponse list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
-        List conversations;
+        List <Conversation>conversations;
         if (type.equals(SENDER)){
             conversations = conversationService.conversationsAsSender(sessionService.getUserByToken(token));
         }else{
             conversations = conversationService.conversationsAsRecipients(sessionService.getUserByToken(token));
         }
+
         return new ConversationListResponse(conversations, true);
     }
 
