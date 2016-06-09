@@ -31,7 +31,8 @@ Run the application with Docker using a command like this:
 
     % docker run --env-file=.env -p 8080:8080 -v log:/var/log/cws-parent-portal-api parent_portal_api_image
 
-Containers are tagged with the short Git commit hash from the GitHub repository.
+Containers are tagged with the short Git commit hash from the GitHub repository. Containers are additionally tagged
+with the tag 'latest' to indicate the most recent version.
 
 ### Database Initialization
 
