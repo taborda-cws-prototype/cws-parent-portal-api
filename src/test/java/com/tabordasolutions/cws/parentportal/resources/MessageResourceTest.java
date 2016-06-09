@@ -1,19 +1,20 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import com.tabordasolutions.cws.parentportal.api.CreateMessageRequest;
-import com.tabordasolutions.cws.parentportal.api.Message;
-import com.tabordasolutions.cws.parentportal.api.User;
-import com.tabordasolutions.cws.parentportal.services.ConversationService;
-import com.tabordasolutions.cws.parentportal.services.SessionService;
-import com.tabordasolutions.cws.parentportal.services.UserService;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
-
+import com.tabordasolutions.cws.parentportal.api.Message;
+import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.MessageService;
-
-import java.util.Date;
+import com.tabordasolutions.cws.parentportal.services.SessionService;
+import com.tabordasolutions.cws.parentportal.services.UserService;
 
 public class MessageResourceTest {
     MessageResource resource;

@@ -119,7 +119,7 @@ public class Conversation {
     private Message loadBaseMessage(){
         Message emptyMessage = new Message();
         if (messages == null || baseMessage == null) { return  emptyMessage; }
-        List<Message> sorted = new ArrayList(messages);
+        List<Message> sorted = new ArrayList<Message>(messages);
         Collections.sort(sorted, Collections.reverseOrder());
         return sorted.isEmpty() ? emptyMessage : sorted.get(0);
     }

@@ -1,15 +1,14 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.util.Converter;
-
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
 
 public class CreateConversationSerializer extends JsonSerializer<Conversation> {
     private DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -78,13 +77,6 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
        }
         return user;
     }
-    private String receiversNameFromBaseMessage(Conversation conversation){
-        String name = "";
-        if (hasBaseMessage(conversation)) {
-            name = recipientsName(conversation.getBaseMessage());
-        }
-        return name;
-    }
     private User authors(Message message){
         User user = new User();
         if( message != null && message.getAuthor() != null){
@@ -102,7 +94,7 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
     }
 
     private boolean hasBaseMessage(Conversation conversation){
-        return conversation != null || conversation.getBaseMessage() != null;
+        return conversation != null && conversation.getBaseMessage() != null;
 
     }
     private String dateAsString(Date date){

@@ -19,7 +19,7 @@ public class UserService {
     }
 
     public User findUserByUserName(String username){
-        return dao.findByUsername(username);
+        return dao.findByUsername(username.toLowerCase());
     }
 
     public User findUserById(long id){
@@ -42,7 +42,7 @@ public class UserService {
     		LOGGER.warn("User with id:{} not found", id);
     		throw new ServicesException("User does not exist");
     	}
-    	User existingWithUsername = findUserByUserName(user.getEmail());
+    	User existingWithUsername = findUserByUserName(user.getEmail().toLowerCase());
     	if( existingWithUsername != null && existingWithUsername.getId() != id) {
     		LOGGER.warn("Unable to update user email to non unique email {}", user.getEmail());
     		throw new ServicesException("Email not unique");
@@ -79,9 +79,9 @@ public class UserService {
     	existingPasswordFromDb = existingPasswordFromDb != null ? existingPasswordFromDb.trim() : "";
     	
     	String passwordFromUser = user.getPassword();
-    	passwordFromUser = passwordFromUser != null ? passwordFromUser.equals("null") ? "" : passwordFromUser : "";
+    	passwordFromUser = passwordFromUser != null ? passwordFromUser.equals("null") ? "" : passwordFromUser.trim() : "";
 
-    	return existingPasswordFromDb.equals(passwordFromUser);
+    	return existingPasswordFromDb.trim().equals(passwordFromUser.trim());
     }
 
     /**
@@ -92,7 +92,7 @@ public class UserService {
      */
     public long createUser(User user) {
     	//TODO : let db handle check below.  Use ExceptionMapper.
-    	User existingUser = findUserByUserName(user.getEmail());
+    	User existingUser = findUserByUserName(user.getEmail().toLowerCase());
     	if( existingUser == null ) {
     		return dao.create(user);	
     	} else {
@@ -111,9 +111,9 @@ public class UserService {
     	user.setCity(copyFrom.getCity());
     	user.setZip(copyFrom.getZip());
     	user.setImageUrl(copyFrom.getImageUrl());
-    	user.setEmail(copyFrom.getEmail());
+    	user.setEmail(copyFrom.getEmail().toLowerCase());
     	if(copyFrom.getNewPassword() != null && copyFrom.getNewPassword().trim().length() > 0 ) {
-    		user.setPassword(copyFrom.getNewPassword());
+    		user.setPassword(copyFrom.getNewPassword().trim());
     	}
     	return user;
     }

@@ -19,11 +19,12 @@ public class UserDAO extends AbstractDAO<User> {
 		return uniqueResult(query);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<User> findCaseworkers(String emailMatcher) {
 		Query query = currentSession().createQuery(
 				"from User U where U.email like :email");
 		query.setString("email", emailMatcher);
-		return query.list();
+		return (List<User>)query.list();
 	}
 
 	public User find(long id) {

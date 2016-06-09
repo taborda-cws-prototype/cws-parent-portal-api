@@ -1,16 +1,15 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import io.dropwizard.hibernate.UnitOfWork;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Date;
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import java.util.Date;
-import java.util.List;
 
 public class MessageDAOTest {
     private SessionFactory sessionFactory;

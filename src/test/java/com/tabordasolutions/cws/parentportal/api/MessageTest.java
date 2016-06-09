@@ -12,7 +12,6 @@ public class MessageTest {
     private Date date;
     private String subject;
     private String body;
-    private String author;
     User parent;
     User caseworker;
 

@@ -1,13 +1,14 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,7 +48,7 @@ public class ConversationSerializerTest {
         modifiedDate = new Date();
         conversation = new Conversation();
         conversation.setBaseMessage(originalMessage);
-        Set messages = new HashSet<Message>();
+        Set<Message> messages = new HashSet<Message>();
         messages.add(originalMessage);
         conversation.setMessages(messages);
         conversation.setDateCreated(createDate);

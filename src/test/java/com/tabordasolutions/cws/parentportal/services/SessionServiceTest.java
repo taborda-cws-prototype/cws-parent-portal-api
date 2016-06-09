@@ -13,7 +13,6 @@ import static org.mockito.Mockito.when;
 
 public class SessionServiceTest {
     private SessionService service;
-    private final static String key = "mysecretkey12345";
     private String username = "joey.doe@example.com";
     private String encryptedToken = "myEncyptedToken";
     private String decryptedToken = username + ":password";

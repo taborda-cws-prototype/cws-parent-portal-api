@@ -1,6 +1,7 @@
 package com.tabordasolutions.cws.parentportal.api;
 
 import io.dropwizard.hibernate.AbstractDAO;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
@@ -41,9 +42,10 @@ public class MessageDAO extends AbstractDAO<Message> {
         return messages;
     }
 
-    private List<Message> findMessagesBy(User user, String queryString, String userNamedParam){
+    @SuppressWarnings("unchecked")
+	private List<Message> findMessagesBy(User user, String queryString, String userNamedParam){
         Query query = currentSession().createQuery( queryString);
         query.setEntity("person", user);
-        return query.list();
+        return (List<Message>)query.list();
     }
 }

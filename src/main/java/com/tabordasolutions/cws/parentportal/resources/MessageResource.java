@@ -37,7 +37,8 @@ public class MessageResource {
     private MessageService messageService;
     private ConversationService conversationService;
     private SessionService sessionService;
-    private UserService userService;
+    @SuppressWarnings("unused")
+	private UserService userService;
 
     public MessageResource() { }
 

@@ -1,15 +1,14 @@
 package com.tabordasolutions.cws.parentportal.api;
 
-import org.junit.After;
-import org.junit.Before;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.After;
+import org.junit.Before;
 
 public class ConversationDAOTest {
     private SessionFactory sessionFactory;

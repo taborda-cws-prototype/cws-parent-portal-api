@@ -41,7 +41,7 @@ public class SessionService {
 
     private boolean isValid(String string, User user) {
         //return string != null && string.length() > 0 && Character.isLowerCase(string.charAt(0));
-    	return string != null && string.length() > 0 && user.getPassword().equals(string);
+    	return string != null && string.length() > 0 && user.getPassword().trim().equals(string.trim());
     }
 
     private String buildToken(String userName, String password) {

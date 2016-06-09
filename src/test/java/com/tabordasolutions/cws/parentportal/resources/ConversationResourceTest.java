@@ -1,9 +1,16 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import com.tabordasolutions.cws.parentportal.ShowConversationRequest;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.CreateConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.User;
@@ -12,8 +19,6 @@ import com.tabordasolutions.cws.parentportal.auth.Session;
 import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
-import org.junit.Before;
-import org.junit.Test;
 
 public class ConversationResourceTest {
     private ConversationResource resource;
@@ -104,7 +109,6 @@ public class ConversationResourceTest {
 
     @Test
     public void findSavedConversation(){
-        ShowConversationRequest request = new ShowConversationRequest();
         resource.show(sender.getId(), senderToken);
         verify(mockedConversationService).find(sender.getId(), sender);
     }

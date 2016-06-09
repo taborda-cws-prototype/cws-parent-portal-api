@@ -28,7 +28,8 @@ public class ConversationResource {
     private String SENDER = "sender";
     private ConversationService conversationService;
     private SessionService sessionService;
-    private UserService userService;
+    @SuppressWarnings("unused")
+	private UserService userService;
 
     public ConversationResource(ConversationService service, SessionService sessionService, UserService userService) {
         this.conversationService = service;
