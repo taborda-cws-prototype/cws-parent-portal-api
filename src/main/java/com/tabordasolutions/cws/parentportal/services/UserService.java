@@ -60,7 +60,7 @@ public class UserService {
 	private User loadCaseworkers(User user){
 		String caseworkerPattern = "%" + CASEWORKER;
 		List<User> caseworkers = dao.findCaseworkers(caseworkerPattern);
-		if(user != null && isCaseworker(user)) {
+		if(user != null && !isCaseworker(user)) {
 			user.setCaseworkers(caseworkers);
 		}
 		return user;
