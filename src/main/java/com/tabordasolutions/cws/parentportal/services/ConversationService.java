@@ -1,7 +1,9 @@
 package com.tabordasolutions.cws.parentportal.services;
 
 import com.tabordasolutions.cws.parentportal.api.*;
+import org.hibernate.Session;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,6 +76,9 @@ public class ConversationService {
 
     public Conversation find(long id, User user ){
         Conversation conversation = conversationDao.find(id);
+        if (conversation == null) { return new Conversation(); }
+        Message baseMessage = messageDAO.findByConversation(conversation);
+        conversation.setBaseMessage(baseMessage);
 
         if (conversationContainsUser(user, conversation)) {
             addMessagePropertiesToConversation(conversation, conversation.getBaseMessage());

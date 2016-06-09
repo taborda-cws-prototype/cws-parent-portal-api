@@ -20,6 +20,14 @@ public class MessageDAO extends AbstractDAO<Message> {
         return get(id);
     }
 
+    public Message findByConversation(Conversation conversation){
+        if (conversation == null) { return new Message(); }
+        Query query = currentSession().createQuery(
+                "from Message M where M.conversation = :conversation");
+        query.setEntity("conversation", conversation);
+        return uniqueResult(query);
+    }
+
     public List<Message> findMessagesByRecipient(User user){
         return findMessagesBy(user, "from Message M where M.recipient=:person", "person");
     }

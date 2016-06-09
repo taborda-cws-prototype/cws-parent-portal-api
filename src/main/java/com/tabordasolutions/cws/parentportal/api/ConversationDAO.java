@@ -15,6 +15,13 @@ public class ConversationDAO extends AbstractDAO<Conversation> {
     public Conversation find(long id){
         return get(id);
     }
+
+    public void evictConversation(Conversation conversation){
+        if(conversation != null){
+            currentSession().evict(conversation);
+        }
+
+    }
     public Conversation save(Conversation conversation){
         return persist(conversation);
     }
