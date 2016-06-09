@@ -109,7 +109,7 @@ public class Conversation {
     public Set<Message> getMessages() { 
     	TreeSet<Message> sortedMessages = new TreeSet<Message>();
     	sortedMessages.addAll(messages != null ? messages : new HashSet<Message>()); 
-    	return sortedMessages.descendingSet();
+    	return sortedMessages;
     }
 
     public void setMessages(Set<Message> messages) {

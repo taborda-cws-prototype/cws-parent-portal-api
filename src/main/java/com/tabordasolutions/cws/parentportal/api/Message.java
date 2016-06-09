@@ -19,7 +19,10 @@ public class Message implements Comparable<Message> {
 
     private Conversation conversation;
 
-    public Message(){ }
+    public Message()
+    { 
+    	this.dateCreated = new Date();
+    }
 
     public Message(long id, Date dateCreated, User author, User recipient, String subject, String body) {
         this.id = id;

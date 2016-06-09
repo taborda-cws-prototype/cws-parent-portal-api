@@ -79,8 +79,8 @@ public class ConversationSerializerTest {
         assertTrue("Expected json to contain intializer value", json.contains("\"initializer\":null,"));
         assertTrue("Expected json to contain sender value",  json.contains("\"sender\":null"));
         assertTrue("Expected json to contain receiver value",  json.contains("\"receiver\":null"));
-        assertTrue("Expected json to contain date value",  json.contains("\"date\":\"\""));
-        assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\"\""));
+        assertTrue("Expected json to contain date value",  json.contains("\"date\":\""));
+        assertTrue("Expected json to contain update_date value",  json.contains("\"update_date\":\""));
         assertTrue("Expected json to contain subject value",  json.contains("\"subject\":null"));
         assertTrue("Expected json to contain init_message value",  json.contains("\"init_message\":null"));
         assertTrue("Expected json to contain read value",  json.contains("\"read\":\"false\""));
