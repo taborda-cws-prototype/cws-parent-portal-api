@@ -23,23 +23,3 @@ api.chhs.key: 81OubXhgPG3hny5Fdz1IgVACs
 api.chhs.queryParam: facility_zip
 
 encrypt.salt: fXY82541Kar14375
-
-logging:
-  level: DEBUG
-  loggers:
-    io.dropwizard: WARN
-    com.tabordasolutions: DEBUG
-  appenders:
-    - type: file
-      currentLogFilename: /var/log/myapplication.log
-      threshold: DEBUG
-      archive: true
-      archivedLogFilenamePattern: /var/log/cws-parent-portal-api/api-%d.log
-      archivedFileCount: 5
-      timeZone: UTC
-      logFormat: "%-5level [%thread] [%date{ISO8601}] %c:%line- %msg%n"
-    - type: console
-      threshold: ALL
-      timeZone: UTC
-      target: stdout
-      logFormat: "%-5level [%thread] [%date{ISO8601}] %c:%line- %msg%n"
