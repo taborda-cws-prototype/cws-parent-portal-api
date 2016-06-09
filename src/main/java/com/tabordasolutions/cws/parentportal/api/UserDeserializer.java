@@ -23,7 +23,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 		String lastName = nameNode.get("last_name").asText();
 		
 		JsonNode addressNode = node.get("address");
-		String inCareOf = node.get("name") != null ? node.get("name").asText() : null;
+		String inCareOf = addressNode.get("name") != null ? addressNode.get("name").asText() : null;
 		String streetAddress1 = addressNode.get("street_address") != null ? addressNode.get("street_address").asText() : null;
 		String streetAddress2 = addressNode.get("street_address_2") != null ? addressNode.get("street_address_2").asText() : null;
 		String state = addressNode.get("state") != null ? addressNode.get("state").asText() : null;
