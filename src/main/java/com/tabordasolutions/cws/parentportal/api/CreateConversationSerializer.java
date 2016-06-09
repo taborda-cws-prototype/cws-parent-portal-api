@@ -20,11 +20,13 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
         generator.writeFieldName("id");
         generator.writeString(Long.toString(value.getId()));
         generator.writeFieldName("initializer");
-        generator.writeString(value.getInitializer());
+        generator.writeObject(authorsFromBaseMessage(value));
         generator.writeFieldName("sender");
-        generator.writeString(authorsNameFromBaseMessage(value));
+
+        generator.writeObject(authorsFromBaseMessage(value));
+
         generator.writeFieldName("receiver");
-        generator.writeString(receiversNameFromBaseMessage(value));
+        generator.writeObject(authorsFromBaseMessage(value));
         generator.writeFieldName("date");
         generator.writeString(dateAsString(dateCreatedFromBaseMessage(value)));
         generator.writeFieldName("update_date");
@@ -69,12 +71,12 @@ public class CreateConversationSerializer extends JsonSerializer<Conversation> {
         return date;
     }
 
-    private String authorsNameFromBaseMessage(Conversation conversation){
-        String name = "";
+    private User authorsFromBaseMessage(Conversation conversation){
+       User user = new User();
        if (hasBaseMessage(conversation)) {
-           name = authorsName(conversation.getBaseMessage());
+           user = conversation.getBaseMessage().getAuthor();
        }
-        return name;
+        return user;
     }
     private String receiversNameFromBaseMessage(Conversation conversation){
         String name = "";
