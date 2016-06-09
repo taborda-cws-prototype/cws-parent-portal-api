@@ -106,7 +106,11 @@ public class Conversation {
 
     @OneToMany( mappedBy="conversation", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @ElementCollection(targetClass=Message.class)
-    public Set<Message> getMessages() { return messages != null ? messages : new HashSet<Message>(); }
+    public Set<Message> getMessages() { 
+    	TreeSet<Message> sortedMessages = new TreeSet<Message>();
+    	sortedMessages.addAll(messages != null ? messages : new HashSet<Message>()); 
+    	return sortedMessages.descendingSet();
+    }
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;

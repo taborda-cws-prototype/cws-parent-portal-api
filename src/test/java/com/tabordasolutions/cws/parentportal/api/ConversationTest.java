@@ -34,7 +34,7 @@ public class ConversationTest {
         String initializer = "Fred";
         String sender = "Barney";
         String receiver = "Fred";
-        Set<Message> messages =  new HashSet<Message>(Arrays.asList(new Message(2, new Date(),parent,caseworker, subject, "another body"), new Message(3, new Date(), caseworker, parent, subject, "some other body")));
+        Set<Message> messages =  new TreeSet<Message>(Arrays.asList(new Message(2, new Date(),parent,caseworker, subject, "another body"), new Message(3, new Date(), caseworker, parent, subject, "some other body")));
 
         conversation.setBaseMessage(originalMessage);
         conversation.setDateCreated(createDate);
