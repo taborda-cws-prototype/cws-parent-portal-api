@@ -20,11 +20,8 @@ public class CreateMessageDeserializer extends JsonDeserializer<CreateMessageReq
 
             request = new CreateMessageRequest();
             request.setConversationId(node.get("conversation_id").asLong());
-            JsonNode message = node.get("message");
-            request.setSender(message.get("sender").asLong());
-            request.setReceiver(message.get("receiver").asLong());
-            request.setContent(message.get("content").asText());
-            request.setDate(new Date());
+            request.setContent(node.get("content").asText());
+            request.setReceiver(node.get("receiver").asLong());
 
         } catch (JsonProcessingException e) {
             System.out.println("Threw JSON Deserializing Error. Unprocessable request, skipping....");
