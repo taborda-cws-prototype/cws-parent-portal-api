@@ -34,11 +34,12 @@ public class UserResourceTest {
         when(mockedService.createUser((User)Mockito.anyObject())).thenReturn(1L);
         
         when(mockedSessonService.login(Mockito.anyString(), Mockito.anyString())).thenReturn(session);
+        when(user.getEmail()).thenReturn("joey.doe@example.com");
         
     }
 
     @Test
-    public void userReturnsUserResponset() {
+    public void userReturnsUserResponse() {
         UserResource resource = new UserResource(service, mockedSessonService);
         assertTrue(resource.user(1) instanceof UserResponse);
     }
