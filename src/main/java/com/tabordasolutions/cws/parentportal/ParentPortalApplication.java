@@ -81,12 +81,12 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
                         new EnvironmentVariableSubstitutor()
                 )
         );
-        bootstrap.addBundle(new SwaggerBundle<ParentPortalConfiguration>() {
-            @Override
-            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ParentPortalConfiguration configuration) {
-                return configuration.swaggerBundleConfiguration;
-            }
-        });
+//        bootstrap.addBundle(new SwaggerBundle<ParentPortalConfiguration>() {
+//            @Override
+//            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ParentPortalConfiguration configuration) {
+//                return configuration.swaggerBundleConfiguration;
+//            }
+//        });
 
         bootstrap.addBundle(flywayBundle);
         bootstrap.addBundle(hibernateBundle);

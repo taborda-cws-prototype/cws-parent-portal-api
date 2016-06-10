@@ -1,12 +1,12 @@
 package com.tabordasolutions.cws.parentportal.services;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.tabordasolutions.cws.parentportal.api.User;
 import com.tabordasolutions.cws.parentportal.api.UserDAO;
-
-import java.util.List;
 
 public class UserService {
 	public static final String CASEWORKER = "cws.com";
@@ -94,7 +94,21 @@ public class UserService {
     	//TODO : let db handle check below.  Use ExceptionMapper.
     	User existingUser = findUserByUserName(user.getEmail().toLowerCase());
     	if( existingUser == null ) {
-    		return dao.create(user);	
+    		User.Builder builder = new User.Builder();
+			existingUser = builder
+					.firstName(user.getFirstName())
+					.lastName(user.getLastName())
+					.inCareOf(user.getInCareOf())
+					.streetAddress1(user.getStreetAddress1())
+					.streetAddress2(user.getStreetAddress2())
+					.state(user.getState())
+					.city(user.getCity())
+					.zip(user.getZip())
+					.imageUrl(user.getImageUrl())
+					.email(user.getEmail().toLowerCase())
+					.password(user.getPassword())
+					.build(); 
+    		return dao.create(existingUser);	
     	} else {
     		LOGGER.warn("Unable to create user with non unique email {}", user.getEmail());
     		throw new ServicesException("Email not unique" );
@@ -112,7 +126,7 @@ public class UserService {
     	user.setZip(copyFrom.getZip());
     	user.setImageUrl(copyFrom.getImageUrl());
     	user.setEmail(copyFrom.getEmail().toLowerCase());
-    	if(copyFrom.getNewPassword() != null && copyFrom.getNewPassword().trim().length() > 0 ) {
+    	if(  (copyFrom.getNewPassword() != null && copyFrom.getNewPassword().trim().length() > 0 )) {
     		user.setPassword(copyFrom.getNewPassword().trim());
     	}
     	return user;

@@ -115,7 +115,7 @@ public class UserResource {
 				.city(user.getCity())
 				.zip(user.getZip())
 				.imageUrl(user.getImageUrl())
-				.email(user.getEmail())
+				.email(user.getEmail().toLowerCase())
 				.password(user.getPassword())
 				.build();
 			
