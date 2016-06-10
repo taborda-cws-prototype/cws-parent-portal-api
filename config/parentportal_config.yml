@@ -23,3 +23,6 @@ api.chhs.key: 81OubXhgPG3hny5Fdz1IgVACs
 api.chhs.queryParam: facility_zip
 
 encrypt.salt: fXY82541Kar14375
+
+swagger:
+  resourcePackage: com.tabordasolutions.cws.parentportal.resources
