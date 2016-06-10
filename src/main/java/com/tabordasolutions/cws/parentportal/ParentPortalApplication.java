@@ -1,6 +1,5 @@
 package com.tabordasolutions.cws.parentportal;
 
-import com.tabordasolutions.cws.parentportal.api.*;
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -11,6 +10,8 @@ import io.dropwizard.flyway.FlywayFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -25,6 +26,12 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.tabordasolutions.cws.parentportal.api.Conversation;
+import com.tabordasolutions.cws.parentportal.api.ConversationDAO;
+import com.tabordasolutions.cws.parentportal.api.Message;
+import com.tabordasolutions.cws.parentportal.api.MessageDAO;
+import com.tabordasolutions.cws.parentportal.api.User;
+import com.tabordasolutions.cws.parentportal.api.UserDAO;
 import com.tabordasolutions.cws.parentportal.api.response.RuntimeExceptionMapper;
 import com.tabordasolutions.cws.parentportal.auth.Cryptography;
 import com.tabordasolutions.cws.parentportal.filters.ModifyResponseFilter;
@@ -74,11 +81,17 @@ public class ParentPortalApplication extends Application<ParentPortalConfigurati
                         new EnvironmentVariableSubstitutor()
                 )
         );
+        bootstrap.addBundle(new SwaggerBundle<ParentPortalConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ParentPortalConfiguration configuration) {
+                return configuration.swaggerBundleConfiguration;
+            }
+        });
 
         bootstrap.addBundle(flywayBundle);
         bootstrap.addBundle(hibernateBundle);
     }
-
+    
     @Override
     public void run(final ParentPortalConfiguration configuration, final Environment environment) throws Exception {
         LOGGER.info("Application name: {}", configuration.getApplicationName());

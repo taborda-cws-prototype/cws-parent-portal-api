@@ -1,6 +1,9 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
 import io.dropwizard.hibernate.UnitOfWork;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,6 +25,7 @@ import com.tabordasolutions.cws.parentportal.services.ServicesException;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 
+@Api("/users")
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -36,6 +40,7 @@ public class UserResource {
 		this.sessionService = sessionService;
 	}
 
+	@ApiOperation("Find current logged in user based on session id in X-Auth-Token Header")
 	@UnitOfWork
 	@Path("/me")
 	@GET
@@ -44,6 +49,7 @@ public class UserResource {
 		return new UserResponse(userService.findUserById(session.getUserId()), true);
 	}
 	
+	@ApiOperation("Find user by id")
 	@UnitOfWork
 	@Path("/{id}")
 	@GET
@@ -51,6 +57,7 @@ public class UserResource {
 		return new UserResponse(userService.findUserById(id), true);
 	}
 
+	@ApiOperation("Find user by username")
 	@UnitOfWork
 	@Path("/username/{username}")
 	@GET
@@ -58,10 +65,11 @@ public class UserResource {
 		return userService.findUserByUserName(username);
 	}
 
+	@ApiOperation("Update user by given id")
 	@UnitOfWork
 	@Path("/{id}")
 	@PUT
-	public UserResponse updateUser(@PathParam("id")long id, User user) {
+	public UserResponse updateUser(@PathParam("id") @ApiParam(required=true)long id, User user) {
 		try {
 			return new UserResponse(userService.updateUser(id, user), true);
 		} catch (ServicesException e) {
@@ -71,6 +79,7 @@ public class UserResource {
 		}
 	}
 
+	@ApiOperation("Update current logged in user based on session id in X-Auth-Token Header")
 	@UnitOfWork
 	@Path("/me")
 	@PUT
@@ -86,7 +95,7 @@ public class UserResource {
 		}
 	}
 	
-
+	@ApiOperation("Create User")
 	@UnitOfWork
 	@Path("/")
 	@POST
@@ -117,7 +126,4 @@ public class UserResource {
 			return new UserResponse(user, false, e.getMessage());
 		}
 	}
-
-	
-
 }
