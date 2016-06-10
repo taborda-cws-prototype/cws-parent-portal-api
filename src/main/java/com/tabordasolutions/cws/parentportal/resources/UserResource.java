@@ -44,7 +44,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/me")
 	@GET
-	public UserResponse me(@HeaderParam("X-Auth-Token") String token) {
+	public UserResponse me(@HeaderParam("X-Auth-Token") @ApiParam(required=true, value = "User session token")  String token) {
 		Session session = sessionService.loginWithToken(token);
 		return new UserResponse(userService.findUserById(session.getUserId()), true);
 	}
@@ -53,7 +53,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/{id}")
 	@GET
-	public UserResponse user(@PathParam("id") long id) {
+	public UserResponse user(@PathParam("id")@ApiParam(required=true, value="id of the user") long id) {
 		return new UserResponse(userService.findUserById(id), true);
 	}
 
@@ -61,7 +61,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/username/{username}")
 	@GET
-	public User findUserByUserName(@PathParam("username") String username) {
+	public User findUserByUserName(@PathParam("username") @ApiParam(required=true, value="email address of the user") String username) {
 		return userService.findUserByUserName(username);
 	}
 
@@ -69,7 +69,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/{id}")
 	@PUT
-	public UserResponse updateUser(@PathParam("id") @ApiParam(required=true)long id, User user) {
+	public UserResponse updateUser(@PathParam("id") @ApiParam(required=true, value="id of the user")long id, User user) {
 		try {
 			return new UserResponse(userService.updateUser(id, user), true);
 		} catch (ServicesException e) {
@@ -83,7 +83,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/me")
 	@PUT
-	public UserResponse updateMe(@HeaderParam("X-Auth-Token") String token, User user) {
+	public UserResponse updateMe(@HeaderParam("X-Auth-Token") @ApiParam(required=true, value = "User session token") String token, @ApiParam(required=true, value="The updated user")User user) {
 		Session session = sessionService.loginWithToken(token);
 		try {
 			user = userService.updateUser(session.getUserId(), user);
@@ -99,7 +99,7 @@ public class UserResource {
 	@UnitOfWork
 	@Path("/")
 	@POST
-	public Object createUser(User user) {
+	public Object createUser(@ApiParam(required=true, value="The user to create")User user) {
 		
 		try {
 			long newId = userService.createUser(user);

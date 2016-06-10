@@ -1,6 +1,9 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
 import io.dropwizard.hibernate.UnitOfWork;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import java.util.List;
 
@@ -26,6 +29,7 @@ import com.tabordasolutions.cws.parentportal.services.MessageService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 
+@Api("/message")
 @Path("/message")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -49,6 +53,7 @@ public class MessageResource {
         this.userService = userService;
     }
 
+    @ApiOperation("Create a message")
     @UnitOfWork
     @Path("/")
     @POST
@@ -63,6 +68,7 @@ public class MessageResource {
         return new MessageResponse(createdMessage, success );
     }
 
+    @ApiOperation("Get message by id")
     @UnitOfWork
     @GET
     @Path("/{id}")
@@ -71,10 +77,11 @@ public class MessageResource {
         return new MessageResponse(message, message.getId() > 0 );
     }
 
+    @ApiOperation("List messages")
     @UnitOfWork
     @Path("/")
     @GET
-    public List<Message> list(@QueryParam("select")String type, @HeaderParam("X-Auth-Token") String token){
+    public List<Message> list(@QueryParam("select") @ApiParam(value="Messages for?", required = false, defaultValue="sender" ) String type, @HeaderParam("X-Auth-Token") String token){
         if (type == RECEIVER){
             return messageService.findByRecipient(sessionService.getUserByToken(token));
 

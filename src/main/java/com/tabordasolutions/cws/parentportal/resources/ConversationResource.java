@@ -1,5 +1,23 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import io.dropwizard.hibernate.UnitOfWork;
+import io.swagger.annotations.Api;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.tabordasolutions.cws.parentportal.api.Conversation;
 import com.tabordasolutions.cws.parentportal.api.CreateConversationRequest;
 import com.tabordasolutions.cws.parentportal.api.response.ConversationCreateResponse;
@@ -8,16 +26,7 @@ import com.tabordasolutions.cws.parentportal.services.ConversationService;
 import com.tabordasolutions.cws.parentportal.services.SessionService;
 import com.tabordasolutions.cws.parentportal.services.UserService;
 
-import io.dropwizard.hibernate.UnitOfWork;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
+@Api("/conversation")
 @Path("/conversation")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

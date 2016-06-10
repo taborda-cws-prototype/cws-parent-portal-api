@@ -1,5 +1,9 @@
 package com.tabordasolutions.cws.parentportal.resources;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -15,6 +19,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tabordasolutions.cws.parentportal.api.Agency;
 
+@Api("/agencies")
 public class ChhsOpenDataAgencyResource implements AgencyResource {
 
 	public static final Logger LOGGER = LoggerFactory
@@ -48,8 +53,9 @@ public class ChhsOpenDataAgencyResource implements AgencyResource {
 				"apiQueryParam must not be empty");
 	}
 
+	@ApiOperation("Find agencies")
 	@Override
-	public List<Agency> listAgencies(String zipcode) {
+	public List<Agency> listAgencies(@ApiParam(required=true )String zipcode) {
 		LOGGER.debug("Searching on zipcode {}", zipcode);
 		if( zipcode != null) {
 			@SuppressWarnings({ "rawtypes" })

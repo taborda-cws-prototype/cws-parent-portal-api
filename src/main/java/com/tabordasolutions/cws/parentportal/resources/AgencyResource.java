@@ -10,7 +10,8 @@ import javax.ws.rs.core.MediaType;
 
 import com.tabordasolutions.cws.parentportal.api.Agency;
 
-@Path("agencies")
+
+@Path("/agencies")
 @Produces(MediaType.APPLICATION_JSON)
 public interface AgencyResource {
 	@GET
