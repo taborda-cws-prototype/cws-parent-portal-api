@@ -75,7 +75,7 @@ public class UserServiceTest {
     @Test
     public void createUseReturnsUser() {
     	long id = service.createUser(user3);
-    	assertEquals(3, id);
+    	assertEquals(0, id);
     }
     
     @Test
